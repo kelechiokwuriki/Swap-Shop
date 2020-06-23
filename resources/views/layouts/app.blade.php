@@ -33,6 +33,15 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a href="/home" class="nav-link"><i class="fas fa-tachometer-alt pr-1"></i>Home</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a href="/listings" class="nav-link"><i class="fas fa-tachometer-alt pr-1"></i>Listings</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a href="/events" class="nav-link"><i class="fas fa-info-circle pr-1"></i>Events</a>
+                        </li>
 
                     </ul>
 
@@ -72,7 +81,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main id="main" class="py-4">
             @yield('content')
         </main>
     </div>

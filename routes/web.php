@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ListingApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,4 +28,5 @@ Route::namespace('admin')->prefix('admin')->name('admin.')->group(function() {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('/listings', 'ListingController');
 

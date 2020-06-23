@@ -20,6 +20,15 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('listings-component', require('./components/Listings.vue').default);
+Vue.component('createlisting-component', require('./components/CreateListing.vue').default);
+Vue.component('home-component', require('./components/Home.vue').default);
+
+
+
+import listings from './components/Listings'
+import home from './components/Home'
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -28,5 +37,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app',
+    el: '#main',
+
 });

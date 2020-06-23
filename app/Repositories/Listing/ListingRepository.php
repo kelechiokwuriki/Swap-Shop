@@ -14,4 +14,9 @@ class ListingRepository extends BaseRepository
     {
         parent::__construct($listingModel);
     }
+
+    public function getListingsForLoggedInUser()
+    {
+        return auth()->user()->listings()->orderBy('created_at', 'DESC')->get();
+    }
 }

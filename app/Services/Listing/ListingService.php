@@ -16,6 +16,11 @@ class ListingService
         $this->listingRepository = $listingRepository;
     }
 
+    public function getListingsForLoggedInUser()
+    {
+        return $this->listingRepository->getListingsForLoggedInUser();
+    }
+
     public function getAllListings()
     {
         return $this->listingRepository->all();
@@ -23,8 +28,7 @@ class ListingService
 
     public function createListing(array $listing)
     {
-        Log::debug(Auth::user());
-        // return $this->listingRepository->create($listing);
+        return $this->listingRepository->create($listing);
     }
 
     public function updateListing(int $id, array $listing)

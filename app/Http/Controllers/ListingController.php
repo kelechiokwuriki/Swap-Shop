@@ -1,24 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Listing;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
 
-
-use App\Services\Listing\ListingService;
-
-class ListingApiController extends Controller
+class ListingController extends Controller
 {
-    protected $listingService;
-
-    public function __construct(ListingService $listingService)
-    {
-        $this->listingService = $listingService;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +13,7 @@ class ListingApiController extends Controller
      */
     public function index()
     {
-        return $this->listingService->getListingsForLoggedInUser();
+        return view('listings.index');
     }
 
     /**
@@ -36,6 +23,7 @@ class ListingApiController extends Controller
      */
     public function create()
     {
+        return view('listings.create');
     }
 
     /**
@@ -46,17 +34,16 @@ class ListingApiController extends Controller
      */
     public function store(Request $request)
     {
-        $request->request->set('user_id', auth()->id());
-        return $this->listingService->createListing($request->all());
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Listing  $listing
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Listing $listing)
+    public function show($id)
     {
         //
     }
@@ -64,10 +51,10 @@ class ListingApiController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Listing  $listing
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Listing $listing)
+    public function edit($id)
     {
         //
     }
@@ -76,10 +63,10 @@ class ListingApiController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Listing  $listing
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Listing $listing)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -87,10 +74,10 @@ class ListingApiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Listing  $listing
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Listing $listing)
+    public function destroy($id)
     {
         //
     }
