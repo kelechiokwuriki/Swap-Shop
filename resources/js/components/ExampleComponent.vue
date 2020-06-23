@@ -17,7 +17,9 @@
 <script>
     export default {
         mounted() {
-            console.log('Component mounted.')
+            axios.get('/api/listings').then(response => {
+                console.log(response);
+            })
         }
     }
 </script>
