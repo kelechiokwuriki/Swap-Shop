@@ -81,7 +81,8 @@ class ListingApiController extends Controller
      */
     public function update(Request $request, Listing $listing)
     {
-        //
+        $request->request->remove('id');
+        return $this->listingService->updateListing($listing->id, $request->all());
     }
 
     /**

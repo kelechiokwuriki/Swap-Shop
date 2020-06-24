@@ -2126,13 +2126,107 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      listings: []
+      listings: [],
+      editListingModalData: {
+        id: null,
+        type: null,
+        item: null,
+        information: null,
+        deal: null
+      },
+      listing: {
+        type: null,
+        item: null,
+        information: null,
+        deal: null
+      }
     };
   },
   methods: {
+    saveListing: function saveListing() {
+      var _this = this;
+
+      axios.put('/api/listings/' + this.editListingModalData.id, this.editListingModalData).then(function (response) {
+        if (response.data === 1) {
+          var localListingIndex = _this.listings.findIndex(function (listing) {
+            return listing.id === _this.editListingModalData.id;
+          }); //update front end data
+
+
+          _this.listings[localListingIndex].type = _this.editListingModalData.type;
+          _this.listings[localListingIndex].item = _this.editListingModalData.item;
+          _this.listings[localListingIndex].information = _this.editListingModalData.information;
+          _this.listings[localListingIndex].deal = _this.editListingModalData.deal;
+          _this.listings[localListingIndex].updated_at = moment().toDate();
+        }
+      });
+    },
+    showEditListingModal: function showEditListingModal(listing) {
+      this.editListingModalData.id = listing.id;
+      this.editListingModalData.type = listing.type;
+      this.editListingModalData.item = listing.item;
+      this.editListingModalData.deal = listing.deal;
+      this.editListingModalData.information = listing.information;
+      $("#editListingModal").modal('show');
+    },
     deleteListing: function deleteListing(listingId) {},
     moment: function (_moment) {
       function moment(_x) {
@@ -2149,10 +2243,10 @@ __webpack_require__.r(__webpack_exports__);
     })
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     axios.get('/api/listings').then(function (response) {
-      _this.listings = response.data;
+      _this2.listings = response.data;
     });
   }
 });
@@ -62330,7 +62424,7 @@ var render = function() {
     _c("div", { staticClass: "container" }, [
       _c("h1", { staticClass: "display-4" }, [
         _c("i", { staticClass: "fas fa-times" }),
-        _vm._v("Hi " + _vm._s(_vm.user.name) + ", please")
+        _vm._v("Hi " + _vm._s(_vm.user.name))
       ]),
       _vm._v(" "),
       _c(
@@ -62376,17 +62470,17 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c(
-      "div",
-      { staticClass: "row justify-content-center" },
-      _vm._l(_vm.listings, function(listing) {
-        return _c("div", { key: listing.id, staticClass: "col-md-8 mb-4" }, [
-          _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-8" },
+        _vm._l(_vm.listings, function(listing) {
+          return _c("div", { key: listing.id, staticClass: "card mb-4" }, [
             _c(
               "div",
               { staticClass: "card-header" },
               [
-                listing.type === "offer"
+                listing.type === "Offer"
                   ? [_vm._v("Offered")]
                   : [_vm._v("Wanted")],
                 _vm._v(
@@ -62399,9 +62493,19 @@ var render = function() {
                     "\n\n                    "
                 ),
                 _c("div", { staticClass: "float-right" }, [
-                  _c("button", { staticClass: "btn btn-primary" }, [
-                    _vm._v("Edit")
-                  ]),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { "data-toggle": "modal" },
+                      on: {
+                        click: function($event) {
+                          return _vm.showEditListingModal(listing)
+                        }
+                      }
+                    },
+                    [_vm._v("Edit")]
+                  ),
                   _vm._v(" "),
                   _c(
                     "button",
@@ -62421,31 +62525,262 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "form-group row" }, [
-                _vm._m(0, true),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [
-                  _c("p", [_vm._v(_vm._s(listing.item))])
-                ]),
-                _vm._v(" "),
-                _vm._m(1, true),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [
-                  _c("p", [_vm._v(_vm._s(listing.information))])
-                ]),
-                _vm._v(" "),
-                _vm._m(2, true),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [
-                  _c("p", [_vm._v(_vm._s(listing.deal))])
-                ])
-              ])
+              _c(
+                "div",
+                { staticClass: "form-group row" },
+                [
+                  _vm._m(0, true),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-8" }, [
+                    _c("p", [_vm._v(_vm._s(listing.item))])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(1, true),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-8" }, [
+                    _c("p", [_vm._v(_vm._s(listing.information))])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(2, true),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-8" }, [
+                    _c("p", [_vm._v(_vm._s(listing.deal))])
+                  ]),
+                  _vm._v(" "),
+                  listing.updated_at !== listing.created_at
+                    ? [
+                        _vm._m(3, true),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-8" }, [
+                          _c("p", [
+                            _vm._v(
+                              _vm._s(_vm.moment(listing.updated_at).fromNow())
+                            )
+                          ])
+                        ])
+                      ]
+                    : _vm._e()
+                ],
+                2
+              )
             ])
           ])
-        ])
-      }),
-      0
-    )
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "editListingModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "editListingModal",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(4),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("form", [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "listing-type" } }, [
+                        _vm._v("Type")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.editListingModalData.type,
+                              expression: "editListingModalData.type"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { id: "listing-type" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.editListingModalData,
+                                "type",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", [_vm._v("Select an option")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("Want")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("Offer")])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "listing-item" } }, [
+                        _vm._v("What would you like to offer or request for?")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.editListingModalData.item,
+                            expression: "editListingModalData.item"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "listing-item",
+                          placeholder: "E.g the painting of Monalissa"
+                        },
+                        domProps: { value: _vm.editListingModalData.item },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.editListingModalData,
+                              "item",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "listing-information" } }, [
+                        _vm._v("Give us some information about the item")
+                      ]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.editListingModalData.information,
+                            expression: "editListingModalData.information"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "listing-information",
+                          placeholder: ""
+                        },
+                        domProps: {
+                          value: _vm.editListingModalData.information
+                        },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.editListingModalData,
+                              "information",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "listing-deal" } }, [
+                        _vm._v("What would you like the deal to be?")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.editListingModalData.deal,
+                            expression: "editListingModalData.deal"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "listing-deal",
+                          placeholder: "E.g I am offering £5 for the painting"
+                        },
+                        domProps: { value: _vm.editListingModalData.deal },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.editListingModalData,
+                              "deal",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.saveListing()
+                        }
+                      }
+                    },
+                    [_vm._v("Save changes")]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -62468,6 +62803,37 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-4" }, [_c("p", [_vm._v("Deal:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [_c("p", [_vm._v("Updated:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "editListingModal" } },
+        [_vm._v("Edit your listing")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
   }
 ]
 render._withStripped = true
