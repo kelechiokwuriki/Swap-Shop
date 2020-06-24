@@ -111,19 +111,14 @@
                     information: null,
                     deal: null
                 },
-                listing: {
-                    type: null,
-                    item: null,
-                    information: null,
-                    deal: null
-                }
+                listingsApi: this.$helper.getlistingsApi()
             }
         },
         methods: {
             saveListing() {
-                axios.put('/api/listings/'+ this.editListingModalData.id, this.editListingModalData).then(response => {
+                axios.put(this.listingsApi + this.editListingModalData.id, this.editListingModalData).then(response => {
                     if(response.data === 1) {
-                        let localListingIndex = this.listings.findIndex(listing => listing.id === this.editListingModalData.id);
+                        let localListingIndex = this.getListingIndexFromArray();
                         //update front end data
                         this.listings[localListingIndex].type = this.editListingModalData.type;
                         this.listings[localListingIndex].item = this.editListingModalData.item;
@@ -132,6 +127,9 @@
                         this.listings[localListingIndex].updated_at = moment().toDate();
                     }
                 });
+            },
+            getListingIndexFromArray() {
+                return this.listings.findIndex(listing => listing.id === this.editListingModalData.id);
             },
             showEditListingModal(listing) {
                 this.editListingModalData.id = listing.id;
@@ -143,14 +141,21 @@
                 $("#editListingModal").modal('show');
             },
             deleteListing(listingId) {
+                axios.delete(this.listingsApi + listingId).then(response => {
+                    if(response.data === 1) {
 
+                        //delete front end data
+                        let localListingIndex = this.getListingIndexFromArray();
+                        this.listings.splice(localListingIndex, 1);
+                    }
+                })
             },
             moment(date) {
                 return moment(date);
             },
         },
         mounted() {
-            axios.get('/api/listings').then(response => {
+            axios.get(this.listingsApi).then(response => {
                 this.listings = response.data;
             })
         }

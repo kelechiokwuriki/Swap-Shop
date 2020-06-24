@@ -93,6 +93,6 @@ class ListingApiController extends Controller
      */
     public function destroy(Listing $listing)
     {
-        //
+        return $this->listingService->deleteListing($listing->id);
     }
 }

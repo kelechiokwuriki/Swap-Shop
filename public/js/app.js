@@ -2192,23 +2192,16 @@ __webpack_require__.r(__webpack_exports__);
         information: null,
         deal: null
       },
-      listing: {
-        type: null,
-        item: null,
-        information: null,
-        deal: null
-      }
+      listingsApi: this.$helper.getlistingsApi()
     };
   },
   methods: {
     saveListing: function saveListing() {
       var _this = this;
 
-      axios.put('/api/listings/' + this.editListingModalData.id, this.editListingModalData).then(function (response) {
+      axios.put(this.listingsApi + this.editListingModalData.id, this.editListingModalData).then(function (response) {
         if (response.data === 1) {
-          var localListingIndex = _this.listings.findIndex(function (listing) {
-            return listing.id === _this.editListingModalData.id;
-          }); //update front end data
+          var localListingIndex = _this.getListingIndexFromArray(); //update front end data
 
 
           _this.listings[localListingIndex].type = _this.editListingModalData.type;
@@ -2219,6 +2212,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
+    getListingIndexFromArray: function getListingIndexFromArray() {
+      var _this2 = this;
+
+      return this.listings.findIndex(function (listing) {
+        return listing.id === _this2.editListingModalData.id;
+      });
+    },
     showEditListingModal: function showEditListingModal(listing) {
       this.editListingModalData.id = listing.id;
       this.editListingModalData.type = listing.type;
@@ -2227,7 +2227,18 @@ __webpack_require__.r(__webpack_exports__);
       this.editListingModalData.information = listing.information;
       $("#editListingModal").modal('show');
     },
-    deleteListing: function deleteListing(listingId) {},
+    deleteListing: function deleteListing(listingId) {
+      var _this3 = this;
+
+      axios["delete"](this.listingsApi + listingId).then(function (response) {
+        if (response.data === 1) {
+          //delete front end data
+          var localListingIndex = _this3.getListingIndexFromArray();
+
+          _this3.listings.splice(localListingIndex, 1);
+        }
+      });
+    },
     moment: function (_moment) {
       function moment(_x) {
         return _moment.apply(this, arguments);
@@ -2243,10 +2254,10 @@ __webpack_require__.r(__webpack_exports__);
     })
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this4 = this;
 
-    axios.get('/api/listings').then(function (response) {
-      _this2.listings = response.data;
+    axios.get(this.listingsApi).then(function (response) {
+      _this4.listings = response.data;
     });
   }
 });
@@ -75013,8 +75024,9 @@ module.exports = function(module) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Listings__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Listings */ "./resources/js/components/Listings.vue");
-/* harmony import */ var _components_Home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Home */ "./resources/js/components/Home.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helper */ "./resources/js/helper.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -75033,19 +75045,26 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-Vue.component('listings-component', __webpack_require__(/*! ./components/Listings.vue */ "./resources/js/components/Listings.vue")["default"]);
-Vue.component('createlisting-component', __webpack_require__(/*! ./components/CreateListing.vue */ "./resources/js/components/CreateListing.vue")["default"]);
-Vue.component('home-component', __webpack_require__(/*! ./components/Home.vue */ "./resources/js/components/Home.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('listings-component', __webpack_require__(/*! ./components/Listings.vue */ "./resources/js/components/Listings.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('createlisting-component', __webpack_require__(/*! ./components/CreateListing.vue */ "./resources/js/components/CreateListing.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('home-component', __webpack_require__(/*! ./components/Home.vue */ "./resources/js/components/Home.vue")["default"]);
 
 
+var plugin = {
+  install: function install() {
+    vue__WEBPACK_IMPORTED_MODULE_0___default.a.helper = _helper__WEBPACK_IMPORTED_MODULE_1__["default"];
+    vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$helper = _helper__WEBPACK_IMPORTED_MODULE_1__["default"];
+  }
+};
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(plugin);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new Vue({
+var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#main'
 });
 
@@ -75375,6 +75394,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Listings_vue_vue_type_template_id_6376dc5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/helper.js":
+/*!********************************!*\
+  !*** ./resources/js/helper.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getlistingsApi: function getlistingsApi() {
+    return '/api/listings/';
+  }
+});
 
 /***/ }),
 

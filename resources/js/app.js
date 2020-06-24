@@ -24,10 +24,18 @@ Vue.component('listings-component', require('./components/Listings.vue').default
 Vue.component('createlisting-component', require('./components/CreateListing.vue').default);
 Vue.component('home-component', require('./components/Home.vue').default);
 
+import Vue from 'vue'
+import helper from './helper';
 
+const plugin = {
+    install () {
+      Vue.helper = helper
+      Vue.prototype.$helper = helper
+    }
+  }
 
-import listings from './components/Listings'
-import home from './components/Home'
+  Vue.use(plugin);
+
 
 
 /**
