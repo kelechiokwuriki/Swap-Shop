@@ -21,12 +21,14 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::namespace('admin')->prefix('admin')->name('admin.')->group(function() {
-    Route::resource('/users', 'UsersController');
+Route::group(['middleware' => 'auth:web'], function () {
+    Route::namespace('admin')->prefix('admin')->name('admin.')->group(function() {
+        Route::resource('/users', 'UsersController');
+    });
+
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('/listings', 'ListingController');
+    Route::resource('/events', 'EventController');
 });
 
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resource('/listings', 'ListingController');
 

@@ -20,12 +20,28 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('listings-component', require('./components/Listings.vue').default);
-Vue.component('createlisting-component', require('./components/CreateListing.vue').default);
+
+//listing
+Vue.component('listings-component', require('./components/listing/Listings.vue').default);
+Vue.component('createlisting-component', require('./components/listing/CreateListing.vue').default);
+
+//event
+Vue.component('events-component', require('./components/event/Events.vue').default);
+Vue.component('createevent-component', require('./components/event/CreateEvent.vue').default);
+
+//datetime
+// Vue.component('datetime', require('vue-datetime').default);
+
+//home
 Vue.component('home-component', require('./components/Home.vue').default);
 
 import Vue from 'vue'
 import helper from './helper';
+import DateTimePicker from 'vue-ctk-date-time-picker';
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
+
+Vue.component('DateTimePicker', DateTimePicker);
+
 
 const plugin = {
     install () {
@@ -35,6 +51,7 @@ const plugin = {
   }
 
   Vue.use(plugin);
+
 
 
 

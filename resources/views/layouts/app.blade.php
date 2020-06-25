@@ -34,18 +34,18 @@
                     <!-- Left Side Of Navbar -->
                     @if(Auth::check())
 
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a href="/home" class="nav-link"><i class="fas fa-tachometer-alt pr-1"></i>Home</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a href="/listings" class="nav-link"><i class="fas fa-tachometer-alt pr-1"></i>Listings</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a href="/events" class="nav-link"><i class="fas fa-info-circle pr-1"></i>Events</a>
-                        </li>
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a href="/home" class="nav-link"><i class="fas fa-tachometer-alt pr-1"></i>Home</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a href="/listings" class="nav-link"><i class="fas fa-tachometer-alt pr-1"></i>Listings</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a href="/events" class="nav-link"><i class="fas fa-info-circle pr-1"></i>Events</a>
+                            </li>
 
-                    </ul>
+                        </ul>
 
                     @endif
 
