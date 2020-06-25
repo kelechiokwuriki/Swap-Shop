@@ -45,9 +45,20 @@
             }
         },
         methods: {
+            feedBack(title, text, icon) {
+                 return Swal.fire({
+                     title: title,
+                     text: text,
+                     icon: icon
+                 })
+             },
             createEvent() {
                 axios.post(this.eventsApi, this.event).then(response => {
-                    console.log(response);
+                    if(response.status === 201) {
+                        this.feedBack('Success', 'Your event has been created', 'success');
+                    } else {
+                        this.feedBack('Oops...', 'Something went wrong please try again!', 'error')
+                    }
                 })
             }
         },

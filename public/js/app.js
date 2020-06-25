@@ -2021,9 +2021,22 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    feedBack: function feedBack(title, text, icon) {
+      return Swal.fire({
+        title: title,
+        text: text,
+        icon: icon
+      });
+    },
     createEvent: function createEvent() {
+      var _this = this;
+
       axios.post(this.eventsApi, this.event).then(function (response) {
-        console.log(response);
+        if (response.status === 201) {
+          _this.feedBack('Success', 'Your event has been created', 'success');
+        } else {
+          _this.feedBack('Oops...', 'Something went wrong please try again!', 'error');
+        }
       });
     }
   },
