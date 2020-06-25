@@ -2000,25 +2000,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       event: {
         name: null,
-        when: null
-      }
+        when: null,
+        information: null,
+        contact_info: null
+      },
+      eventsApi: this.$helper.getEventsApi()
     };
   },
   methods: {
-    createEvent: function createEvent() {}
+    createEvent: function createEvent() {
+      axios.post(this.eventsApi, this.event).then(function (response) {
+        console.log(response);
+      });
+    }
   },
-  mounted: function mounted() {
-    var _this = this;
-
-    axios.get('/api/listings').then(function (response) {
-      _this.listings = response.data;
-    });
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -89433,7 +89442,7 @@ var render = function() {
       _c("div", { staticClass: "card-body" }, [
         _c("form", { attrs: { role: "form", "prevent-default": "" } }, [
           _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "listing-type" } }, [
+            _c("label", { attrs: { for: "event-name" } }, [
               _vm._v("Event Name")
             ]),
             _vm._v(" "),
@@ -89449,7 +89458,7 @@ var render = function() {
               staticClass: "form-control",
               attrs: {
                 type: "text",
-                id: "listing-item",
+                id: "event-name",
                 placeholder: "E.g my birthday meet up"
               },
               domProps: { value: _vm.event.name },
@@ -89468,12 +89477,12 @@ var render = function() {
             "div",
             { staticClass: "form-group" },
             [
-              _c("label", { attrs: { for: "listing-item" } }, [
+              _c("label", { attrs: { for: "event-when" } }, [
                 _vm._v("When is the event?")
               ]),
               _vm._v(" "),
               _c("DateTimePicker", {
-                attrs: { format: "YYYY-MM-DD hh:mm" },
+                attrs: { id: "event-when", format: "YYYY-MM-DD hh:mm" },
                 model: {
                   value: _vm.event.when,
                   callback: function($$v) {
@@ -89484,7 +89493,67 @@ var render = function() {
               })
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "event-information" } }, [
+              _vm._v("Give some information about the event")
+            ]),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.event.information,
+                  expression: "event.information"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "event-information", placeholder: "" },
+              domProps: { value: _vm.event.information },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.event, "information", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "contact-information" } }, [
+              _vm._v("Contact information")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.event.contact_info,
+                  expression: "event.contact_info"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                id: "contact-information",
+                placeholder: ""
+              },
+              domProps: { value: _vm.event.contact_info },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.event, "contact_info", $event.target.value)
+                }
+              }
+            })
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "text-center" }, [
@@ -89507,7 +89576,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header navbar-custom-dark" }, [
+    return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "card-title header-text-color" }, [
         _vm._v("Create an Event")
       ])
@@ -89756,7 +89825,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header navbar-custom-dark" }, [
+    return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "card-title header-text-color" }, [
         _vm._v("Create a listing")
       ])
@@ -102865,6 +102934,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   getlistingsApi: function getlistingsApi() {
     return '/api/listings/';
+  },
+  getEventsApi: function getEventsApi() {
+    return '/api/events/';
   }
 });
 

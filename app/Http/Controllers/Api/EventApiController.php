@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Api;
 use App\Event;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+
+use App\Services\Event\EventService;
 
 class EventApiController extends Controller
 {
+    protected $eventService;
+
+    public function __construct(EventService $eventService)
+    {
+        $this->eventService = $eventService;
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +47,9 @@ class EventApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->request->set('user_id', auth()->id());
+        return $this->eventService->createEvent($request->all());
+        Log::debug($request->all());
     }
 
     /**

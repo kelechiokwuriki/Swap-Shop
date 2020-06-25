@@ -1,18 +1,26 @@
 <template>
     <div class="container">
         <div class="card">
-            <div class="card-header navbar-custom-dark">
+            <div class="card-header">
                 <h4 class="card-title header-text-color">Create an Event</h4>
             </div>
             <div class="card-body">
                 <form role="form" prevent-default>
                     <div class="form-group">
-                        <label for="listing-type">Event Name</label>
-                        <input type="text" v-model="event.name" class="form-control" id="listing-item" placeholder="E.g my birthday meet up">
+                        <label for="event-name">Event Name</label>
+                        <input type="text" v-model="event.name" class="form-control" id="event-name" placeholder="E.g my birthday meet up">
                     </div>
                     <div class="form-group">
-                        <label for="listing-item">When is the event?</label>
-                        <DateTimePicker v-model="event.when" format="YYYY-MM-DD hh:mm"/>
+                        <label for="event-when">When is the event?</label>
+                        <DateTimePicker id="event-when" v-model="event.when" format="YYYY-MM-DD hh:mm"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-information">Give some information about the event</label>
+                        <textarea type="text" v-model="event.information" class="form-control" id="event-information" placeholder="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-information">Contact information</label>
+                        <input type="text" v-model="event.contact_info" class="form-control" id="contact-information" placeholder="">
                     </div>
                 </form>
                 <div class="text-center">
@@ -29,19 +37,22 @@
             return {
                 event: {
                     name: null,
-                    when: null
-                }
+                    when: null,
+                    information: null,
+                    contact_info: null
+                },
+                eventsApi: this.$helper.getEventsApi()
             }
         },
         methods: {
             createEvent() {
-
+                axios.post(this.eventsApi, this.event).then(response => {
+                    console.log(response);
+                })
             }
         },
         mounted() {
-            axios.get('/api/listings').then(response => {
-                this.listings = response.data;
-            })
+
         }
     }
 </script>

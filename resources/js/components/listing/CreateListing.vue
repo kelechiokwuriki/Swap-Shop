@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="card">
-            <div class="card-header navbar-custom-dark">
+            <div class="card-header">
                 <h4 class="card-title header-text-color">Create a listing</h4>
             </div>
             <div class="card-body">
