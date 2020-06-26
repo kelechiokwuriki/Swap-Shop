@@ -26,7 +26,7 @@ class EventApiController extends Controller
      */
     public function index()
     {
-        //
+        return $this->eventService->getEventsForLoggedInUser();
     }
 
     /**

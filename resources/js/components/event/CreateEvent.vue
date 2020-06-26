@@ -12,7 +12,7 @@
                     </div>
                     <div class="form-group">
                         <label for="event-when">When is the event?</label>
-                        <DateTimePicker id="event-when" v-model="event.when" format="YYYY-MM-DD hh:mm"/>
+                        <DateTimePicker id="event-when" v-model="event.when" format="YYYY-MM-DD HH:mm"/>
                     </div>
                     <div class="form-group">
                         <label for="event-information">Give some information about the event</label>

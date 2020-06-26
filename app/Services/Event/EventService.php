@@ -2,7 +2,7 @@
 
 namespace App\Services\Event;
 
-use App\Repositories\Listing\EventRepository;
+use App\Repositories\Event\EventRepository;
 
 
 class EventService
@@ -17,5 +17,10 @@ class EventService
     public function createEvent(array $event)
     {
         return $this->eventRepository->create($event);
+    }
+
+    public function getEventsForLoggedInUser()
+    {
+        return $this->eventRepository->getEventsForLoggedInUser();
     }
 }

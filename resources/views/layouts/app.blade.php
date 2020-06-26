@@ -14,7 +14,13 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    {{-- <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> --}}
+
+    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('custom.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -36,7 +42,7 @@
 
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
-                                <a href="/home" class="nav-link"><i class="fas fa-tachometer-alt pr-1"></i>Home</a>
+                                <a href="/home" class="nav-link"><i class="fas fa-home pr-1"></i>Home</a>
                             </li>
                             <li class="nav-item active">
                                 <a href="/listings" class="nav-link"><i class="fas fa-tachometer-alt pr-1"></i>Listings</a>

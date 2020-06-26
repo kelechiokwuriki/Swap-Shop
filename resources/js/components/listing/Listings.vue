@@ -4,12 +4,20 @@
             <div class="col-md-8">
                 <div class="card mb-4" v-for="listing in listings" v-bind:key="listing.id">
                     <div class="card-header">
-                        <template v-if="listing.type === 'Offer'">Offered</template>
-                        <template v-else>Wanted</template> on {{moment(listing.created_at).format('MMMM Do YYYY, h:mm:ss a')}}
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <h5 class="card-title">
+                                    <template v-if="listing.type === 'Offer'">Offered</template>
+                                    <template v-else>Wanted</template> on {{moment(listing.created_at).format('MMMM Do YYYY, h:mm:ss a')}}
+                                </h5>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="float-right">
+                                    <button class="btn btn-primary" data-toggle="modal" @click="showEditListingModal(listing)">Edit</button>
+                                    <button class="btn btn-danger" @click="deleteListing(listing.id)">Delete</button>
+                                </div>
+                            </div>
 
-                        <div class="float-right">
-                            <button class="btn btn-primary" data-toggle="modal" @click="showEditListingModal(listing)">Edit</button>
-                            <button class="btn btn-danger" @click="deleteListing(listing.id)">Delete</button>
                         </div>
                     </div>
 

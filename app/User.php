@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 
 use App\Listing;
+use App\Event;
 
 
 class User extends Authenticatable
@@ -44,6 +45,11 @@ class User extends Authenticatable
     public function listings()
     {
         return $this->hasMany(Listing::class);
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
     }
 
     public function getApiTokenAttribute($value)
