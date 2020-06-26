@@ -83,7 +83,8 @@ class EventApiController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+        $request->request->remove('id');
+        return $this->eventService->updateEvent($event->id, $request->all());
     }
 
     /**

@@ -10,8 +10,8 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="float-right">
-                                    <button class="btn btn-primary" data-toggle="modal" @click="showEditListingModal(listing)">Edit</button>
-                                    <button class="btn btn-danger" @click="deleteListing(listing.id)">Delete</button>
+                                    <button class="btn btn-primary" data-toggle="modal" @click="showEditEventModal(event)">Edit</button>
+                                    <button class="btn btn-danger" @click="deleteEvent(event.id)">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                                 <p>When:</p>
                             </div>
                             <div class="col-8">
-                                <p>{{event.when}}</p>
+                                <p>{{ moment(event.when).format('MMMM Do YYYY, h:mm:ss a') }}</p>
                             </div>
 
                             <div class="col-4">
@@ -47,50 +47,56 @@
                                 <p>{{event.contact_info}}</p>
                             </div>
 
+                            <template v-if="event.updated_at !== event.created_at">
+                                <div class="col-4">
+                                    <p>Updated:</p>
+                                </div>
+                                <div class="col-8">
+                                    <p>{{moment(event.updated_at).fromNow()}}</p>
+                                </div>
+                            </template>
+
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Modal -->
-            <div class="modal fade" id="editListingModal" tabindex="-1" role="dialog" aria-labelledby="editListingModal" aria-hidden="true">
+            <div class="modal fade" id="editEventModal" tabindex="-1" role="dialog" aria-labelledby="editEventModal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editListingModal">Edit your listing</h5>
+                        <h5 class="modal-title" id="editEventModal">Edit your event</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form role="form">
                             <div class="form-group">
-                        <label for="listing-type">Type</label>
-                        <select class="form-control" id="listing-type" v-model="editListingModalData.type">
-                            <option>Select an option</option>
-                            <option>Want</option>
-                            <option>Offer</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="listing-item">What would you like to offer or request for?</label>
-                        <input type="text" v-model="editListingModalData.item" class="form-control" id="listing-item" placeholder="E.g the painting of Monalissa">
-                    </div>
+                                <label for="event-name">Event Name</label>
+                                <input type="text" v-model="editEventModalData.name" class="form-control" id="event-name" placeholder="E.g my birthday meet up">
+                            </div>
 
-                    <div class="form-group">
-                        <label for="listing-information">Give us some information about the item</label>
-                        <textarea type="text" v-model="editListingModalData.information" class="form-control" id="listing-information" placeholder="" />
-                    </div>
+                            <div class="form-group">
+                                <label for="event-when">When is the event?</label>
+                                <DateTimePicker id="event-when" v-model="editEventModalData.when" format="YYYY-MM-DD HH:mm"/>
+                            </div>
 
-                    <div class="form-group">
-                        <label for="listing-deal">What would you like the deal to be?</label>
-                        <input type="text" v-model="editListingModalData.deal" class="form-control" id="listing-deal" placeholder="E.g I am offering £5 for the painting">
-                    </div>
+                            <div class="form-group">
+                                <label for="event-information">Give some information about the event</label>
+                                <textarea type="text" v-model="editEventModalData.information" class="form-control" id="event-information" placeholder="" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contact-information">Contact information</label>
+                                <input type="text" v-model="editEventModalData.contact_info" class="form-control" id="contact-information" placeholder="">
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="saveListing()">Save changes</button>
+                        <button type="button" class="btn btn-primary" @click="saveEvent()">Save changes</button>
                     </div>
                     </div>
                 </div>
@@ -105,51 +111,50 @@
     export default {
         data() {
             return {
-                listings: [],
                 events: [],
-                editListingModalData: {
+                editEventModalData: {
                     id: null,
-                    type: null,
-                    item: null,
+                    name: null,
+                    when: null,
                     information: null,
-                    deal: null
+                    contact_info: null
                 },
                 eventsApi: this.$helper.getEventsApi()
             }
         },
         methods: {
-            saveListing() {
-                axios.put(this.eventsApi + this.editListingModalData.id, this.editListingModalData).then(response => {
+            saveEvent() {
+                axios.put(this.eventsApi + this.editEventModalData.id, this.editEventModalData).then(response => {
                     if(response.data === 1) {
-                        let localListingIndex = this.getListingIndexFromArray();
+                        let localEventIndex = this.getEventIndexFromArray();
                         //update front end data
-                        this.listings[localListingIndex].type = this.editListingModalData.type;
-                        this.listings[localListingIndex].item = this.editListingModalData.item;
-                        this.listings[localListingIndex].information = this.editListingModalData.information;
-                        this.listings[localListingIndex].deal = this.editListingModalData.deal;
-                        this.listings[localListingIndex].updated_at = moment().toDate();
+                        this.events[localEventIndex].name = this.editEventModalData.name;
+                        this.events[localEventIndex].when = this.editEventModalData.when;
+                        this.events[localEventIndex].information = this.editEventModalData.information;
+                        this.events[localEventIndex].contact_info = this.editEventModalData.contact_info;
+                        this.events[localEventIndex].updated_at = moment().toDate();
                     }
                 });
             },
-            getListingIndexFromArray() {
-                return this.listings.findIndex(listing => listing.id === this.editListingModalData.id);
+            getEventIndexFromArray() {
+                return this.events.findIndex(event => event.id === this.editEventModalData.id);
             },
-            showEditListingModal(listing) {
-                this.editListingModalData.id = listing.id;
-                this.editListingModalData.type = listing.type;
-                this.editListingModalData.item = listing.item;
-                this.editListingModalData.deal = listing.deal;
-                this.editListingModalData.information = listing.information;
+            showEditEventModal(event) {
+                this.editEventModalData.id = event.id;
+                this.editEventModalData.name = event.name;
+                this.editEventModalData.when = event.when;
+                this.editEventModalData.information = event.information;
+                this.editEventModalData.contact_info = event.contact_info;
 
-                $("#editListingModal").modal('show');
+                $("#editEventModal").modal('show');
             },
-            deleteListing(listingId) {
-                axios.delete(this.listingsApi + listingId).then(response => {
+            deleteEvent(eventId) {
+                axios.delete(this.eventsApi + eventId).then(response => {
                     if(response.data === 1) {
 
                         //delete front end data
-                        let localListingIndex = this.getListingIndexFromArray();
-                        this.listings.splice(localListingIndex, 1);
+                        let localEventIndex = this.getEventIndexFromArray();
+                        this.events.splice(localEventIndex, 1);
                     }
                 })
             },

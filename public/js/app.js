@@ -2157,62 +2157,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      listings: [],
       events: [],
-      editListingModalData: {
+      editEventModalData: {
         id: null,
-        type: null,
-        item: null,
+        name: null,
+        when: null,
         information: null,
-        deal: null
+        contact_info: null
       },
       eventsApi: this.$helper.getEventsApi()
     };
   },
   methods: {
-    saveListing: function saveListing() {
+    saveEvent: function saveEvent() {
       var _this = this;
 
-      axios.put(this.eventsApi + this.editListingModalData.id, this.editListingModalData).then(function (response) {
+      axios.put(this.eventsApi + this.editEventModalData.id, this.editEventModalData).then(function (response) {
         if (response.data === 1) {
-          var localListingIndex = _this.getListingIndexFromArray(); //update front end data
+          var localEventIndex = _this.getEventIndexFromArray(); //update front end data
 
 
-          _this.listings[localListingIndex].type = _this.editListingModalData.type;
-          _this.listings[localListingIndex].item = _this.editListingModalData.item;
-          _this.listings[localListingIndex].information = _this.editListingModalData.information;
-          _this.listings[localListingIndex].deal = _this.editListingModalData.deal;
-          _this.listings[localListingIndex].updated_at = moment().toDate();
+          _this.events[localEventIndex].name = _this.editEventModalData.name;
+          _this.events[localEventIndex].when = _this.editEventModalData.when;
+          _this.events[localEventIndex].information = _this.editEventModalData.information;
+          _this.events[localEventIndex].contact_info = _this.editEventModalData.contact_info;
+          _this.events[localEventIndex].updated_at = moment().toDate();
         }
       });
     },
-    getListingIndexFromArray: function getListingIndexFromArray() {
+    getEventIndexFromArray: function getEventIndexFromArray() {
       var _this2 = this;
 
-      return this.listings.findIndex(function (listing) {
-        return listing.id === _this2.editListingModalData.id;
+      return this.events.findIndex(function (event) {
+        return event.id === _this2.editEventModalData.id;
       });
     },
-    showEditListingModal: function showEditListingModal(listing) {
-      this.editListingModalData.id = listing.id;
-      this.editListingModalData.type = listing.type;
-      this.editListingModalData.item = listing.item;
-      this.editListingModalData.deal = listing.deal;
-      this.editListingModalData.information = listing.information;
-      $("#editListingModal").modal('show');
+    showEditEventModal: function showEditEventModal(event) {
+      this.editEventModalData.id = event.id;
+      this.editEventModalData.name = event.name;
+      this.editEventModalData.when = event.when;
+      this.editEventModalData.information = event.information;
+      this.editEventModalData.contact_info = event.contact_info;
+      $("#editEventModal").modal('show');
     },
-    deleteListing: function deleteListing(listingId) {
+    deleteEvent: function deleteEvent(eventId) {
       var _this3 = this;
 
-      axios["delete"](this.listingsApi + listingId).then(function (response) {
+      axios["delete"](this.eventsApi + eventId).then(function (response) {
         if (response.data === 1) {
           //delete front end data
-          var localListingIndex = _this3.getListingIndexFromArray();
+          var localEventIndex = _this3.getEventIndexFromArray();
 
-          _this3.listings.splice(localListingIndex, 1);
+          _this3.events.splice(localEventIndex, 1);
         }
       });
     },
@@ -89770,7 +89775,7 @@ var render = function() {
                         attrs: { "data-toggle": "modal" },
                         on: {
                           click: function($event) {
-                            return _vm.showEditListingModal(_vm.listing)
+                            return _vm.showEditEventModal(event)
                           }
                         }
                       },
@@ -89783,7 +89788,7 @@ var render = function() {
                         staticClass: "btn btn-danger",
                         on: {
                           click: function($event) {
-                            return _vm.deleteListing(_vm.listing.id)
+                            return _vm.deleteEvent(event.id)
                           }
                         }
                       },
@@ -89795,31 +89800,58 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "form-group row" }, [
-                _vm._m(0, true),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [
-                  _c("p", [_vm._v(_vm._s(event.name))])
-                ]),
-                _vm._v(" "),
-                _vm._m(1, true),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [
-                  _c("p", [_vm._v(_vm._s(event.when))])
-                ]),
-                _vm._v(" "),
-                _vm._m(2, true),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [
-                  _c("p", [_vm._v(_vm._s(event.information))])
-                ]),
-                _vm._v(" "),
-                _vm._m(3, true),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [
-                  _c("p", [_vm._v(_vm._s(event.contact_info))])
-                ])
-              ])
+              _c(
+                "div",
+                { staticClass: "form-group row" },
+                [
+                  _vm._m(0, true),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-8" }, [
+                    _c("p", [_vm._v(_vm._s(event.name))])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(1, true),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-8" }, [
+                    _c("p", [
+                      _vm._v(
+                        _vm._s(
+                          _vm
+                            .moment(event.when)
+                            .format("MMMM Do YYYY, h:mm:ss a")
+                        )
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(2, true),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-8" }, [
+                    _c("p", [_vm._v(_vm._s(event.information))])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(3, true),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-8" }, [
+                    _c("p", [_vm._v(_vm._s(event.contact_info))])
+                  ]),
+                  _vm._v(" "),
+                  event.updated_at !== event.created_at
+                    ? [
+                        _vm._m(4, true),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-8" }, [
+                          _c("p", [
+                            _vm._v(
+                              _vm._s(_vm.moment(event.updated_at).fromNow())
+                            )
+                          ])
+                        ])
+                      ]
+                    : _vm._e()
+                ],
+                2
+              )
             ])
           ])
         }),
@@ -89831,10 +89863,10 @@ var render = function() {
         {
           staticClass: "modal fade",
           attrs: {
-            id: "editListingModal",
+            id: "editEventModal",
             tabindex: "-1",
             role: "dialog",
-            "aria-labelledby": "editListingModal",
+            "aria-labelledby": "editEventModal",
             "aria-hidden": "true"
           }
         },
@@ -89844,61 +89876,13 @@ var render = function() {
             { staticClass: "modal-dialog", attrs: { role: "document" } },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(4),
+                _vm._m(5),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
-                  _c("form", [
+                  _c("form", { attrs: { role: "form" } }, [
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "listing-type" } }, [
-                        _vm._v("Type")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.editListingModalData.type,
-                              expression: "editListingModalData.type"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { id: "listing-type" },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.editListingModalData,
-                                "type",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c("option", [_vm._v("Select an option")]),
-                          _vm._v(" "),
-                          _c("option", [_vm._v("Want")]),
-                          _vm._v(" "),
-                          _c("option", [_vm._v("Offer")])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "listing-item" } }, [
-                        _vm._v("What would you like to offer or request for?")
+                      _c("label", { attrs: { for: "event-name" } }, [
+                        _vm._v("Event Name")
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -89906,25 +89890,25 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.editListingModalData.item,
-                            expression: "editListingModalData.item"
+                            value: _vm.editEventModalData.name,
+                            expression: "editEventModalData.name"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: {
                           type: "text",
-                          id: "listing-item",
-                          placeholder: "E.g the painting of Monalissa"
+                          id: "event-name",
+                          placeholder: "E.g my birthday meet up"
                         },
-                        domProps: { value: _vm.editListingModalData.item },
+                        domProps: { value: _vm.editEventModalData.name },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.$set(
-                              _vm.editListingModalData,
-                              "item",
+                              _vm.editEventModalData,
+                              "name",
                               $event.target.value
                             )
                           }
@@ -89932,9 +89916,34 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", { attrs: { for: "event-when" } }, [
+                          _vm._v("When is the event?")
+                        ]),
+                        _vm._v(" "),
+                        _c("DateTimePicker", {
+                          attrs: {
+                            id: "event-when",
+                            format: "YYYY-MM-DD HH:mm"
+                          },
+                          model: {
+                            value: _vm.editEventModalData.when,
+                            callback: function($$v) {
+                              _vm.$set(_vm.editEventModalData, "when", $$v)
+                            },
+                            expression: "editEventModalData.when"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "listing-information" } }, [
-                        _vm._v("Give us some information about the item")
+                      _c("label", { attrs: { for: "event-information" } }, [
+                        _vm._v("Give some information about the event")
                       ]),
                       _vm._v(" "),
                       _c("textarea", {
@@ -89942,26 +89951,24 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.editListingModalData.information,
-                            expression: "editListingModalData.information"
+                            value: _vm.editEventModalData.information,
+                            expression: "editEventModalData.information"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: {
                           type: "text",
-                          id: "listing-information",
+                          id: "event-information",
                           placeholder: ""
                         },
-                        domProps: {
-                          value: _vm.editListingModalData.information
-                        },
+                        domProps: { value: _vm.editEventModalData.information },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.$set(
-                              _vm.editListingModalData,
+                              _vm.editEventModalData,
                               "information",
                               $event.target.value
                             )
@@ -89971,8 +89978,8 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "listing-deal" } }, [
-                        _vm._v("What would you like the deal to be?")
+                      _c("label", { attrs: { for: "contact-information" } }, [
+                        _vm._v("Contact information")
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -89980,25 +89987,27 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.editListingModalData.deal,
-                            expression: "editListingModalData.deal"
+                            value: _vm.editEventModalData.contact_info,
+                            expression: "editEventModalData.contact_info"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: {
                           type: "text",
-                          id: "listing-deal",
-                          placeholder: "E.g I am offering £5 for the painting"
+                          id: "contact-information",
+                          placeholder: ""
                         },
-                        domProps: { value: _vm.editListingModalData.deal },
+                        domProps: {
+                          value: _vm.editEventModalData.contact_info
+                        },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
                             _vm.$set(
-                              _vm.editListingModalData,
-                              "deal",
+                              _vm.editEventModalData,
+                              "contact_info",
                               $event.target.value
                             )
                           }
@@ -90025,7 +90034,7 @@ var render = function() {
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
-                          return _vm.saveListing()
+                          return _vm.saveEvent()
                         }
                       }
                     },
@@ -90073,11 +90082,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [_c("p", [_vm._v("Updated:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
       _c(
         "h5",
-        { staticClass: "modal-title", attrs: { id: "editListingModal" } },
-        [_vm._v("Edit your listing")]
+        { staticClass: "modal-title", attrs: { id: "editEventModal" } },
+        [_vm._v("Edit your event")]
       ),
       _vm._v(" "),
       _c(
