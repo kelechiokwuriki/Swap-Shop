@@ -23,6 +23,7 @@ class ListingServiceTest extends TestCase
     protected $listingRepository;
     protected $user;
     protected $listingRequest;
+    protected $listing;
 
     /**
      * A basic unit test example.
@@ -55,26 +56,48 @@ class ListingServiceTest extends TestCase
         $this->listingRequest->item = 'An item i want';
         $this->listingRequest->information = 'I need the item to have bla bla please';
         $this->listingRequest->deal = 'I have money to offer for this';
+
+        //listing to be sent from front end
+        $this->listing = [
+            'type' => $this->listingRequest->type,
+            'item' => $this->listingRequest->item,
+            'information' => $this->listingRequest->information,
+            'deal' => $this->listingRequest->deal
+        ];
     }
 
-    public function testCreateListing()
+    public function testCreateListingFromFrontEnd()
     {
         $this->be($this->user);
 
         $response = $this->json(
             'POST',
             '/api/listings',
-            [
-                'type' => $this->listingRequest->type,
-                'item' => $this->listingRequest->item,
-                'information' => $this->listingRequest->information,
-                'deal' => $this->listingRequest->deal
-            ],
+            $this->listing,
             [
                 'Authorization' => 'Bearer ' . $this->user->api_token
             ]
         );
 
         $response->assertStatus(201);
+        $this->assertDatabaseHas('listings', $this->listing);
+    }
+
+    public function testCreateListing()
+    {
+        $this->listing['user_id'] = $this->user->id;
+        $this->listingService->createListing($this->listing);
+        $this->assertDatabaseHas('listings', $this->listing);
+    }
+
+    public function testEditListing()
+    {
+        $this->listing['user_id'] = $this->user->id;
+        $listinCreated = Listing::create($this->listing);
+
+        $this->listing['type'] = 'Offer';
+        $this->listingService->updateListing($listinCreated->id, $this->listing);
+
+        $this->assertEquals(Listing::first()->type, $this->listing['type']);
     }
 }
