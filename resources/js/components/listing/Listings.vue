@@ -1,15 +1,11 @@
 <template>
     <div class="container">
+
         <!--search bar-->
-        <!-- <nav class="navbar justify-content-center search-bar fixed-top navbar-light bg-light">
-            <form class="form-inline">
-                <input type="text" size="30" class="form-control mr-sm-2" v-model="searchListingText" placeholder="Type your listing item to search" aria-label="Search">
-            </form>
-        </nav> -->
-        <searchbar v-on:search="setSearchText"></searchbar>
+        <searchbar v-on:search="setSearchText" :searchPlaceHolder="searchPlaceHolder"></searchbar>
         <!--search bar-->
 
-        <div class="row justify-content-center listing-container">
+        <div class="row justify-content-center content-container">
             <div class="col-md-8">
                 <div class="card mb-4" v-for="listing in listingsToShow" v-bind:key="listing.id">
                     <div class="card-header">
@@ -125,6 +121,7 @@
                     deal: null
                 },
                 searchListingText: '',
+                searchPlaceHolder: "Type your listing item to search",
                 listingsApi: this.$helper.getlistingsApi()
             }
         },
@@ -190,11 +187,7 @@
 </script>
 
 <style scoped>
-    .search-bar{
-        margin-top: 55px;
-    }
-
-    .listing-container {
+    /* .listing-container {
         margin-top: 5%;
-    }
+    } */
 </style>

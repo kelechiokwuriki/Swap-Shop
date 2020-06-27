@@ -1,8 +1,10 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
+        <searchbar v-on:search="setSearchText" :searchPlaceHolder="searchPlaceHolder"></searchbar>
+
+        <div class="row justify-content-center content-container">
             <div class="col-md-8">
-                <div class="card mb-4" v-for="event in events" v-bind:key="event.id">
+                <div class="card mb-4" v-for="event in eventsToShow" v-bind:key="event.id">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-9">
@@ -115,10 +117,15 @@
                     information: null,
                     contact_info: null
                 },
+                searchEventText: '',
+                searchPlaceHolder: "Type your event name to search",
                 eventsApi: this.$helper.getEventsApi()
             }
         },
         methods: {
+            setSearchText(value) {
+                this.searchEventText = value;
+            },
             saveEvent() {
                 axios.put(this.eventsApi + this.editEventModalData.id, this.editEventModalData).then(response => {
                     if(response.data === 1) {
@@ -161,6 +168,16 @@
                 axios.get(this.eventsApi).then(response => {
                     this.events = response.data;
                 });
+            }
+        },
+        computed: {
+            eventsToShow() {
+                return this.events.filter(event => {
+                    return event.name.toLowerCase().includes(this.searchEventText.toLowerCase()) ||
+                        event.contact_info.toLowerCase().includes(this.searchEventText.toLowerCase()) ||
+                        event.when.toLowerCase().includes(this.searchEventText.toLowerCase())
+                    ;
+                })
             }
         },
         mounted() {

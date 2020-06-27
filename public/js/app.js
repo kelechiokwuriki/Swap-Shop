@@ -1990,6 +1990,11 @@ __webpack_require__.r(__webpack_exports__);
       searchText: ''
     };
   },
+  props: {
+    searchPlaceHolder: {
+      type: String
+    }
+  },
   watch: {
     searchText: function searchText(oldText, newText) {
       this.$emit('search', this.searchText);
@@ -2192,6 +2197,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2203,10 +2210,15 @@ __webpack_require__.r(__webpack_exports__);
         information: null,
         contact_info: null
       },
+      searchEventText: '',
+      searchPlaceHolder: "Type your event name to search",
       eventsApi: this.$helper.getEventsApi()
     };
   },
   methods: {
+    setSearchText: function setSearchText(value) {
+      this.searchEventText = value;
+    },
     saveEvent: function saveEvent() {
       var _this = this;
 
@@ -2268,6 +2280,15 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get(this.eventsApi).then(function (response) {
         _this4.events = response.data;
+      });
+    }
+  },
+  computed: {
+    eventsToShow: function eventsToShow() {
+      var _this5 = this;
+
+      return this.events.filter(function (event) {
+        return event.name.toLowerCase().includes(_this5.searchEventText.toLowerCase()) || event.contact_info.toLowerCase().includes(_this5.searchEventText.toLowerCase()) || event.when.toLowerCase().includes(_this5.searchEventText.toLowerCase());
       });
     }
   },
@@ -2502,10 +2523,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2518,6 +2535,7 @@ __webpack_require__.r(__webpack_exports__);
         deal: null
       },
       searchListingText: '',
+      searchPlaceHolder: "Type your listing item to search",
       listingsApi: this.$helper.getlistingsApi()
     };
   },
@@ -7054,6 +7072,25 @@ exports.push([module.i, ".custom-button[data-v-2ed8e606]{padding:0 20px;position
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UIhelpers/SearchBar.vue?vue&type=style&index=0&id=6557ad92&scoped=true&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UIhelpers/SearchBar.vue?vue&type=style&index=0&id=6557ad92&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.search-bar[data-v-6557ad92]{\n       margin-top: 55px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/listing/Listings.vue?vue&type=style&index=0&id=41722705&scoped=true&lang=css&":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/listing/Listings.vue?vue&type=style&index=0&id=41722705&scoped=true&lang=css& ***!
@@ -7066,7 +7103,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.search-bar[data-v-41722705]{\n    margin-top: 55px;\n}\n.listing-container[data-v-41722705] {\n    margin-top: 5%;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* .listing-container {\n    margin-top: 5%;\n} */\n", ""]);
 
 // exports
 
@@ -59375,6 +59412,36 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UIhelpers/SearchBar.vue?vue&type=style&index=0&id=6557ad92&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UIhelpers/SearchBar.vue?vue&type=style&index=0&id=6557ad92&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchBar.vue?vue&type=style&index=0&id=6557ad92&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UIhelpers/SearchBar.vue?vue&type=style&index=0&id=6557ad92&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/listing/Listings.vue?vue&type=style&index=0&id=41722705&scoped=true&lang=css&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/listing/Listings.vue?vue&type=style&index=0&id=41722705&scoped=true&lang=css& ***!
@@ -89659,10 +89726,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UIhelpers/SearchBar.vue?vue&type=template&id=6557ad92&":
-/*!**********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UIhelpers/SearchBar.vue?vue&type=template&id=6557ad92& ***!
-  \**********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UIhelpers/SearchBar.vue?vue&type=template&id=6557ad92&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/UIhelpers/SearchBar.vue?vue&type=template&id=6557ad92&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -89695,7 +89762,7 @@ var render = function() {
           attrs: {
             type: "text",
             size: "30",
-            placeholder: "Type your listing item to search",
+            placeholder: _vm.searchPlaceHolder,
             "aria-label": "Search"
           },
           domProps: { value: _vm.searchText },
@@ -89903,306 +89970,326 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-8" },
-        _vm._l(_vm.events, function(event) {
-          return _c("div", { key: event.id, staticClass: "card mb-4" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-sm-9" }, [
-                  _c("h5", { staticClass: "card-title pt-2" }, [
-                    _vm._v(
-                      "Event created on " +
-                        _vm._s(
-                          _vm
-                            .moment(event.created_at)
-                            .format("MMMM Do YYYY, h:mm:ss a")
-                        )
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-3" }, [
-                  _c("div", { staticClass: "float-right" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { "data-toggle": "modal" },
-                        on: {
-                          click: function($event) {
-                            return _vm.showEditEventModal(event)
-                          }
-                        }
-                      },
-                      [_vm._v("Edit")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteEvent(event.id)
-                          }
-                        }
-                      },
-                      [_vm._v("Delete")]
-                    )
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "form-group row" }, [
-                _vm._m(0, true),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [
-                  _c("p", [_vm._v(_vm._s(event.name))])
-                ]),
-                _vm._v(" "),
-                _vm._m(1, true),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [
-                  _c("p", [
-                    _vm._v(
-                      _vm._s(
-                        _vm.moment(event.when).format("MMMM Do YYYY, h:mm:ss a")
-                      )
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(2, true),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [
-                  _c("p", [_vm._v(_vm._s(event.information))])
-                ]),
-                _vm._v(" "),
-                _vm._m(3, true),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-8" }, [
-                  _c("p", [_vm._v(_vm._s(event.contact_info))])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card-footer text-muted" },
-              [
-                event.updated_at !== event.created_at
-                  ? [
-                      _vm._v(
-                        "\n                        Updated " +
-                          _vm._s(_vm.moment(event.updated_at).fromNow()) +
-                          "\n                    "
-                      )
-                    ]
-                  : _vm._e()
-              ],
-              2
-            )
-          ])
-        }),
-        0
-      ),
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("searchbar", {
+        attrs: { searchPlaceHolder: _vm.searchPlaceHolder },
+        on: { search: _vm.setSearchText }
+      }),
       _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass: "modal fade",
-          attrs: {
-            id: "editEventModal",
-            tabindex: "-1",
-            role: "dialog",
-            "aria-labelledby": "editEventModal",
-            "aria-hidden": "true"
-          }
-        },
+        { staticClass: "row justify-content-center content-container" },
         [
           _c(
             "div",
-            { staticClass: "modal-dialog", attrs: { role: "document" } },
-            [
-              _c("div", { staticClass: "modal-content" }, [
-                _vm._m(4),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-body" }, [
-                  _c("form", { attrs: { role: "form" } }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "event-name" } }, [
-                        _vm._v("Event Name")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.editEventModalData.name,
-                            expression: "editEventModalData.name"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          id: "event-name",
-                          placeholder: "E.g my birthday meet up"
-                        },
-                        domProps: { value: _vm.editEventModalData.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.editEventModalData,
-                              "name",
-                              $event.target.value
+            { staticClass: "col-md-8" },
+            _vm._l(_vm.eventsToShow, function(event) {
+              return _c("div", { key: event.id, staticClass: "card mb-4" }, [
+                _c("div", { staticClass: "card-header" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-sm-9" }, [
+                      _c("h5", { staticClass: "card-title pt-2" }, [
+                        _vm._v(
+                          "Event created on " +
+                            _vm._s(
+                              _vm
+                                .moment(event.created_at)
+                                .format("MMMM Do YYYY, h:mm:ss a")
                             )
-                          }
-                        }
-                      })
+                        )
+                      ])
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "form-group" },
-                      [
-                        _c("label", { attrs: { for: "event-when" } }, [
-                          _vm._v("When is the event?")
-                        ]),
-                        _vm._v(" "),
-                        _c("DateTimePicker", {
-                          attrs: {
-                            id: "event-when",
-                            format: "YYYY-MM-DD HH:mm"
+                    _c("div", { staticClass: "col-sm-3" }, [
+                      _c("div", { staticClass: "float-right" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { "data-toggle": "modal" },
+                            on: {
+                              click: function($event) {
+                                return _vm.showEditEventModal(event)
+                              }
+                            }
                           },
-                          model: {
-                            value: _vm.editEventModalData.when,
-                            callback: function($$v) {
-                              _vm.$set(_vm.editEventModalData, "when", $$v)
-                            },
-                            expression: "editEventModalData.when"
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "event-information" } }, [
-                        _vm._v("Give some information about the event")
-                      ]),
-                      _vm._v(" "),
-                      _c("textarea", {
-                        directives: [
+                          [_vm._v("Edit")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
                           {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.editEventModalData.information,
-                            expression: "editEventModalData.information"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          id: "event-information",
-                          placeholder: ""
-                        },
-                        domProps: { value: _vm.editEventModalData.information },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                            staticClass: "btn btn-danger",
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteEvent(event.id)
+                              }
                             }
-                            _vm.$set(
-                              _vm.editEventModalData,
-                              "information",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "contact-information" } }, [
-                        _vm._v("Contact information")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.editEventModalData.contact_info,
-                            expression: "editEventModalData.contact_info"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          id: "contact-information",
-                          placeholder: ""
-                        },
-                        domProps: {
-                          value: _vm.editEventModalData.contact_info
-                        },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.editEventModalData,
-                              "contact_info",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
+                          },
+                          [_vm._v("Delete")]
+                        )
+                      ])
                     ])
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "modal-footer" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary",
-                      attrs: { type: "button", "data-dismiss": "modal" }
-                    },
-                    [_vm._v("Close")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.saveEvent()
-                        }
-                      }
-                    },
-                    [_vm._v("Save changes")]
-                  )
-                ])
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _vm._m(0, true),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-8" }, [
+                      _c("p", [_vm._v(_vm._s(event.name))])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1, true),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-8" }, [
+                      _c("p", [
+                        _vm._v(
+                          _vm._s(
+                            _vm
+                              .moment(event.when)
+                              .format("MMMM Do YYYY, h:mm:ss a")
+                          )
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(2, true),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-8" }, [
+                      _c("p", [_vm._v(_vm._s(event.information))])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(3, true),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-8" }, [
+                      _c("p", [_vm._v(_vm._s(event.contact_info))])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "card-footer text-muted" },
+                  [
+                    event.updated_at !== event.created_at
+                      ? [
+                          _vm._v(
+                            "\n                        Updated " +
+                              _vm._s(_vm.moment(event.updated_at).fromNow()) +
+                              "\n                    "
+                          )
+                        ]
+                      : _vm._e()
+                  ],
+                  2
+                )
               ])
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              attrs: {
+                id: "editEventModal",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-labelledby": "editEventModal",
+                "aria-hidden": "true"
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "modal-dialog", attrs: { role: "document" } },
+                [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c("form", { attrs: { role: "form" } }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "event-name" } }, [
+                            _vm._v("Event Name")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.editEventModalData.name,
+                                expression: "editEventModalData.name"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "event-name",
+                              placeholder: "E.g my birthday meet up"
+                            },
+                            domProps: { value: _vm.editEventModalData.name },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.editEventModalData,
+                                  "name",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c("label", { attrs: { for: "event-when" } }, [
+                              _vm._v("When is the event?")
+                            ]),
+                            _vm._v(" "),
+                            _c("DateTimePicker", {
+                              attrs: {
+                                id: "event-when",
+                                format: "YYYY-MM-DD HH:mm"
+                              },
+                              model: {
+                                value: _vm.editEventModalData.when,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.editEventModalData, "when", $$v)
+                                },
+                                expression: "editEventModalData.when"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "event-information" } }, [
+                            _vm._v("Give some information about the event")
+                          ]),
+                          _vm._v(" "),
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.editEventModalData.information,
+                                expression: "editEventModalData.information"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "event-information",
+                              placeholder: ""
+                            },
+                            domProps: {
+                              value: _vm.editEventModalData.information
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.editEventModalData,
+                                  "information",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            { attrs: { for: "contact-information" } },
+                            [_vm._v("Contact information")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.editEventModalData.contact_info,
+                                expression: "editEventModalData.contact_info"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "contact-information",
+                              placeholder: ""
+                            },
+                            domProps: {
+                              value: _vm.editEventModalData.contact_info
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.editEventModalData,
+                                  "contact_info",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button", "data-dismiss": "modal" }
+                        },
+                        [_vm._v("Close")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.saveEvent()
+                            }
+                          }
+                        },
+                        [_vm._v("Save changes")]
+                      )
+                    ])
+                  ])
+                ]
+              )
             ]
           )
         ]
       )
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -90479,11 +90566,14 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
-      _c("searchbar", { on: { search: _vm.setSearchText } }),
+      _c("searchbar", {
+        attrs: { searchPlaceHolder: _vm.searchPlaceHolder },
+        on: { search: _vm.setSearchText }
+      }),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "row justify-content-center listing-container" },
+        { staticClass: "row justify-content-center content-container" },
         [
           _c(
             "div",
@@ -103295,9 +103385,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SearchBar_vue_vue_type_template_id_6557ad92___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchBar.vue?vue&type=template&id=6557ad92& */ "./resources/js/components/UIhelpers/SearchBar.vue?vue&type=template&id=6557ad92&");
+/* harmony import */ var _SearchBar_vue_vue_type_template_id_6557ad92_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchBar.vue?vue&type=template&id=6557ad92&scoped=true& */ "./resources/js/components/UIhelpers/SearchBar.vue?vue&type=template&id=6557ad92&scoped=true&");
 /* harmony import */ var _SearchBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchBar.vue?vue&type=script&lang=js& */ "./resources/js/components/UIhelpers/SearchBar.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _SearchBar_vue_vue_type_style_index_0_id_6557ad92_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SearchBar.vue?vue&type=style&index=0&id=6557ad92&scoped=true&lang=css& */ "./resources/js/components/UIhelpers/SearchBar.vue?vue&type=style&index=0&id=6557ad92&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -103305,13 +103397,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _SearchBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _SearchBar_vue_vue_type_template_id_6557ad92___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _SearchBar_vue_vue_type_template_id_6557ad92___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _SearchBar_vue_vue_type_template_id_6557ad92_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SearchBar_vue_vue_type_template_id_6557ad92_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "6557ad92",
   null
   
 )
@@ -103337,19 +103429,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/UIhelpers/SearchBar.vue?vue&type=template&id=6557ad92&":
-/*!****************************************************************************************!*\
-  !*** ./resources/js/components/UIhelpers/SearchBar.vue?vue&type=template&id=6557ad92& ***!
-  \****************************************************************************************/
+/***/ "./resources/js/components/UIhelpers/SearchBar.vue?vue&type=style&index=0&id=6557ad92&scoped=true&lang=css&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/UIhelpers/SearchBar.vue?vue&type=style&index=0&id=6557ad92&scoped=true&lang=css& ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBar_vue_vue_type_style_index_0_id_6557ad92_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchBar.vue?vue&type=style&index=0&id=6557ad92&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UIhelpers/SearchBar.vue?vue&type=style&index=0&id=6557ad92&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBar_vue_vue_type_style_index_0_id_6557ad92_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBar_vue_vue_type_style_index_0_id_6557ad92_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBar_vue_vue_type_style_index_0_id_6557ad92_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBar_vue_vue_type_style_index_0_id_6557ad92_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBar_vue_vue_type_style_index_0_id_6557ad92_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/UIhelpers/SearchBar.vue?vue&type=template&id=6557ad92&scoped=true&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/UIhelpers/SearchBar.vue?vue&type=template&id=6557ad92&scoped=true& ***!
+  \****************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBar_vue_vue_type_template_id_6557ad92___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchBar.vue?vue&type=template&id=6557ad92& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UIhelpers/SearchBar.vue?vue&type=template&id=6557ad92&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBar_vue_vue_type_template_id_6557ad92___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBar_vue_vue_type_template_id_6557ad92_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./SearchBar.vue?vue&type=template&id=6557ad92&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/UIhelpers/SearchBar.vue?vue&type=template&id=6557ad92&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBar_vue_vue_type_template_id_6557ad92_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBar_vue_vue_type_template_id_6557ad92___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchBar_vue_vue_type_template_id_6557ad92_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
