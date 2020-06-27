@@ -1,12 +1,21 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
+        <!--search bar-->
+        <!-- <nav class="navbar justify-content-center search-bar fixed-top navbar-light bg-light">
+            <form class="form-inline">
+                <input type="text" size="30" class="form-control mr-sm-2" v-model="searchListingText" placeholder="Type your listing item to search" aria-label="Search">
+            </form>
+        </nav> -->
+        <searchbar v-on:search="setSearchText"></searchbar>
+        <!--search bar-->
+
+        <div class="row justify-content-center listing-container">
             <div class="col-md-8">
-                <div class="card mb-4" v-for="listing in listings" v-bind:key="listing.id">
+                <div class="card mb-4" v-for="listing in listingsToShow" v-bind:key="listing.id">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-9">
-                                <h5 class="card-title">
+                                <h5 class="card-title pt-2">
                                     <template v-if="listing.type === 'Offer'">Offered</template>
                                     <template v-else>Wanted</template> on {{moment(listing.created_at).format('MMMM Do YYYY, h:mm:ss a')}}
                                 </h5>
@@ -43,17 +52,13 @@
                             <div class="col-8">
                                 <p>{{listing.deal}}</p>
                             </div>
-
-                            <template v-if="listing.updated_at !== listing.created_at">
-                                <div class="col-4">
-                                    <p>Updated:</p>
-                                </div>
-                                <div class="col-8">
-                                    <p>{{moment(listing.updated_at).fromNow()}}</p>
-                                </div>
-                            </template>
-
                         </div>
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        <template v-if="listing.updated_at !== listing.created_at">
+                            Updated {{moment(listing.updated_at).fromNow()}}
+                        </template>
                     </div>
                 </div>
             </div>
@@ -119,10 +124,14 @@
                     information: null,
                     deal: null
                 },
+                searchListingText: '',
                 listingsApi: this.$helper.getlistingsApi()
             }
         },
         methods: {
+            setSearchText(value) {
+                this.searchListingText = value;
+            },
             saveListing() {
                 axios.put(this.listingsApi + this.editListingModalData.id, this.editListingModalData).then(response => {
                     if(response.data === 1) {
@@ -161,11 +170,31 @@
             moment(date) {
                 return moment(date);
             },
+            getListings() {
+                axios.get(this.listingsApi).then(response => {
+                    this.listings = response.data;
+                })
+            }
+        },
+        computed: {
+            listingsToShow() {
+                return this.listings.filter(listing => {
+                    return listing.item.toLowerCase().includes(this.searchListingText.toLowerCase());
+                })
+            }
         },
         mounted() {
-            axios.get(this.listingsApi).then(response => {
-                this.listings = response.data;
-            })
+            this.getListings();
         }
     }
 </script>
+
+<style scoped>
+    .search-bar{
+        margin-top: 55px;
+    }
+
+    .listing-container {
+        margin-top: 5%;
+    }
+</style>

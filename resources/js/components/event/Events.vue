@@ -6,7 +6,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-9">
-                                <h5 class="card-title">Event created on {{moment(event.created_at).format('MMMM Do YYYY, h:mm:ss a')}}</h5>
+                                <h5 class="card-title pt-2">Event created on {{moment(event.created_at).format('MMMM Do YYYY, h:mm:ss a')}}</h5>
                             </div>
                             <div class="col-sm-3">
                                 <div class="float-right">
@@ -46,17 +46,13 @@
                             <div class="col-8">
                                 <p>{{event.contact_info}}</p>
                             </div>
-
-                            <template v-if="event.updated_at !== event.created_at">
-                                <div class="col-4">
-                                    <p>Updated:</p>
-                                </div>
-                                <div class="col-8">
-                                    <p>{{moment(event.updated_at).fromNow()}}</p>
-                                </div>
-                            </template>
-
                         </div>
+                    </div>
+
+                      <div class="card-footer text-muted">
+                        <template v-if="event.updated_at !== event.created_at">
+                            Updated {{moment(event.updated_at).fromNow()}}
+                        </template>
                     </div>
                 </div>
             </div>

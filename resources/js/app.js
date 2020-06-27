@@ -29,8 +29,8 @@ Vue.component('createlisting-component', require('./components/listing/CreateLis
 Vue.component('events-component', require('./components/event/Events.vue').default);
 Vue.component('createevent-component', require('./components/event/CreateEvent.vue').default);
 
-//datetime
-// Vue.component('datetime', require('vue-datetime').default);
+//searchbar
+Vue.component('searchbar', require('./components/UIhelpers/SearchBar.vue').default);
 
 //home
 Vue.component('home-component', require('./components/Home.vue').default);
