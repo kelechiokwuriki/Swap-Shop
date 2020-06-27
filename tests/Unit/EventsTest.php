@@ -72,4 +72,10 @@ class EventsTest extends TestCase
         $this->assertDatabaseHas('events', $this->event);
     }
 
+    public function testCreateEvent()
+    {
+        $this->eventService->createEvent($this->event);
+        $this->assertDatabaseHas('events', $this->event);
+    }
+
 }

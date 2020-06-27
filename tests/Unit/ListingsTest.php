@@ -97,6 +97,6 @@ class ListingsTest extends TestCase
 
         $this->listingService->deleteListing($listingCreated->id);
 
-        $this->assertDatabaseMissing('listings', $this->listing);
+        $this->assertDeleted('listings', $this->listing);
     }
 }
