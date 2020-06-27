@@ -80,9 +80,11 @@
                                     {{ __('Logout') }}
                                 </a>
 
-                                <a class="dropdown-item" href="{{ route('admin.index') }}">
-                                    Admin Dashboard
-                                </a>
+                                @if(Auth::user()->hasRole('admin'))
+                                    <a class="dropdown-item" href="{{ route('admin.index') }}">
+                                        Admin Dashboard
+                                    </a>
+                                @endif
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
