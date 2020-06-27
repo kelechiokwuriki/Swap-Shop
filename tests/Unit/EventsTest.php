@@ -78,4 +78,14 @@ class EventsTest extends TestCase
         $this->assertDatabaseHas('events', $this->event);
     }
 
+    public function testEditEvent()
+    {
+        $eventCreated = Event::create($this->event);
+
+        $this->event['name'] = 'A new event name';
+        $this->eventService->updateEvent($eventCreated->id, $this->event);
+
+        $this->assertEquals(Event::first()->name, $this->event['name']);
+    }
+
 }
