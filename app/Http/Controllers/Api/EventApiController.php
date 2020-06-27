@@ -95,6 +95,6 @@ class EventApiController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        return $this->eventService->deleteEvent($event->id);
     }
 }

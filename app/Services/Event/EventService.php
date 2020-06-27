@@ -28,4 +28,9 @@ class EventService
     {
         return $this->eventRepository->update($id, $event);
     }
+
+    public function deleteEvent(int $id)
+    {
+        return $this->eventRepository->delete($id);
+    }
 }
