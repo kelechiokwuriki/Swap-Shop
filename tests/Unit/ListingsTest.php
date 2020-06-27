@@ -38,6 +38,8 @@ class ListingsTest extends TestCase
             'remember_token' => Str::random(10)
         ]);
 
+        $this->actingAs($this->user);
+
         //listing repository
         $this->listingRepository = new ListingRepository(new Listing());
         //listing service
@@ -45,7 +47,7 @@ class ListingsTest extends TestCase
 
         //listing request setup
         $this->listingRequest = new \stdClass();
-        $this->listingRequest->type = 'wanted';
+        $this->listingRequest->type = 'Want';
         $this->listingRequest->item = 'An item i want';
         $this->listingRequest->information = 'I need the item to have bla bla please';
         $this->listingRequest->deal = 'I have money to offer for this';
@@ -98,5 +100,26 @@ class ListingsTest extends TestCase
         $this->listingService->deleteListing($listingCreated->id);
 
         $this->assertDeleted('listings', $this->listing);
+    }
+
+    public function testRetrieveListingsForLoggedInUser()
+    {
+        $listingCreated = Listing::create($this->listing);
+
+        $listings = $this->listingService->getListingsForLoggedInUser();
+
+        $this->assertEquals($listings[0]['user_id'], $listingCreated->user_id);
+    }
+
+    public function testRetrieveAllListings()
+    {
+        Listing::create($this->listing);
+
+        $this->listing['type'] = 'Offer';
+        Listing::create($this->listing);
+
+        $listings = $this->listingService->getAllListings();
+
+        $this->assertNotEmpty($listings);
     }
 }

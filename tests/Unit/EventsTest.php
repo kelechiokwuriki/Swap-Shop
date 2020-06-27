@@ -39,6 +39,9 @@ class EventsTest extends TestCase
             'remember_token' => Str::random(10)
         ]);
 
+        $this->actingAs($this->user);
+
+
         $this->eventRepository = new EventRepository(new Event());
         $this->eventService = new EventService($this->eventRepository);
 
@@ -95,6 +98,27 @@ class EventsTest extends TestCase
         $this->eventService->deleteEvent($eventCreated->id);
 
         $this->assertDeleted('events', $this->event);
+    }
+
+    public function testRetrieveEventsForLoggedInUser()
+    {
+        $eventCreated = Event::create($this->event);
+
+        $events = $this->eventService->getEventsForLoggedInUser();
+
+        $this->assertEquals($events[0]['user_id'], $eventCreated->user_id);
+    }
+
+    public function testRetrieveAllEvents()
+    {
+        Event::create($this->event);
+
+        $this->event['name'] = 'Event two';
+        Event::create($this->event);
+
+        $events = $this->eventService->getAllEvents();
+
+        $this->assertNotEmpty($events);
     }
 
 }
