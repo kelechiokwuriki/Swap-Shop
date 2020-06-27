@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 
-class ListingServiceTest extends TestCase
+class ListingsTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -24,12 +24,6 @@ class ListingServiceTest extends TestCase
     protected $user;
     protected $listingRequest;
     protected $listing;
-
-    /**
-     * A basic unit test example.
-     *
-     * @return void
-     */
 
     public function setup(): void
     {
@@ -43,7 +37,6 @@ class ListingServiceTest extends TestCase
             'api_token' => Str::random(80),
             'remember_token' => Str::random(10)
         ]);
-        $this->actingAs($this->user);
 
         //listing repository
         $this->listingRepository = new ListingRepository(new Listing());
@@ -62,14 +55,13 @@ class ListingServiceTest extends TestCase
             'type' => $this->listingRequest->type,
             'item' => $this->listingRequest->item,
             'information' => $this->listingRequest->information,
-            'deal' => $this->listingRequest->deal
+            'deal' => $this->listingRequest->deal,
+            'user_id' => $this->user->id
         ];
     }
 
-    public function testCreateListingFromFrontEnd()
+    public function testPostListing()
     {
-        $this->be($this->user);
-
         $response = $this->json(
             'POST',
             '/api/listings',
@@ -85,14 +77,12 @@ class ListingServiceTest extends TestCase
 
     public function testCreateListing()
     {
-        $this->listing['user_id'] = $this->user->id;
         $this->listingService->createListing($this->listing);
         $this->assertDatabaseHas('listings', $this->listing);
     }
 
     public function testEditListing()
     {
-        $this->listing['user_id'] = $this->user->id;
         $listingCreated = Listing::create($this->listing);
 
         $this->listing['type'] = 'Offer';
@@ -103,7 +93,6 @@ class ListingServiceTest extends TestCase
 
     public function testDeleteListing()
     {
-        $this->listing['user_id'] = $this->user->id;
         $listingCreated = Listing::create($this->listing);
 
         $this->listingService->deleteListing($listingCreated->id);
