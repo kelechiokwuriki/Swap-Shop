@@ -88,4 +88,13 @@ class EventsTest extends TestCase
         $this->assertEquals(Event::first()->name, $this->event['name']);
     }
 
+    public function testDeleteEvent()
+    {
+        $eventCreated = Event::create($this->event);
+
+        $this->eventService->deleteEvent($eventCreated->id);
+
+        $this->assertDeleted('events', $this->event);
+    }
+
 }
