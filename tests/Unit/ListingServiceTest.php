@@ -93,11 +93,21 @@ class ListingServiceTest extends TestCase
     public function testEditListing()
     {
         $this->listing['user_id'] = $this->user->id;
-        $listinCreated = Listing::create($this->listing);
+        $listingCreated = Listing::create($this->listing);
 
         $this->listing['type'] = 'Offer';
-        $this->listingService->updateListing($listinCreated->id, $this->listing);
+        $this->listingService->updateListing($listingCreated->id, $this->listing);
 
         $this->assertEquals(Listing::first()->type, $this->listing['type']);
+    }
+
+    public function testDeleteListing()
+    {
+        $this->listing['user_id'] = $this->user->id;
+        $listingCreated = Listing::create($this->listing);
+
+        $this->listingService->deleteListing($listingCreated->id);
+
+        $this->assertDatabaseMissing('listings', $this->listing);
     }
 }
