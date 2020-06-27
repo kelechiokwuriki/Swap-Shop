@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 
 use App\Listing;
 use App\Event;
+use App\Role;
+
 
 
 class User extends Authenticatable
@@ -50,6 +52,16 @@ class User extends Authenticatable
     public function events()
     {
         return $this->hasMany(Event::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function hasRole(string $role)
+    {
+        return $this->roles()->where('name', $role)->exists();
     }
 
     public function getApiTokenAttribute($value)

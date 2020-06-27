@@ -4,5 +4,8 @@ export default {
     },
     getEventsApi() {
         return '/api/events/';
+    },
+    getUsersApi() {
+        return '/api/users';
     }
 }

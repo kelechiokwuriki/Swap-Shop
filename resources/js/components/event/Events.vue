@@ -118,7 +118,7 @@
                     contact_info: null
                 },
                 searchEventText: '',
-                searchPlaceHolder: "Type your event name to search",
+                searchPlaceHolder: "Search for an event name",
                 eventsApi: this.$helper.getEventsApi()
             }
         },

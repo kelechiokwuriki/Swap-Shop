@@ -1,12 +1,16 @@
 <template>
     <div class="container">
 
+
+
         <!--search bar-->
         <searchbar v-on:search="setSearchText" :searchPlaceHolder="searchPlaceHolder"></searchbar>
         <!--search bar-->
 
         <div class="row justify-content-center content-container">
+
             <div class="col-md-8">
+
                 <div class="card mb-4" v-for="listing in listingsToShow" v-bind:key="listing.id">
                     <div class="card-header">
                         <div class="row">
@@ -121,7 +125,7 @@
                     deal: null
                 },
                 searchListingText: '',
-                searchPlaceHolder: "Type your listing item to search",
+                searchPlaceHolder: "Search for a listing item",
                 listingsApi: this.$helper.getlistingsApi()
             }
         },

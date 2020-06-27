@@ -1,6 +1,6 @@
 <template>
 
-    <nav class="navbar justify-content-center search-bar fixed-top navbar-light bg-light">
+    <nav class="navbar justify-content-center search-bar fixed-top navbar-light bg-light w-50">
         <form class="form-inline">
             <input type="text" size="30" class="form-control mr-sm-2" v-model="searchText" :placeholder="searchPlaceHolder" aria-label="Search">
         </form>
@@ -30,6 +30,7 @@ export default {
 
 <style scoped>
  .search-bar{
-        margin-top: 55px;
+    margin: 0 auto;
+    margin-top: 55px;
     }
 </style>

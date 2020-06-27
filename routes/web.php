@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Users\UserController;
 use App\Http\Controllers\Api\ListingApiController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,10 +22,16 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::group(['middleware' => 'auth:web'], function () {
-    Route::namespace('admin')->prefix('admin')->name('admin.')->group(function() {
-        Route::resource('/users', 'UsersController');
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::middleware('checkrole')->group(function () {
+        Route::namespace('Admin')->group(function() {
+            Route::resource('/admin', 'AdminController', ['except' => 'show', 'create', 'store']);
+
+            Route::resource('/admin/users', 'Users\UserController');
+        });
     });
+
 
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('/listings', 'ListingController');
