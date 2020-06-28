@@ -10,7 +10,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="float-right">
-                                    <button class="btn btn-primary" @click="registerUser">Register a user</button>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#registerUserModal">Register a user</button>
                                 </div>
                             </div>
                         </div>
@@ -38,11 +38,11 @@
             </div>
 
             <!-- Modal -->
-            <!-- <div class="modal fade" id="editEventModal" tabindex="-1" role="dialog" aria-labelledby="editEventModal" aria-hidden="true">
+            <div class="modal fade" id="registerUserModal" tabindex="-1" role="dialog" aria-labelledby="registerUserModal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editEventModal">Edit your event</h5>
+                        <h5 class="modal-title" id="registerUserModal">Register a new User</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -50,33 +50,23 @@
                     <div class="modal-body">
                         <form role="form">
                             <div class="form-group">
-                                <label for="event-name">Event Name</label>
-                                <input type="text" v-model="editEventModalData.name" class="form-control" id="event-name" placeholder="E.g my birthday meet up">
+                                <label for="user-name">Name</label>
+                                <input type="text" v-model="user.name" class="form-control" id="user-name" placeholder="John Wick">
                             </div>
 
                             <div class="form-group">
-                                <label for="event-when">When is the event?</label>
-                                <DateTimePicker id="event-when" v-model="editEventModalData.when" format="YYYY-MM-DD HH:mm"/>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="event-information">Give some information about the event</label>
-                                <textarea type="text" v-model="editEventModalData.information" class="form-control" id="event-information" placeholder="" />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="contact-information">Contact information</label>
-                                <input type="text" v-model="editEventModalData.contact_info" class="form-control" id="contact-information" placeholder="">
+                                <label for="user-email">Email</label>
+                                <input type="email" v-model="user.email" class="form-control" id="user-email" placeholder="">
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="saveEvent()">Save changes</button>
+                        <button type="button" class="btn btn-primary" @click="registerUser">Save changes</button>
                     </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
             <!--end modal-->
 
         </div>
@@ -88,12 +78,18 @@
         data() {
             return {
                 users: [],
-                usersApi: this.$helper.getUsersApi()
+                usersApi: this.$helper.getUsersApi(),
+                user: {
+                    name: null,
+                    email: null
+                }
             }
         },
         methods: {
             registerUser() {
-
+                axios.post(this.usersApi, this.user).then(response => {
+                    console.log(response);
+                })
             },
             moment(date) {
                 return moment(date);

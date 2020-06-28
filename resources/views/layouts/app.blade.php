@@ -50,6 +50,11 @@
                         <li class="nav-item active">
                             <a href="/events" class="nav-link"><i class="fas fa-info-circle pr-1"></i>Events</a>
                         </li>
+                        @if(Auth::user()->hasRole('admin'))
+                            <li class="nav-item active">
+                                <a href="{{ route('admin.index') }}" class="nav-link"><i class="fas fa-tachometer-alt pr-1"></i>Admin Dashboard</a>
+                            </li>
+                        @endif
 
                     </ul>
 
@@ -80,11 +85,9 @@
                                     {{ __('Logout') }}
                                 </a>
 
-                                @if(Auth::user()->hasRole('admin'))
-                                    <a class="dropdown-item" href="{{ route('admin.index') }}">
-                                        Admin Dashboard
-                                    </a>
-                                @endif
+                                <a class="dropdown-item" href="{{ route('logout') }}">
+                                    Profile
+                                </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf

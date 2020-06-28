@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\User\UserService;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+
 
 
 class UserApiController extends Controller
@@ -43,7 +46,16 @@ class UserApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users'
+        ]);
+
+
+            // 'password' => ['required', 'string', 'min:8', 'confirmed'],
+        // ]);
+
+        return $this->userService->registerUser($request->all());
     }
 
     /**
