@@ -4,6 +4,10 @@ namespace App\Services\User;
 
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+
+use Illuminate\Auth\Events\Registered;
+
 
 class UserService
 {
@@ -24,6 +28,8 @@ class UserService
     public function registerUser(array $user)
     {
         $user['password'] = Hash::make(self::DEFAULT_PASS);
-        return $this->userRepository->create($user);
+        $user = $this->userRepository->create($user);
+
+        return $user;
     }
 }

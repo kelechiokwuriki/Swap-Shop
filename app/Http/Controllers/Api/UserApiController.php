@@ -51,10 +51,6 @@ class UserApiController extends Controller
             'email' => 'required|string|email|max:255|unique:users'
         ]);
 
-
-            // 'password' => ['required', 'string', 'min:8', 'confirmed'],
-        // ]);
-
         return $this->userService->registerUser($request->all());
     }
 
