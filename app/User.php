@@ -10,8 +10,7 @@ use Illuminate\Support\Str;
 use App\Listing;
 use App\Event;
 use App\Role;
-
-
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -23,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'password_needs_reset',
     ];
 
     /**
@@ -62,6 +61,11 @@ class User extends Authenticatable
     public function hasRole(string $role)
     {
         return $this->roles()->where('name', $role)->exists();
+    }
+
+    public function passwordNeedsReset()
+    {
+        return $this->password_needs_reset;
     }
 
     public function getApiTokenAttribute($value)

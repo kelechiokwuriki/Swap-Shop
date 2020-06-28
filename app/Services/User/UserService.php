@@ -28,6 +28,8 @@ class UserService
     public function registerUser(array $user)
     {
         $user['password'] = Hash::make(self::DEFAULT_PASS);
+        $user['password_needs_reset'] = 1;
+
         $user = $this->userRepository->create($user);
 
         return $user;
