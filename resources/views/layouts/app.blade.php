@@ -45,10 +45,10 @@
                             <a href="/home" class="nav-link"><i class="fas fa-home pr-1"></i>Home</a>
                         </li>
                         <li class="nav-item active">
-                            <a href="/listings" class="nav-link"><i class="fas fa-tachometer-alt pr-1"></i>Listings</a>
+                            <a href="/listings" class="nav-link"><i class="fas fa-clipboard-list pr-1"></i>Listings</a>
                         </li>
                         <li class="nav-item active">
-                            <a href="/events" class="nav-link"><i class="fas fa-info-circle pr-1"></i>Events</a>
+                            <a href="/events" class="nav-link"><i class="far fa-calendar-alt pr-1"></i>Events</a>
                         </li>
                         @if(Auth::user()->hasRole('admin'))
                             <li class="nav-item active">
