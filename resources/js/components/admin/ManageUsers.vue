@@ -2,11 +2,11 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card mb-4">
+                <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-9">
-                                <h5 class="card-title pt-2">All Users</h5>
+                                <h5 class="card-title pt-2">{{ users.length }} Users</h5>
                             </div>
                             <div class="col-sm-3">
                                 <div class="float-right">
@@ -16,7 +16,7 @@
                         </div>
                     </div>
 
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -86,9 +86,22 @@
             }
         },
         methods: {
+            feedBack(title, text, icon) {
+                return Swal.fire({
+                    title: title,
+                    text: text,
+                    icon: icon
+                });
+            },
             registerUser() {
                 axios.post(this.usersApi, this.user).then(response => {
-                    console.log(response);
+                    if(response.status === 201) {
+                        this.users.push(response.data);
+
+                        this.feedBack('Success', 'Successfully registered ' + this.user.name, 'success');
+                    } else {
+                        this.feedBack('Oops...', 'Something went wrong please try again!', 'error')
+                    }
                 })
             },
             moment(date) {

@@ -2149,9 +2149,24 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    feedBack: function feedBack(title, text, icon) {
+      return Swal.fire({
+        title: title,
+        text: text,
+        icon: icon
+      });
+    },
     registerUser: function registerUser() {
+      var _this = this;
+
       axios.post(this.usersApi, this.user).then(function (response) {
-        console.log(response);
+        if (response.status === 201) {
+          _this.users.push(response.data);
+
+          _this.feedBack('Success', 'Successfully registered ' + _this.user.name, 'success');
+        } else {
+          _this.feedBack('Oops...', 'Something went wrong please try again!', 'error');
+        }
       });
     },
     moment: function (_moment) {
@@ -2168,10 +2183,10 @@ __webpack_require__.r(__webpack_exports__);
       return moment(date);
     }),
     getUsers: function getUsers() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get(this.usersApi).then(function (response) {
-        _this.users = response.data;
+        _this2.users = response.data;
       });
     }
   },
@@ -90080,10 +90095,20 @@ var render = function() {
   return _c("div", { staticClass: "container-fluid" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card mb-4" }, [
-          _vm._m(0),
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-sm-9" }, [
+                _c("h5", { staticClass: "card-title pt-2" }, [
+                  _vm._v(_vm._s(_vm.users.length) + " Users")
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "card-body text-center" }, [
             _c("table", { staticClass: "table table-hover" }, [
               _vm._m(1),
               _vm._v(" "),
@@ -90234,27 +90259,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-9" }, [
-          _c("h5", { staticClass: "card-title pt-2" }, [_vm._v("All Users")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-3" }, [
-          _c("div", { staticClass: "float-right" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: {
-                  "data-toggle": "modal",
-                  "data-target": "#registerUserModal"
-                }
-              },
-              [_vm._v("Register a user")]
-            )
-          ])
-        ])
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "float-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: {
+              "data-toggle": "modal",
+              "data-target": "#registerUserModal"
+            }
+          },
+          [_vm._v("Register a user")]
+        )
       ])
     ])
   },
