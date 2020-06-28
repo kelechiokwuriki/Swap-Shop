@@ -24,5 +24,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('events', 'Api\EventApiController');
 
     //todo middleware for only admin
-    Route::resource('users', 'Api\UserApiController');
+    Route::middleware('checkRole')->group(function () {
+        Route::resource('users', 'Api\UserApiController');
+    });
 });
