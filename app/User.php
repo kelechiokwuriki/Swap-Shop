@@ -68,6 +68,11 @@ class User extends Authenticatable
         return $this->password_needs_reset;
     }
 
+    public function deactivatePasswordNeedsReset()
+    {
+        $this->password_needs_reset = 0;
+    }
+
     public function getApiTokenAttribute($value)
     {
         if(!$value) {
