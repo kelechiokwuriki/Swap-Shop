@@ -19,4 +19,9 @@ class EventRepository extends BaseRepository
     {
         return auth()->user()->events()->orderBy('created_at', 'DESC')->get();
     }
+
+    public function totalEventsForLoggedInUser()
+    {
+        return auth()->user()->events()->count();
+    }
 }

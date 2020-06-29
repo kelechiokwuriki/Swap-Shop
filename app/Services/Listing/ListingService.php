@@ -26,6 +26,11 @@ class ListingService
         return $this->listingRepository->all();
     }
 
+    public function totalListingsForLoggedInUser()
+    {
+        return $this->listingRepository->totalListingsForLoggedInUser();
+    }
+
     public function createListing(array $listing)
     {
         return $this->listingRepository->create($listing);

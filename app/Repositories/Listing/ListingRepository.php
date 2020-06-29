@@ -19,4 +19,9 @@ class ListingRepository extends BaseRepository
     {
         return auth()->user()->listings()->orderBy('created_at', 'DESC')->get();
     }
+
+    public function totalListingsForLoggedInUser()
+    {
+        return auth()->user()->listings()->count();
+    }
 }

@@ -29,6 +29,11 @@ class EventService
         return $this->eventRepository->all();
     }
 
+    public function totalEventsForLoggedInUser()
+    {
+        return $this->eventRepository->totalEventsForLoggedInUser();
+    }
+
     public function updateEvent(int $id, array $event)
     {
         return $this->eventRepository->update($id, $event);

@@ -45,6 +45,11 @@ abstract class BaseRepository
         return $this->model->create($data);
     }
 
+    public function totalCount()
+    {
+        return $this->model->all()->count();
+    }
+
     public function update(int $id, array $data)
     {
         return $this->model->find($id)->update($data);
