@@ -1,16 +1,13 @@
 <template>
     <div class="container">
 
-
-
         <!--search bar-->
-        <searchbar v-on:search="setSearchText" :searchPlaceHolder="searchPlaceHolder"></searchbar>
+        <searchbar v-on:search="setSearchText" :searchPlaceHolder="searchPlaceHolder" v-show="listings.length !== 0"></searchbar>
         <!--search bar-->
 
         <div class="row justify-content-center content-container">
 
             <div class="col-md-8">
-
                 <div class="card mb-4" v-for="listing in listingsToShow" v-bind:key="listing.id">
                     <div class="card-header">
                         <div class="row">
@@ -61,6 +58,11 @@
                         </template>
                     </div>
                 </div>
+            </div>
+
+            <div class="text-center" v-show="listings.length === 0">
+                <h1 class="mb-3">You have not made any listing</h1>
+                <a role="button" href="/listings/create" class="btn btn-success btn-lg">Create a Listing</a>
             </div>
 
             <!-- Modal -->

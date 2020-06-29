@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <searchbar v-on:search="setSearchText" :searchPlaceHolder="searchPlaceHolder"></searchbar>
+        <searchbar v-on:search="setSearchText" :searchPlaceHolder="searchPlaceHolder" v-show="events.length !== 0"></searchbar>
 
         <div class="row justify-content-center content-container">
             <div class="col-md-8">
@@ -57,6 +57,11 @@
                         </template>
                     </div>
                 </div>
+            </div>
+
+            <div class="text-center" v-show="events.length === 0">
+                <h1 class="mb-3">You have not made any event</h1>
+                <a role="button" href="/events/create" class="btn btn-success btn-lg">Create an Event</a>
             </div>
 
             <!-- Modal -->

@@ -1982,6 +1982,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
@@ -2436,6 +2439,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2650,6 +2658,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -7363,7 +7373,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* .listing-container {\n    margin-top: 5%;\n} */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* .listing-container {\n    margin-top: 5%;\n} */\n", ""]);
 
 // exports
 
@@ -89985,75 +89995,69 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "text-center" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("h1", [_vm._v("Hi, " + _vm._s(_vm.user.name))]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "card-deck justify-content-center text-center" },
-        [
-          _c(
-            "div",
-            {
-              staticClass: "card text-white bg-primary",
-              staticStyle: { "max-width": "18rem" }
-            },
-            [
-              _vm._m(1),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("h1", [_vm._v(_vm._s(_vm.user.totalListings))])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "card-footer listing-footer",
-                  on: { click: _vm.linkToListingCreation }
-                },
-                [_c("h3", [_vm._v("Create a Listing")])]
-              )
-            ]
-          ),
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("h1", [_vm._v("Hi, " + _vm._s(_vm.user.name))]),
           _vm._v(" "),
           _c(
             "div",
-            {
-              staticClass: "card text-white bg-success",
-              staticStyle: { "max-width": "18rem" }
-            },
+            { staticClass: "card-deck justify-content-center text-center" },
             [
-              _vm._m(2),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("h1", [_vm._v(_vm._s(_vm.user.totalEvents))])
-              ]),
+              _c(
+                "div",
+                {
+                  staticClass: "card text-white bg-primary",
+                  staticStyle: { "max-width": "18rem" }
+                },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("h1", [_vm._v(_vm._s(_vm.user.totalListings))])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "card-footer listing-footer",
+                      on: { click: _vm.linkToListingCreation }
+                    },
+                    [_c("h3", [_vm._v("Create a Listing")])]
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "div",
                 {
-                  staticClass: "card-footer event-footer",
-                  on: { click: _vm.linkToEventCreation }
+                  staticClass: "card text-white bg-success",
+                  staticStyle: { "max-width": "18rem" }
                 },
-                [_c("h3", [_vm._v("Create an Event")])]
+                [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("h1", [_vm._v(_vm._s(_vm.user.totalEvents))])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "card-footer event-footer",
+                      on: { click: _vm.linkToEventCreation }
+                    },
+                    [_c("h3", [_vm._v("Create an Event")])]
+                  )
+                ]
               )
             ]
           )
-        ]
-      )
+        ])
+      ])
     ])
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card" })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -90697,6 +90701,14 @@ var render = function() {
     { staticClass: "container" },
     [
       _c("searchbar", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.events.length !== 0,
+            expression: "events.length !== 0"
+          }
+        ],
         attrs: { searchPlaceHolder: _vm.searchPlaceHolder },
         on: { search: _vm.setSearchText }
       }),
@@ -90813,6 +90825,35 @@ var render = function() {
               ])
             }),
             0
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.events.length === 0,
+                  expression: "events.length === 0"
+                }
+              ],
+              staticClass: "text-center"
+            },
+            [
+              _c("h1", { staticClass: "mb-3" }, [
+                _vm._v("You have not made any event")
+              ]),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-success btn-lg",
+                  attrs: { role: "button", href: "/events/create" }
+                },
+                [_vm._v("Create an Event")]
+              )
+            ]
           ),
           _vm._v(" "),
           _c(
@@ -91289,6 +91330,14 @@ var render = function() {
     { staticClass: "container" },
     [
       _c("searchbar", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.listings.length !== 0,
+            expression: "listings.length !== 0"
+          }
+        ],
         attrs: { searchPlaceHolder: _vm.searchPlaceHolder },
         on: { search: _vm.setSearchText }
       }),
@@ -91400,6 +91449,35 @@ var render = function() {
               ])
             }),
             0
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.listings.length === 0,
+                  expression: "listings.length === 0"
+                }
+              ],
+              staticClass: "text-center"
+            },
+            [
+              _c("h1", { staticClass: "mb-3" }, [
+                _vm._v("You have not made any listing")
+              ]),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-success btn-lg",
+                  attrs: { role: "button", href: "/listings/create" }
+                },
+                [_vm._v("Create a Listing")]
+              )
+            ]
           ),
           _vm._v(" "),
           _c(
