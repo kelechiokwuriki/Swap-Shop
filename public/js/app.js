@@ -1989,6 +1989,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     linkToEventCreation: function linkToEventCreation() {
       window.location = '/events/create';
+    },
+    linkToListingCreation: function linkToListingCreation() {
+      window.location = '/listings/create';
     }
   },
   props: {
@@ -90003,7 +90006,14 @@ var render = function() {
                 _c("h1", [_vm._v(_vm._s(_vm.user.totalListings))])
               ]),
               _vm._v(" "),
-              _vm._m(2)
+              _c(
+                "div",
+                {
+                  staticClass: "card-footer listing-footer",
+                  on: { click: _vm.linkToListingCreation }
+                },
+                [_c("h3", [_vm._v("Create a Listing")])]
+              )
             ]
           ),
           _vm._v(" "),
@@ -90014,7 +90024,7 @@ var render = function() {
               staticStyle: { "max-width": "18rem" }
             },
             [
-              _vm._m(3),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
                 _c("h1", [_vm._v(_vm._s(_vm.user.totalEvents))])
@@ -90053,14 +90063,6 @@ var staticRenderFns = [
         _c("i", { staticClass: "fas fa-clipboard-list pr-2" }),
         _vm._v("Listings")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-footer listing-footer" }, [
-      _c("h3", [_vm._v("Create a Listing")])
     ])
   },
   function() {

@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <h1>{{ user.totalListings }}</h1>
                     </div>
-                    <div class="card-footer listing-footer">
+                    <div class="card-footer listing-footer" @click="linkToListingCreation">
                         <h3>Create a Listing</h3>
                     </div>
                 </div>
@@ -46,6 +46,9 @@
         methods:{
             linkToEventCreation() {
                 window.location = '/events/create';
+            },
+            linkToListingCreation() {
+                window.location = '/listings/create';
             }
         },
         props: {
