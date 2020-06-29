@@ -32,6 +32,7 @@ Route::group(['middleware' => 'checkUserChangedPassword', 'auth'], function () {
                 Route::resource('/admin', 'AdminController', ['except' => 'show', 'create', 'store']);
 
                 Route::resource('/admin/users', 'Users\UserController');
+                Route::resource('/admin/bulletin', 'Bulletin\BulletinController');
             });
         });
 

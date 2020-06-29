@@ -35,6 +35,7 @@ Vue.component('searchbar', require('./components/UIhelpers/SearchBar.vue').defau
 //admin
 Vue.component('admin', require('./components/admin/Admin.vue').default);
 Vue.component('manageusers', require('./components/admin/ManageUsers.vue').default);
+Vue.component('bulletin', require('./components/admin/Bulletin.vue').default);
 
 
 //home
@@ -56,8 +57,6 @@ const plugin = {
   }
 
   Vue.use(plugin);
-
-
 
 
 /**

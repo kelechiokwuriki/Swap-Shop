@@ -81,18 +81,11 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Swap Shop Platform
                 </div>
-
+                <h2>Welcome dear person</h2>
+                <h3>Swap shop is a platform for members to exchange items. <br>It supports re-use, re-cycling and community neighbourliness</h3>
                 <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
             </div>
         </div>

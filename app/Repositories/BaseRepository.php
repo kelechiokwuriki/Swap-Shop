@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -38,6 +39,12 @@ abstract class BaseRepository
     public function whereFirst(string $column, $value)
     {
         return $this->model->where($column, $value)->firstOrFail();
+    }
+
+    public function getDataCreatedSevenDaysAgo()
+    {
+        $date = Carbon::today()->subDays(7);
+        return $this->model->where('created_at', '>=', $date);
     }
 
     public function create(array $data)
