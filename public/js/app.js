@@ -2101,8 +2101,61 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2337,15 +2390,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return _defineProperty({
+    return {
       bulletin: [],
       step: 1,
       totalSteps: 3,
-      shouldStrikeThrough: false
-    }, "bulletin", {
-      header: '',
-      footer: ''
-    });
+      regexMatch: '/\d+/',
+      bulletinToSend: {
+        number: null,
+        header: '',
+        swap_shop_info: '',
+        bulletinContent: {
+          listings: [],
+          events: []
+        }
+      }
+    };
   },
   methods: {
     previousStep: function previousStep() {
@@ -2354,22 +2413,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     nextStep: function nextStep() {
       this.step++;
 
-      if (this.step === 3) {
-        var res = this.sortByKey(this.bulletin.listings, 'type');
-        console.log(res);
+      if (this.step === this.totalSteps) {
+        var listingResult = this.sortListingByWantFirst(this.bulletin.listings, 'type'); //return items included for bulletin
+
+        this.bulletinToSend.bulletinContent.listings = listingResult.filter(function (listing) {
+          return listing.excluded_from_bulletin !== false;
+        });
+        this.bulletinToSend.bulletinContent.events = this.bulletin.events.filter(function (event) {
+          return event.excluded_from_bulletin !== false;
+        });
       }
-    },
-    excludeEventFromBulletin: function excludeEventFromBulletin(eventId) {
-      var eventIndex = this.bulletin.events.findIndex(function (event) {
-        return event.id == eventId;
-      });
-      this.bulletin.events[eventIndex].excluded_from_bulletin = !this.bulletin.events[eventIndex].excluded_from_bulletin;
-    },
-    excludeListingFromBulletin: function excludeListingFromBulletin(listingId) {
-      var listingIndex = this.bulletin.listings.findIndex(function (listing) {
-        return listing.id == listingId;
-      });
-      this.bulletin.listings[listingIndex].excluded_from_bulletin = !this.bulletin.listings[listingIndex].excluded_from_bulletin;
     },
     moment: function (_moment) {
       function moment(_x) {
@@ -2393,36 +2446,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getBulletin: function getBulletin() {
       var _this = this;
 
-      axios.get('/api/bulletins').then(function (response) {
-        _this.bulletin = response.data; // this.bulletinToSend = response.data;
+      axios.get('/api/bulletindata').then(function (response) {
+        _this.bulletin = response.data;
       });
     },
-    compare: function compare(a, b) {
-      if (a.type === 'Want') {
-        return -1;
-      }
-
-      if (a.type === 'Offer') {
-        return 1;
-      }
-
-      return 0;
+    sendBulletin: function sendBulletin() {
+      var dataToSend = FormData();
+      dataToSend.append('number', this.bulletinToSend.number);
+      dataToSend.append('header', this.bulletinToSend.number);
+      dataToSend.append('swap_shop_info', this.bulletinToSend.number); // dataToSend.append('content', this.bulletinToSend.number);
     },
-    sortByKey: function sortByKey(array, key) {
+    sortListingByWantFirst: function sortListingByWantFirst(array, key) {
       return array.sort(function (a, b) {
         var x = a[key];
         var y = b[key];
         return x < y ? 1 : x > y ? -1 : 0;
       });
+    },
+    getLatestBulletinData: function getLatestBulletinData() {
+      var _this2 = this;
+
+      axios.get('/api/latestBulletinData').then(function (response) {
+        _this2.bulletinToSend.number = response.data.number; // response.data.header.match(this.regexMatch);
+
+        _this2.bulletinToSend.header = response.data.header.replace(response.data.header.match(/\d+/), response.data.number);
+        _this2.bulletinToSend.swap_shop_info = response.data.swap_shop_info;
+      });
     }
   },
   mounted: function mounted() {
     this.getBulletin();
+    this.getLatestBulletinData();
   },
   computed: {
     sortListingsPlaceWantFirst: function sortListingsPlaceWantFirst() {
-      return this.sortByKey(this.bulletin.listings, 'type');
-    }
+      var listingResult = this.sortListingByWantFirst(this.bulletin.listings, 'type'); //return items included for bulletin
+
+      return listingResult.filter(function (listing) {
+        return listing.excluded_from_bulletin !== 1;
+      });
+    },
+    bulletinHeader: function bulletinHeader() {}
   }
 });
 
@@ -7710,7 +7774,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.strikeThrough[data-v-74a74fdc]{\n    text-decoration: line-through;\n}\n.keep-whitespace[data-v-74a74fdc] {\nwhite-space: pre-wrap;       /* Since CSS 2.1 */\n}\n\n", ""]);
+exports.push([module.i, "\n.keep-whitespace[data-v-74a74fdc] {\nwhite-space: pre-wrap;\n}\n\n", ""]);
 
 // exports
 
@@ -90614,7 +90678,7 @@ var render = function() {
                     ],
                     staticClass: "card-title pt-2"
                   },
-                  [_vm._v("Select items not to be included in bulletin")]
+                  [_vm._v("Filter items to be included in Bulletin")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -90646,7 +90710,7 @@ var render = function() {
                     ],
                     staticClass: "card-title pt-2"
                   },
-                  [_vm._v("Preview and send email")]
+                  [_vm._v("Preview and send Bulletin")]
                 )
               ]),
               _vm._v(" "),
@@ -90684,6 +90748,23 @@ var render = function() {
                       on: { click: _vm.nextStep }
                     },
                     [_vm._v("Next Step")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.step === _vm.totalSteps,
+                          expression: "step === totalSteps"
+                        }
+                      ],
+                      staticClass: "btn btn-primary ml-1",
+                      on: { click: _vm.sendBulletin }
+                    },
+                    [_vm._v("Send Bulletin")]
                   )
                 ])
               ])
@@ -90712,7 +90793,27 @@ var render = function() {
                               [
                                 _c("div", { staticClass: "card-header" }, [
                                   _c("div", { staticClass: "row" }, [
-                                    _vm._m(1, true),
+                                    _c("div", { staticClass: "col-sm-9" }, [
+                                      _c("h5", { staticClass: "card-title" }, [
+                                        event.excluded_from_bulletin
+                                          ? _c("span", [
+                                              _vm._v(
+                                                "\n                                                            Un-mark\n                                                        "
+                                              )
+                                            ])
+                                          : _c("span", [_vm._v("Mark")]),
+                                        _vm._v(
+                                          "\n                                                        event for\n                                                        "
+                                        ),
+                                        event.excluded_from_bulletin
+                                          ? _c("span", [
+                                              _vm._v(
+                                                "\n                                                            exclusion\n                                                        "
+                                              )
+                                            ])
+                                          : _c("span", [_vm._v("inclusion")])
+                                      ])
+                                    ]),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-sm-3" }, [
                                       _c(
@@ -90724,16 +90825,70 @@ var render = function() {
                                             { staticClass: "form-check" },
                                             [
                                               _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value:
+                                                      event.excluded_from_bulletin,
+                                                    expression:
+                                                      "event.excluded_from_bulletin"
+                                                  }
+                                                ],
                                                 staticClass: "form-check-input",
                                                 attrs: {
                                                   type: "checkbox",
                                                   id: "exampleCheck1"
                                                 },
+                                                domProps: {
+                                                  checked: Array.isArray(
+                                                    event.excluded_from_bulletin
+                                                  )
+                                                    ? _vm._i(
+                                                        event.excluded_from_bulletin,
+                                                        null
+                                                      ) > -1
+                                                    : event.excluded_from_bulletin
+                                                },
                                                 on: {
                                                   change: function($event) {
-                                                    return _vm.excludeEventFromBulletin(
-                                                      event.id
-                                                    )
+                                                    var $$a =
+                                                        event.excluded_from_bulletin,
+                                                      $$el = $event.target,
+                                                      $$c = $$el.checked
+                                                        ? true
+                                                        : false
+                                                    if (Array.isArray($$a)) {
+                                                      var $$v = null,
+                                                        $$i = _vm._i($$a, $$v)
+                                                      if ($$el.checked) {
+                                                        $$i < 0 &&
+                                                          _vm.$set(
+                                                            event,
+                                                            "excluded_from_bulletin",
+                                                            $$a.concat([$$v])
+                                                          )
+                                                      } else {
+                                                        $$i > -1 &&
+                                                          _vm.$set(
+                                                            event,
+                                                            "excluded_from_bulletin",
+                                                            $$a
+                                                              .slice(0, $$i)
+                                                              .concat(
+                                                                $$a.slice(
+                                                                  $$i + 1
+                                                                )
+                                                              )
+                                                          )
+                                                      }
+                                                    } else {
+                                                      _vm.$set(
+                                                        event,
+                                                        "excluded_from_bulletin",
+                                                        $$c
+                                                      )
+                                                    }
                                                   }
                                                 }
                                               })
@@ -90747,196 +90902,80 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("div", { staticClass: "card-body" }, [
                                   _c("div", { staticClass: "form-group row" }, [
-                                    _c("div", { staticClass: "col-4" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              event.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v("Name:")]
-                                      )
-                                    ]),
+                                    _vm._m(1, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              event.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(event.name))]
-                                      )
+                                      _c("p", [_vm._v(_vm._s(event.name))])
                                     ]),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "col-4" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              event.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v("When:")]
-                                      )
-                                    ]),
+                                    _vm._m(2, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              event.excluded_from_bulletin
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                        " +
-                                              _vm._s(
-                                                _vm
-                                                  .moment(event.when)
-                                                  .format(
-                                                    "MMMM Do YYYY, h:mm:ss a"
-                                                  )
-                                              ) +
-                                              "\n                                                    "
-                                          )
-                                        ]
-                                      )
+                                      _c("p", [
+                                        _vm._v(
+                                          "\n                                                        " +
+                                            _vm._s(
+                                              _vm
+                                                .moment(event.when)
+                                                .format(
+                                                  "MMMM Do YYYY, h:mm:ss a"
+                                                )
+                                            ) +
+                                            "\n                                                    "
+                                        )
+                                      ])
                                     ]),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "col-4" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              event.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v("Information:")]
-                                      )
-                                    ]),
+                                    _vm._m(3, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              event.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(event.information))]
-                                      )
+                                      _c("p", [
+                                        _vm._v(_vm._s(event.information))
+                                      ])
                                     ]),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "col-4" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              event.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v("Contact info:")]
-                                      )
-                                    ]),
+                                    _vm._m(4, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              event.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(event.contact_info))]
-                                      )
+                                      _c("p", [
+                                        _vm._v(_vm._s(event.contact_info))
+                                      ])
                                     ]),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "col-4" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              event.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v("Date created:")]
-                                      )
-                                    ]),
+                                    _vm._m(5, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              event.excluded_from_bulletin
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                        " +
-                                              _vm._s(
-                                                _vm
-                                                  .moment(event.created_at)
-                                                  .format(
-                                                    "MMMM Do YYYY, h:mm:ss a"
-                                                  )
-                                              ) +
-                                              "\n                                                    "
-                                          )
-                                        ]
-                                      )
+                                      _c("p", [
+                                        _vm._v(
+                                          "\n                                                        " +
+                                            _vm._s(
+                                              _vm
+                                                .moment(event.created_at)
+                                                .format(
+                                                  "MMMM Do YYYY, h:mm:ss a"
+                                                )
+                                            ) +
+                                            "\n                                                    "
+                                        )
+                                      ])
                                     ]),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "col-4" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              event.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v("Date updated:")]
-                                      )
-                                    ]),
+                                    _vm._m(6, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              event.excluded_from_bulletin
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                        " +
-                                              _vm._s(
-                                                _vm
-                                                  .moment(event.updated_at)
-                                                  .format(
-                                                    "MMMM Do YYYY, h:mm:ss a"
-                                                  )
-                                              ) +
-                                              "\n                                                    "
-                                          )
-                                        ]
-                                      )
+                                      _c("p", [
+                                        _vm._v(
+                                          "\n                                                        " +
+                                            _vm._s(
+                                              _vm
+                                                .moment(event.updated_at)
+                                                .format(
+                                                  "MMMM Do YYYY, h:mm:ss a"
+                                                )
+                                            ) +
+                                            "\n                                                    "
+                                        )
+                                      ])
                                     ])
                                   ])
                                 ])
@@ -90962,7 +91001,27 @@ var render = function() {
                               [
                                 _c("div", { staticClass: "card-header" }, [
                                   _c("div", { staticClass: "row" }, [
-                                    _vm._m(2, true),
+                                    _c("div", { staticClass: "col-sm-9" }, [
+                                      _c("h5", { staticClass: "card-title" }, [
+                                        listing.excluded_from_bulletin
+                                          ? _c("span", [
+                                              _vm._v(
+                                                "\n                                                            Un-mark\n                                                        "
+                                              )
+                                            ])
+                                          : _c("span", [_vm._v("Mark")]),
+                                        _vm._v(
+                                          "\n                                                        listing for\n                                                        "
+                                        ),
+                                        listing.excluded_from_bulletin
+                                          ? _c("span", [
+                                              _vm._v(
+                                                "\n                                                            exclusion\n                                                        "
+                                              )
+                                            ])
+                                          : _c("span", [_vm._v("inclusion")])
+                                      ])
+                                    ]),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-sm-3" }, [
                                       _c(
@@ -90974,16 +91033,70 @@ var render = function() {
                                             { staticClass: "form-check" },
                                             [
                                               _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value:
+                                                      listing.excluded_from_bulletin,
+                                                    expression:
+                                                      "listing.excluded_from_bulletin"
+                                                  }
+                                                ],
                                                 staticClass: "form-check-input",
                                                 attrs: {
                                                   type: "checkbox",
                                                   id: "exampleCheck1"
                                                 },
+                                                domProps: {
+                                                  checked: Array.isArray(
+                                                    listing.excluded_from_bulletin
+                                                  )
+                                                    ? _vm._i(
+                                                        listing.excluded_from_bulletin,
+                                                        null
+                                                      ) > -1
+                                                    : listing.excluded_from_bulletin
+                                                },
                                                 on: {
                                                   change: function($event) {
-                                                    return _vm.excludeListingFromBulletin(
-                                                      listing.id
-                                                    )
+                                                    var $$a =
+                                                        listing.excluded_from_bulletin,
+                                                      $$el = $event.target,
+                                                      $$c = $$el.checked
+                                                        ? true
+                                                        : false
+                                                    if (Array.isArray($$a)) {
+                                                      var $$v = null,
+                                                        $$i = _vm._i($$a, $$v)
+                                                      if ($$el.checked) {
+                                                        $$i < 0 &&
+                                                          _vm.$set(
+                                                            listing,
+                                                            "excluded_from_bulletin",
+                                                            $$a.concat([$$v])
+                                                          )
+                                                      } else {
+                                                        $$i > -1 &&
+                                                          _vm.$set(
+                                                            listing,
+                                                            "excluded_from_bulletin",
+                                                            $$a
+                                                              .slice(0, $$i)
+                                                              .concat(
+                                                                $$a.slice(
+                                                                  $$i + 1
+                                                                )
+                                                              )
+                                                          )
+                                                      }
+                                                    } else {
+                                                      _vm.$set(
+                                                        listing,
+                                                        "excluded_from_bulletin",
+                                                        $$c
+                                                      )
+                                                    }
                                                   }
                                                 }
                                               })
@@ -90997,184 +91110,66 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("div", { staticClass: "card-body" }, [
                                   _c("div", { staticClass: "form-group row" }, [
-                                    _c("div", { staticClass: "col-4" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              listing.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v("Type:")]
-                                      )
-                                    ]),
+                                    _vm._m(7, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              listing.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(listing.type))]
-                                      )
+                                      _c("p", [_vm._v(_vm._s(listing.type))])
                                     ]),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "col-4" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              listing.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v("Item:")]
-                                      )
-                                    ]),
+                                    _vm._m(8, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              listing.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(listing.item))]
-                                      )
+                                      _c("p", [_vm._v(_vm._s(listing.item))])
                                     ]),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "col-4" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              listing.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v("Information:")]
-                                      )
-                                    ]),
+                                    _vm._m(9, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              listing.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(listing.information))]
-                                      )
+                                      _c("p", [
+                                        _vm._v(_vm._s(listing.information))
+                                      ])
                                     ]),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "col-4" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              listing.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v("Deal:")]
-                                      )
-                                    ]),
+                                    _vm._m(10, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              listing.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(listing.deal))]
-                                      )
+                                      _c("p", [_vm._v(_vm._s(listing.deal))])
                                     ]),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "col-4" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              listing.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v("Date created:")]
-                                      )
-                                    ]),
+                                    _vm._m(11, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              listing.excluded_from_bulletin
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                        " +
-                                              _vm._s(
-                                                _vm
-                                                  .moment(listing.created_at)
-                                                  .format(
-                                                    "MMMM Do YYYY, h:mm:ss a"
-                                                  )
-                                              ) +
-                                              "\n                                                    "
-                                          )
-                                        ]
-                                      )
+                                      _c("p", [
+                                        _vm._v(
+                                          "\n                                                        " +
+                                            _vm._s(
+                                              _vm
+                                                .moment(listing.created_at)
+                                                .format(
+                                                  "MMMM Do YYYY, h:mm:ss a"
+                                                )
+                                            ) +
+                                            "\n                                                    "
+                                        )
+                                      ])
                                     ]),
                                     _vm._v(" "),
-                                    _c("div", { staticClass: "col-4" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              listing.excluded_from_bulletin
-                                          }
-                                        },
-                                        [_vm._v("Date updated:")]
-                                      )
-                                    ]),
+                                    _vm._m(12, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
-                                      _c(
-                                        "p",
-                                        {
-                                          class: {
-                                            strikeThrough:
-                                              listing.excluded_from_bulletin
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                        " +
-                                              _vm._s(
-                                                _vm
-                                                  .moment(listing.updated_at)
-                                                  .format(
-                                                    "MMMM Do YYYY, h:mm:ss a"
-                                                  )
-                                              ) +
-                                              "\n                                                    "
-                                          )
-                                        ]
-                                      )
+                                      _c("p", [
+                                        _vm._v(
+                                          "\n                                                        " +
+                                            _vm._s(
+                                              _vm
+                                                .moment(listing.updated_at)
+                                                .format(
+                                                  "MMMM Do YYYY, h:mm:ss a"
+                                                )
+                                            ) +
+                                            "\n                                                    "
+                                        )
+                                      ])
                                     ])
                                   ])
                                 ])
@@ -91194,22 +91189,52 @@ var render = function() {
                       "form",
                       { attrs: { role: "form", "prevent-default": "" } },
                       [
+                        _c("div", { staticClass: "form-group" }, [
+                          _vm._m(13),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.bulletinToSend.number,
+                                expression: "bulletinToSend.number"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "number" },
+                            domProps: { value: _vm.bulletinToSend.number },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.bulletinToSend,
+                                  "number",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "div",
                           { staticClass: "form-group" },
                           [
-                            _vm._m(3),
+                            _vm._m(14),
                             _vm._v(" "),
                             _c("textarea-autosize", {
                               ref: "footerTextArea",
                               staticClass: "form-control",
                               attrs: { id: "header" },
                               model: {
-                                value: _vm.bulletin.header,
+                                value: _vm.bulletinToSend.header,
                                 callback: function($$v) {
-                                  _vm.$set(_vm.bulletin, "header", $$v)
+                                  _vm.$set(_vm.bulletinToSend, "header", $$v)
                                 },
-                                expression: "bulletin.header"
+                                expression: "bulletinToSend.header"
                               }
                             })
                           ],
@@ -91220,18 +91245,22 @@ var render = function() {
                           "div",
                           { staticClass: "form-group" },
                           [
-                            _vm._m(4),
+                            _vm._m(15),
                             _vm._v(" "),
                             _c("textarea-autosize", {
                               ref: "headerTextArea",
                               staticClass: "form-control",
                               attrs: { id: "footer", "min-height": 30 },
                               model: {
-                                value: _vm.bulletin.footer,
+                                value: _vm.bulletinToSend.swap_shop_info,
                                 callback: function($$v) {
-                                  _vm.$set(_vm.bulletin, "footer", $$v)
+                                  _vm.$set(
+                                    _vm.bulletinToSend,
+                                    "swap_shop_info",
+                                    $$v
+                                  )
                                 },
-                                expression: "bulletin.footer"
+                                expression: "bulletinToSend.swap_shop_info"
                               }
                             })
                           ],
@@ -91245,67 +91274,115 @@ var render = function() {
               _vm.step === 3
                 ? [
                     _c("p", { staticClass: "keep-whitespace" }, [
-                      _vm._v(_vm._s(_vm.bulletin.header))
+                      _vm._v(_vm._s(_vm.bulletinToSend.header))
                     ]),
                     _vm._v(" "),
-                    _vm._l(_vm.sortListingsPlaceWantFirst, function(listing) {
-                      return _c(
-                        "div",
-                        { key: listing.id },
-                        [
-                          listing.type === "Want"
-                            ? _c("p", [
-                                _vm._v(
-                                  "\n                                    =============================\n                                        Wanted\n                                    =============================\n                                    "
-                                )
-                              ])
-                            : listing.type === "Offer"
-                            ? _c("p", [
-                                _vm._v(
-                                  "\n                                    =============================\n                                        Offered\n                                    =============================\n                                    "
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          listing.type === "Want"
-                            ? [_vm._v("Wanted: " + _vm._s(listing.item))]
-                            : listing.type === "Offer"
-                            ? [_vm._v("Offered: " + _vm._s(listing.item))]
-                            : _vm._e(),
-                          _vm._v(
-                            "\n                                    Item: " +
-                              _vm._s(listing.item) +
-                              " "
-                          ),
-                          _c("br"),
-                          _vm._v(
-                            "\n                                    Info: " +
-                              _vm._s(listing.information) +
-                              " "
-                          ),
-                          _c("br"),
-                          _vm._v(
-                            "\n                                    Deal: " +
-                              _vm._s(listing.deal) +
-                              " "
-                          ),
-                          _c("br"),
-                          _vm._v(
-                            "\n                                    Contact: " +
-                              _vm._s(listing.contact_info) +
-                              " "
-                          ),
-                          _c("br"),
-                          _vm._v(
-                            "\n                                    Name: " +
-                              _vm._s(listing.user.name) +
-                              " "
-                          ),
-                          _c("br")
-                        ],
-                        2
-                      )
-                    })
+                    _vm._l(
+                      _vm.bulletinToSend.bulletinContent.listings,
+                      function(listing) {
+                        return _c(
+                          "div",
+                          { key: "li" + listing.id },
+                          [
+                            listing.type === "Want"
+                              ? _c("p", [
+                                  _vm._v(
+                                    "\n                                    =============================\n                                        Wanted\n                                    =============================\n                                    "
+                                  )
+                                ])
+                              : listing.type === "Offer"
+                              ? _c("p", [
+                                  _vm._v(
+                                    "\n                                    =============================\n                                        Offered\n                                    =============================\n                                    "
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            listing.type === "Want"
+                              ? [_vm._v("Wanted: " + _vm._s(listing.item))]
+                              : listing.type === "Offer"
+                              ? [_vm._v("Offered: " + _vm._s(listing.item))]
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(
+                              "\n                                    Info: " +
+                                _vm._s(listing.information) +
+                                " "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n                                    Deal: " +
+                                _vm._s(listing.deal) +
+                                " "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n                                    Contact: " +
+                                _vm._s(listing.contact_info) +
+                                " "
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n                                    Name: " +
+                                _vm._s(listing.user.name) +
+                                " "
+                            ),
+                            _c("br")
+                          ],
+                          2
+                        )
+                      }
+                    ),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _vm._l(_vm.bulletinToSend.bulletinContent.events, function(
+                      event
+                    ) {
+                      return _c("div", { key: "ev" + event.id }, [
+                        _vm._v(
+                          "\n\n                                    =============================\n                                    Events\n                                    =============================\n                                    "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                    Event: " +
+                            _vm._s(event.name) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                    Info: " +
+                            _vm._s(event.information) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                    When: " +
+                            _vm._s(event.when) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                    Contact: " +
+                            _vm._s(event.contact_info) +
+                            " "
+                        ),
+                        _c("br")
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(
+                      "\n                                =============================\n                                Swap Shop Information\n                                =============================\n                                "
+                    ),
+                    _c("p", { staticClass: "keep-whitespace" }, [
+                      _vm._v(_vm._s(_vm.bulletinToSend.swap_shop_info))
+                    ])
                   ]
                 : _vm._e()
             ],
@@ -91331,19 +91408,95 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-9" }, [
-      _c("h5", { staticClass: "card-title" }, [
-        _vm._v("Mark event for exclusion")
-      ])
+    return _c("div", { staticClass: "col-4" }, [_c("p", [_vm._v("Name:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [_c("p", [_vm._v("When:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [
+      _c("p", [_vm._v("Information:")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-9" }, [
-      _c("h5", { staticClass: "card-title" }, [
-        _vm._v("Mark listing for exclusion")
+    return _c("div", { staticClass: "col-4" }, [
+      _c("p", [_vm._v("Contact info:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [
+      _c("p", [_vm._v("Date created:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [
+      _c("p", [_vm._v("Date updated:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [_c("p", [_vm._v("Type:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [_c("p", [_vm._v("Item:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [
+      _c("p", [_vm._v("Information:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [_c("p", [_vm._v("Deal:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [
+      _c("p", [_vm._v("Date created:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4" }, [
+      _c("p", [_vm._v("Date updated:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", [
+      _c("label", { attrs: { for: "number" } }, [
+        _vm._v("Current Bulletin Number")
       ])
     ])
   },
@@ -91352,8 +91505,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h5", [
-      _c("label", { attrs: { for: "header" } }, [
-        _vm._v("Include your header in Bulletin")
+      _c("label", { staticClass: "mt-3", attrs: { for: "header" } }, [
+        _vm._v(
+          "We retrieved the last bulletin header and updated the number. Update the information as you please"
+        )
       ])
     ])
   },
@@ -91362,8 +91517,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h5", [
-      _c("label", { attrs: { for: "footer" } }, [
-        _vm._v("Include your footer in Bulletin")
+      _c("label", { staticClass: "mt-3", attrs: { for: "footer" } }, [
+        _vm._v(
+          "We retrieved the last Swap Shop information. Update the information as you please"
+        )
       ])
     ])
   }
@@ -91961,34 +92118,22 @@ var render = function() {
             0
           ),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.events.length === 0,
-                  expression: "events.length === 0"
-                }
-              ],
-              staticClass: "text-center"
-            },
-            [
-              _c("h1", { staticClass: "mb-3" }, [
-                _vm._v("You have not made any event")
-              ]),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-success btn-lg",
-                  attrs: { role: "button", href: "/events/create" }
-                },
-                [_vm._v("Create an Event")]
-              )
-            ]
-          ),
+          _vm.eventsToShow.length === 0
+            ? _c("div", { staticClass: "text-center" }, [
+                _c("h1", { staticClass: "mb-3" }, [
+                  _vm._v("You have not made any event")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-success btn-lg",
+                    attrs: { role: "button", href: "/events/create" }
+                  },
+                  [_vm._v("Create an Event")]
+                )
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "div",

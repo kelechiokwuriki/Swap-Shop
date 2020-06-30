@@ -9,15 +9,17 @@
                                 <p class="card-title pt-2">Data from last 7 days</p>
                             </div>
                             <div class="col-sm-6 text-center">
-                                <h4 class="card-title pt-2" v-show="step === 1">Select items not to be included in bulletin</h4>
+                                <h4 class="card-title pt-2" v-show="step === 1">Filter items to be included in Bulletin</h4>
                                 <h4 class="card-title pt-2" v-show="step === 2">Include Bulletin header and footer</h4>
-                                <h4 class="card-title pt-2" v-show="step === totalSteps">Preview and send email</h4>
+                                <h4 class="card-title pt-2" v-show="step === totalSteps">Preview and send Bulletin</h4>
 
                             </div>
                             <div class="col-sm-3">
                                 <div class="float-right">
                                     <button class="btn btn-secondary" @click="previousStep" v-show="step !== 1">Go Back</button>
                                     <button class="btn btn-primary ml-1" @click="nextStep" v-show="step !== totalSteps">Next Step</button>
+                                    <button class="btn btn-primary ml-1" @click="sendBulletin" v-show="step === totalSteps">Send Bulletin</button>
+
                                 </div>
                             </div>
                         </div>
@@ -34,12 +36,22 @@
                                             <div class="card-header">
                                                 <div class="row">
                                                     <div class="col-sm-9">
-                                                        <h5 class="card-title">Mark event for exclusion</h5>
+                                                        <h5 class="card-title">
+                                                            <span v-if="event.excluded_from_bulletin">
+                                                                Un-mark
+                                                            </span>
+                                                            <span v-else>Mark</span>
+                                                            event for
+                                                            <span v-if="event.excluded_from_bulletin">
+                                                                exclusion
+                                                            </span>
+                                                            <span v-else>inclusion</span>
+                                                        </h5>
                                                     </div>
                                                     <div class="col-sm-3">
                                                         <div class="float-right">
                                                             <div class="form-check">
-                                                                <input type="checkbox" @change="excludeEventFromBulletin(event.id)" class="form-check-input" id="exampleCheck1">
+                                                                <input type="checkbox" v-model="event.excluded_from_bulletin" class="form-check-input" id="exampleCheck1">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -48,49 +60,49 @@
                                             <div class="card-body">
                                                 <div class="form-group row">
                                                     <div class="col-4">
-                                                        <p :class="{ strikeThrough: event.excluded_from_bulletin }">Name:</p>
+                                                        <p>Name:</p>
                                                     </div>
                                                     <div class="col-8">
-                                                        <p :class="{ strikeThrough: event.excluded_from_bulletin }">{{event.name}}</p>
+                                                        <p>{{event.name}}</p>
                                                     </div>
 
                                                     <div class="col-4">
-                                                        <p :class="{ strikeThrough: event.excluded_from_bulletin }">When:</p>
+                                                        <p>When:</p>
                                                     </div>
                                                     <div class="col-8">
-                                                        <p :class="{ strikeThrough: event.excluded_from_bulletin }">
+                                                        <p>
                                                             {{ moment(event.when).format('MMMM Do YYYY, h:mm:ss a') }}
                                                         </p>
                                                     </div>
 
                                                     <div class="col-4">
-                                                        <p :class="{ strikeThrough: event.excluded_from_bulletin }">Information:</p>
+                                                        <p>Information:</p>
                                                     </div>
                                                     <div class="col-8">
-                                                        <p :class="{ strikeThrough: event.excluded_from_bulletin }">{{event.information}}</p>
+                                                        <p>{{event.information}}</p>
                                                     </div>
 
                                                     <div class="col-4">
-                                                        <p :class="{ strikeThrough: event.excluded_from_bulletin }">Contact info:</p>
+                                                        <p>Contact info:</p>
                                                     </div>
                                                     <div class="col-8">
-                                                        <p :class="{ strikeThrough: event.excluded_from_bulletin }">{{event.contact_info}}</p>
+                                                        <p>{{event.contact_info}}</p>
                                                     </div>
 
                                                     <div class="col-4">
-                                                        <p :class="{ strikeThrough: event.excluded_from_bulletin }">Date created:</p>
+                                                        <p>Date created:</p>
                                                     </div>
                                                     <div class="col-8">
-                                                        <p :class="{ strikeThrough: event.excluded_from_bulletin }">
+                                                        <p>
                                                             {{ moment(event.created_at).format('MMMM Do YYYY, h:mm:ss a') }}
                                                         </p>
                                                     </div>
 
                                                     <div class="col-4">
-                                                        <p :class="{ strikeThrough: event.excluded_from_bulletin }">Date updated:</p>
+                                                        <p>Date updated:</p>
                                                     </div>
                                                     <div class="col-8">
-                                                        <p :class="{ strikeThrough: event.excluded_from_bulletin }">
+                                                        <p>
                                                             {{ moment(event.updated_at).format('MMMM Do YYYY, h:mm:ss a') }}
                                                         </p>
                                                     </div>
@@ -107,12 +119,21 @@
                                             <div class="card-header">
                                                 <div class="row">
                                                     <div class="col-sm-9">
-                                                        <h5 class="card-title">Mark listing for exclusion</h5>
+                                                        <h5 class="card-title"><span v-if="listing.excluded_from_bulletin">
+                                                                Un-mark
+                                                            </span>
+                                                            <span v-else>Mark</span>
+                                                            listing for
+                                                            <span v-if="listing.excluded_from_bulletin">
+                                                                exclusion
+                                                            </span>
+                                                            <span v-else>inclusion</span>
+                                                        </h5>
                                                     </div>
                                                     <div class="col-sm-3">
                                                         <div class="float-right">
                                                             <div class="form-check">
-                                                                <input type="checkbox" @change="excludeListingFromBulletin(listing.id)" class="form-check-input" id="exampleCheck1">
+                                                                <input type="checkbox" v-model="listing.excluded_from_bulletin" class="form-check-input" id="exampleCheck1">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -121,48 +142,48 @@
                                             <div class="card-body">
                                                 <div class="form-group row">
                                                     <div class="col-4">
-                                                        <p :class="{ strikeThrough: listing.excluded_from_bulletin }">Type:</p>
+                                                        <p>Type:</p>
 
                                                     </div>
                                                     <div class="col-8">
-                                                        <p :class="{ strikeThrough: listing.excluded_from_bulletin }">{{listing.type}}</p>
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                        <p :class="{ strikeThrough: listing.excluded_from_bulletin }">Item:</p>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <p :class="{ strikeThrough: listing.excluded_from_bulletin }">{{listing.item}}</p>
+                                                        <p>{{listing.type}}</p>
                                                     </div>
 
                                                     <div class="col-4">
-                                                        <p :class="{ strikeThrough: listing.excluded_from_bulletin }">Information:</p>
+                                                        <p>Item:</p>
                                                     </div>
                                                     <div class="col-8">
-                                                        <p :class="{ strikeThrough: listing.excluded_from_bulletin }">{{listing.information}}</p>
+                                                        <p>{{listing.item}}</p>
                                                     </div>
 
                                                     <div class="col-4">
-                                                        <p :class="{ strikeThrough: listing.excluded_from_bulletin }">Deal:</p>
+                                                        <p>Information:</p>
                                                     </div>
                                                     <div class="col-8">
-                                                        <p :class="{ strikeThrough: listing.excluded_from_bulletin }">{{listing.deal}}</p>
+                                                        <p>{{listing.information}}</p>
                                                     </div>
 
                                                     <div class="col-4">
-                                                        <p :class="{ strikeThrough: listing.excluded_from_bulletin }">Date created:</p>
+                                                        <p>Deal:</p>
                                                     </div>
                                                     <div class="col-8">
-                                                        <p :class="{ strikeThrough: listing.excluded_from_bulletin }">
+                                                        <p>{{listing.deal}}</p>
+                                                    </div>
+
+                                                    <div class="col-4">
+                                                        <p>Date created:</p>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <p>
                                                             {{ moment(listing.created_at).format('MMMM Do YYYY, h:mm:ss a') }}
                                                         </p>
                                                     </div>
 
                                                     <div class="col-4">
-                                                        <p :class="{ strikeThrough: listing.excluded_from_bulletin }">Date updated:</p>
+                                                        <p>Date updated:</p>
                                                     </div>
                                                     <div class="col-8">
-                                                        <p :class="{ strikeThrough: listing.excluded_from_bulletin }">
+                                                        <p>
                                                             {{ moment(listing.updated_at).format('MMMM Do YYYY, h:mm:ss a') }}
                                                         </p>
                                                     </div>
@@ -175,32 +196,44 @@
                             </template>
                             <template v-if="step === 2">
                                 <form role="form" prevent-default>
+                                    <!--bulletin number-->
                                     <div class="form-group">
-                                        <h5><label for="header">Include your header in Bulletin</label></h5>
+                                        <h5><label for="number">Current Bulletin Number</label></h5>
+                                        <input type="number" v-model="bulletinToSend.number" class="form-control">
+                                    </div>
+                                    <!--end bulletin number-->
+
+                                    <!--bulletin header-->
+                                    <div class="form-group">
+                                        <h5><label for="header" class="mt-3">We retrieved the last bulletin header and updated the number. Update the information as you please</label></h5>
                                         <textarea-autosize
                                         id="header"
                                         class="form-control"
                                         ref="footerTextArea"
-                                        v-model="bulletin.header"
+                                        v-model="bulletinToSend.header"
                                         />
                                     </div>
+                                    <!--end bulletin header-->
 
+                                    <!--bulletin footer-->
                                     <div class="form-group">
-                                        <h5><label for="footer">Include your footer in Bulletin</label></h5>
+                                        <h5><label for="footer" class="mt-3">We retrieved the last Swap Shop information. Update the information as you please</label></h5>
                                         <textarea-autosize
                                         id="footer"
                                         class="form-control"
                                         ref="headerTextArea"
-                                        v-model="bulletin.footer"
+                                        v-model="bulletinToSend.swap_shop_info"
                                         :min-height="30"
                                         />
                                     </div>
+                                    <!--end bulletin footer-->
                                 </form>
                             </template>
                             <template v-if="step === 3">
-                                    <p class="keep-whitespace">{{ bulletin.header }}</p>
 
-                                    <div v-for="listing in sortListingsPlaceWantFirst" v-bind:key="listing.id">
+                                    <p class="keep-whitespace">{{ bulletinToSend.header }}</p>
+
+                                    <div v-for="listing in bulletinToSend.bulletinContent.listings" v-bind:key="'li'+listing.id">
 
                                         <p v-if="listing.type === 'Want'">
                                         =============================
@@ -212,16 +245,38 @@
                                             Offered
                                         =============================
                                         </p>
-                                        <!-- <hr> -->
 
                                         <template v-if="listing.type === 'Want'">Wanted: {{listing.item}}</template>
-                                        <template v-else-if="listing.type === 'Offer'">Offered: {{listing.item}}</template>
-                                        Item: {{listing.item}} <br>
+                                        <template v-else-if="listing.type === 'Offer'">Offered: {{listing.item}}</template> <br>
                                         Info: {{listing.information}} <br>
                                         Deal: {{listing.deal}} <br>
                                         Contact: {{listing.contact_info}} <br>
                                         Name: {{listing.user.name}} <br>
                                     </div>
+
+                                    <br>
+                                    <br>
+
+
+                                    <div v-for="event in bulletinToSend.bulletinContent.events" v-bind:key="'ev'+event.id">
+
+                                        =============================
+                                        Events
+                                        =============================
+                                        <br>
+                                        Event: {{event.name}} <br>
+                                        Info: {{event.information}} <br>
+                                        When: {{event.when}} <br>
+                                        Contact: {{event.contact_info}} <br>
+                                    </div>
+
+                                    <br>
+                                    <br>
+                                    =============================
+                                    Swap Shop Information
+                                    =============================
+                                    <p class="keep-whitespace">{{ bulletinToSend.swap_shop_info }}</p>
+
                             </template>
                         </div>
                 </div>
@@ -237,10 +292,15 @@
                 bulletin: [],
                 step: 1,
                 totalSteps: 3,
-                shouldStrikeThrough: false,
-                bulletin: {
+                regexMatch: '/\d+/',
+                bulletinToSend: {
+                    number: null,
                     header: '',
-                    footer: ''
+                    swap_shop_info: '',
+                    bulletinContent: {
+                        listings: [],
+                        events: []
+                    }
                 }
             }
         },
@@ -251,20 +311,19 @@
             nextStep() {
                 this.step++;
 
-                if(this.step === 3) {
-                    let res = this.sortByKey(this.bulletin.listings, 'type');
-                    console.log(res);
+                if(this.step === this.totalSteps) {
+                    let listingResult = this.sortListingByWantFirst(this.bulletin.listings, 'type');
 
+                    //return items included for bulletin
+                    this.bulletinToSend.bulletinContent.listings = listingResult.filter(listing => {
+                        return listing.excluded_from_bulletin !== false;
+                    })
+
+                    this.bulletinToSend.bulletinContent.events = this.bulletin.events.filter(event => {
+                        return event.excluded_from_bulletin !== false;
+                    })
                 }
 
-            },
-            excludeEventFromBulletin(eventId) {
-                let eventIndex = this.bulletin.events.findIndex((event => event.id == eventId));
-                this.bulletin.events[eventIndex].excluded_from_bulletin = !this.bulletin.events[eventIndex].excluded_from_bulletin;
-            },
-            excludeListingFromBulletin(listingId) {
-                let listingIndex = this.bulletin.listings.findIndex((listing => listing.id == listingId));
-                this.bulletin.listings[listingIndex].excluded_from_bulletin = !this.bulletin.listings[listingIndex].excluded_from_bulletin;
             },
             moment(date) {
                 return moment(date);
@@ -276,45 +335,61 @@
                 window.location = '/listings/create';
             },
             getBulletin() {
-                axios.get('/api/bulletins').then(response => {
+                axios.get('/api/bulletindata').then(response => {
                     this.bulletin = response.data;
-                    // this.bulletinToSend = response.data;
                 })
             },
-            compare( a, b ) {
-                if ( a.type === 'Want' ){
-                    return -1;
-                }
-                if ( a.type === 'Offer' ){
-                    return 1;
-                }
-                return 0;
+            sendBulletin() {
+                let dataToSend = FormData();
+                dataToSend.append('number', this.bulletinToSend.number);
+                dataToSend.append('header', this.bulletinToSend.number);
+                dataToSend.append('swap_shop_info', this.bulletinToSend.number);
+
+                // dataToSend.append('content', this.bulletinToSend.number);
+
+
             },
-            sortByKey(array, key) {
+            sortListingByWantFirst(array, key) {
                 return array.sort(function(a, b) {
                     var x = a[key]; var y = b[key];
                     return ((x < y) ? 1 : ((x > y) ? -1 : 0));
                 });
             },
+            getLatestBulletinData() {
+                axios.get('/api/latestBulletinData').then(response => {
+                    this.bulletinToSend.number = response.data.number;
+
+                    // response.data.header.match(this.regexMatch);
+                    this.bulletinToSend.header = response.data.header.replace(response.data.header.match(/\d+/), response.data.number);
+
+
+                    this.bulletinToSend.swap_shop_info = response.data.swap_shop_info;
+                })
+            }
         },
         mounted() {
             this.getBulletin();
+            this.getLatestBulletinData();
         },
         computed: {
             sortListingsPlaceWantFirst() {
-                return this.sortByKey(this.bulletin.listings, 'type');
+                let listingResult = this.sortListingByWantFirst(this.bulletin.listings, 'type');
+
+                //return items included for bulletin
+                return listingResult.filter(listing => {
+                    return listing.excluded_from_bulletin !== 1;
+                })
+            },
+            bulletinHeader() {
+
             }
         }
     }
 </script>
 
 <style scoped>
-    .strikeThrough{
-        text-decoration: line-through;
-    }
-
     .keep-whitespace {
-    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: pre-wrap;
     }
 
 </style>

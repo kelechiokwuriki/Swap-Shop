@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="text-center" v-show="events.length === 0">
+            <div class="text-center" v-if="eventsToShow.length === 0">
                 <h1 class="mb-3">You have not made any event</h1>
                 <a role="button" href="/events/create" class="btn btn-success btn-lg">Create an Event</a>
             </div>

@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\Bulletin\BulletinService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class BulletinApiController extends Controller
 {
+
     protected $bulletinService;
 
     public function __construct(BulletinService $bulletinService)
@@ -22,7 +22,12 @@ class BulletinApiController extends Controller
      */
     public function index()
     {
-        return $this->bulletinService->getBulletinForLastSevenDays();
+        //
+    }
+
+    public function latestBulletinData()
+    {
+        return $this->bulletinService->getLatestBulletinData();
     }
 
     /**

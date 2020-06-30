@@ -15,7 +15,7 @@ class UserChangedPassword
      */
     public function handle($request, Closure $next)
     {
-        if($request->user()->passwordNeedsReset()) {
+        if(auth()->check() && auth()->user()->passwordNeedsReset()) {
             return redirect()->route('password.request')->with('status', 'You need to reset your password');
         }
 

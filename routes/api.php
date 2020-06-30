@@ -26,6 +26,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     //todo middleware for only admin
     Route::middleware('checkRole')->group(function () {
         Route::resource('users', 'Api\UserApiController');
-        Route::resource('bulletins', 'Api\BulletinApiController');
+
+        Route::get('bulletindata', 'Api\BulletinDataApiController@getBulletinForSevenDays');
+
+        Route::resource('bulletin', 'Api\BulletinApiController');
+        Route::get('/latestBulletinData', 'Api\BulletinApiController@latestBulletinData');
     });
 });

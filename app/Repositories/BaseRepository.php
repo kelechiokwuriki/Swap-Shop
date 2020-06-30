@@ -47,6 +47,11 @@ abstract class BaseRepository
         return $this->model->where('created_at', '>=', $date);
     }
 
+    public function latest()
+    {
+        return $this->model->latest();
+    }
+
     public function create(array $data)
     {
         return $this->model->create($data);
