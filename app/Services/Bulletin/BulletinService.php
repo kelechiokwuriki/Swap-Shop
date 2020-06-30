@@ -20,9 +20,9 @@ class BulletinService
 
     public function getBulletinForLastSevenDays()
     {
-        $events = $this->eventRepository->getDataCreatedSevenDaysAgo()->get();
+        $events = $this->eventRepository->getDataCreatedSevenDaysAgo()->with('user')->get();
 
-        $listings = $this->listingRepository->getDataCreatedSevenDaysAgo()->get();
+        $listings = $this->listingRepository->getDataCreatedSevenDaysAgo()->with('user')->get();
 
         return [
             'events' => $events,

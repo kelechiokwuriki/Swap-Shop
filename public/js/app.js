@@ -2101,6 +2101,119 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2224,13 +2337,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
+    return _defineProperty({
       bulletin: [],
-      bulletinToSend: [],
+      step: 1,
+      totalSteps: 3,
       shouldStrikeThrough: false
-    };
+    }, "bulletin", {
+      header: '',
+      footer: ''
+    });
   },
   methods: {
+    previousStep: function previousStep() {
+      this.step--;
+    },
+    nextStep: function nextStep() {
+      this.step++;
+
+      if (this.step === 3) {
+        var res = this.sortByKey(this.bulletin.listings, 'type');
+        console.log(res);
+      }
+    },
+    excludeEventFromBulletin: function excludeEventFromBulletin(eventId) {
+      var eventIndex = this.bulletin.events.findIndex(function (event) {
+        return event.id == eventId;
+      });
+      this.bulletin.events[eventIndex].excluded_from_bulletin = !this.bulletin.events[eventIndex].excluded_from_bulletin;
+    },
+    excludeListingFromBulletin: function excludeListingFromBulletin(listingId) {
+      var listingIndex = this.bulletin.listings.findIndex(function (listing) {
+        return listing.id == listingId;
+      });
+      this.bulletin.listings[listingIndex].excluded_from_bulletin = !this.bulletin.listings[listingIndex].excluded_from_bulletin;
+    },
     moment: function (_moment) {
       function moment(_x) {
         return _moment.apply(this, arguments);
@@ -2254,13 +2394,35 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/api/bulletins').then(function (response) {
-        _this.bulletin = response.data;
-        _this.bulletinToSend = response.data;
+        _this.bulletin = response.data; // this.bulletinToSend = response.data;
+      });
+    },
+    compare: function compare(a, b) {
+      if (a.type === 'Want') {
+        return -1;
+      }
+
+      if (a.type === 'Offer') {
+        return 1;
+      }
+
+      return 0;
+    },
+    sortByKey: function sortByKey(array, key) {
+      return array.sort(function (a, b) {
+        var x = a[key];
+        var y = b[key];
+        return x < y ? 1 : x > y ? -1 : 0;
       });
     }
   },
   mounted: function mounted() {
     this.getBulletin();
+  },
+  computed: {
+    sortListingsPlaceWantFirst: function sortListingsPlaceWantFirst() {
+      return this.sortByKey(this.bulletin.listings, 'type');
+    }
   }
 });
 
@@ -7548,7 +7710,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.strikeThrough[data-v-74a74fdc]{\n    text-decoration: line-through;\n}\n", ""]);
+exports.push([module.i, "\n.strikeThrough[data-v-74a74fdc]{\n    text-decoration: line-through;\n}\n.keep-whitespace[data-v-74a74fdc] {\nwhite-space: pre-wrap;       /* Since CSS 2.1 */\n}\n\n", ""]);
 
 // exports
 
@@ -90434,175 +90596,721 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-8" }, [
         _c("div", { staticClass: "card" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "card-header" }, [
             _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col" },
-                [
-                  _c("h4", { staticClass: "card-title text-center" }, [
-                    _vm._v("Events")
-                  ]),
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-6 text-center" }, [
+                _c(
+                  "h4",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.step === 1,
+                        expression: "step === 1"
+                      }
+                    ],
+                    staticClass: "card-title pt-2"
+                  },
+                  [_vm._v("Select items not to be included in bulletin")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h4",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.step === 2,
+                        expression: "step === 2"
+                      }
+                    ],
+                    staticClass: "card-title pt-2"
+                  },
+                  [_vm._v("Include Bulletin header and footer")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h4",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.step === _vm.totalSteps,
+                        expression: "step === totalSteps"
+                      }
+                    ],
+                    staticClass: "card-title pt-2"
+                  },
+                  [_vm._v("Preview and send email")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-3" }, [
+                _c("div", { staticClass: "float-right" }, [
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.step !== 1,
+                          expression: "step !== 1"
+                        }
+                      ],
+                      staticClass: "btn btn-secondary",
+                      on: { click: _vm.previousStep }
+                    },
+                    [_vm._v("Go Back")]
+                  ),
                   _vm._v(" "),
-                  _vm._l(_vm.bulletin.events, function(event) {
-                    return _c("div", { key: event.id, staticClass: "card" }, [
-                      _vm._m(1, true),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("div", { staticClass: "form-group row" }, [
-                          _c("div", { staticClass: "col-4" }, [
-                            _c(
-                              "p",
-                              {
-                                class: {
-                                  strikeThrough: _vm.shouldStrikeThrough
-                                }
-                              },
-                              [_vm._v("Name:")]
-                            )
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.step !== _vm.totalSteps,
+                          expression: "step !== totalSteps"
+                        }
+                      ],
+                      staticClass: "btn btn-primary ml-1",
+                      on: { click: _vm.nextStep }
+                    },
+                    [_vm._v("Next Step")]
+                  )
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "card-body" },
+            [
+              _vm.step === 1
+                ? [
+                    _c("div", { staticClass: "row" }, [
+                      _c(
+                        "div",
+                        { staticClass: "col" },
+                        [
+                          _c("h4", { staticClass: "card-title text-center" }, [
+                            _vm._v("Events")
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-8" }, [
-                            _c(
-                              "p",
-                              {
-                                class: {
-                                  strikeThrough: _vm.shouldStrikeThrough
-                                }
-                              },
-                              [_vm._v(_vm._s(event.name))]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-4" }, [
-                            _c(
-                              "p",
-                              {
-                                class: {
-                                  strikeThrough: _vm.shouldStrikeThrough
-                                }
-                              },
-                              [_vm._v("When:")]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-8" }, [
-                            _c(
-                              "p",
-                              {
-                                class: {
-                                  strikeThrough: _vm.shouldStrikeThrough
-                                }
-                              },
+                          _vm._l(_vm.bulletin.events, function(event) {
+                            return _c(
+                              "div",
+                              { key: event.id, staticClass: "card mb-4" },
                               [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm
-                                      .moment(event.when)
-                                      .format("MMMM Do YYYY, h:mm:ss a")
-                                  )
-                                )
+                                _c("div", { staticClass: "card-header" }, [
+                                  _c("div", { staticClass: "row" }, [
+                                    _vm._m(1, true),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-sm-3" }, [
+                                      _c(
+                                        "div",
+                                        { staticClass: "float-right" },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "form-check" },
+                                            [
+                                              _c("input", {
+                                                staticClass: "form-check-input",
+                                                attrs: {
+                                                  type: "checkbox",
+                                                  id: "exampleCheck1"
+                                                },
+                                                on: {
+                                                  change: function($event) {
+                                                    return _vm.excludeEventFromBulletin(
+                                                      event.id
+                                                    )
+                                                  }
+                                                }
+                                              })
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "card-body" }, [
+                                  _c("div", { staticClass: "form-group row" }, [
+                                    _c("div", { staticClass: "col-4" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              event.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v("Name:")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-8" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              event.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(event.name))]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-4" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              event.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v("When:")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-8" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              event.excluded_from_bulletin
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                        " +
+                                              _vm._s(
+                                                _vm
+                                                  .moment(event.when)
+                                                  .format(
+                                                    "MMMM Do YYYY, h:mm:ss a"
+                                                  )
+                                              ) +
+                                              "\n                                                    "
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-4" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              event.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v("Information:")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-8" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              event.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(event.information))]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-4" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              event.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v("Contact info:")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-8" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              event.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(event.contact_info))]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-4" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              event.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v("Date created:")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-8" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              event.excluded_from_bulletin
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                        " +
+                                              _vm._s(
+                                                _vm
+                                                  .moment(event.created_at)
+                                                  .format(
+                                                    "MMMM Do YYYY, h:mm:ss a"
+                                                  )
+                                              ) +
+                                              "\n                                                    "
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-4" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              event.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v("Date updated:")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-8" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              event.excluded_from_bulletin
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                        " +
+                                              _vm._s(
+                                                _vm
+                                                  .moment(event.updated_at)
+                                                  .format(
+                                                    "MMMM Do YYYY, h:mm:ss a"
+                                                  )
+                                              ) +
+                                              "\n                                                    "
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ])
+                                ])
                               ]
                             )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-4" }, [
-                            _c(
-                              "p",
-                              {
-                                class: {
-                                  strikeThrough: _vm.shouldStrikeThrough
-                                }
-                              },
-                              [_vm._v("Information:")]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-8" }, [
-                            _c(
-                              "p",
-                              {
-                                class: {
-                                  strikeThrough: _vm.shouldStrikeThrough
-                                }
-                              },
-                              [_vm._v(_vm._s(event.information))]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-4" }, [
-                            _c(
-                              "p",
-                              {
-                                class: {
-                                  strikeThrough: _vm.shouldStrikeThrough
-                                }
-                              },
-                              [_vm._v("Contact info:")]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-8" }, [
-                            _c(
-                              "p",
-                              {
-                                class: {
-                                  strikeThrough: _vm.shouldStrikeThrough
-                                }
-                              },
-                              [_vm._v(_vm._s(event.contact_info))]
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  })
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col" },
-                [
-                  _c("h4", { staticClass: "card-title text-center" }, [
-                    _vm._v("Listings")
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.bulletin.listings, function(listing) {
-                    return _c("div", { key: listing.id, staticClass: "card" }, [
-                      _vm._m(2, true),
+                          })
+                        ],
+                        2
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("div", { staticClass: "form-group row" }, [
-                          _vm._m(3, true),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-8" }, [
-                            _c("p", [_vm._v(_vm._s(listing.item))])
+                      _c(
+                        "div",
+                        { staticClass: "col" },
+                        [
+                          _c("h4", { staticClass: "card-title text-center" }, [
+                            _vm._v("Listings")
                           ]),
                           _vm._v(" "),
-                          _vm._m(4, true),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-8" }, [
-                            _c("p", [_vm._v(_vm._s(listing.information))])
-                          ]),
-                          _vm._v(" "),
-                          _vm._m(5, true),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-8" }, [
-                            _c("p", [_vm._v(_vm._s(listing.deal))])
-                          ])
-                        ])
-                      ])
+                          _vm._l(_vm.bulletin.listings, function(listing) {
+                            return _c(
+                              "div",
+                              { key: listing.id, staticClass: "card mb-4" },
+                              [
+                                _c("div", { staticClass: "card-header" }, [
+                                  _c("div", { staticClass: "row" }, [
+                                    _vm._m(2, true),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-sm-3" }, [
+                                      _c(
+                                        "div",
+                                        { staticClass: "float-right" },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "form-check" },
+                                            [
+                                              _c("input", {
+                                                staticClass: "form-check-input",
+                                                attrs: {
+                                                  type: "checkbox",
+                                                  id: "exampleCheck1"
+                                                },
+                                                on: {
+                                                  change: function($event) {
+                                                    return _vm.excludeListingFromBulletin(
+                                                      listing.id
+                                                    )
+                                                  }
+                                                }
+                                              })
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "card-body" }, [
+                                  _c("div", { staticClass: "form-group row" }, [
+                                    _c("div", { staticClass: "col-4" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              listing.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v("Type:")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-8" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              listing.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(listing.type))]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-4" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              listing.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v("Item:")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-8" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              listing.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(listing.item))]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-4" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              listing.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v("Information:")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-8" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              listing.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(listing.information))]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-4" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              listing.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v("Deal:")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-8" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              listing.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(listing.deal))]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-4" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              listing.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v("Date created:")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-8" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              listing.excluded_from_bulletin
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                        " +
+                                              _vm._s(
+                                                _vm
+                                                  .moment(listing.created_at)
+                                                  .format(
+                                                    "MMMM Do YYYY, h:mm:ss a"
+                                                  )
+                                              ) +
+                                              "\n                                                    "
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-4" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              listing.excluded_from_bulletin
+                                          }
+                                        },
+                                        [_vm._v("Date updated:")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-8" }, [
+                                      _c(
+                                        "p",
+                                        {
+                                          class: {
+                                            strikeThrough:
+                                              listing.excluded_from_bulletin
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                        " +
+                                              _vm._s(
+                                                _vm
+                                                  .moment(listing.updated_at)
+                                                  .format(
+                                                    "MMMM Do YYYY, h:mm:ss a"
+                                                  )
+                                              ) +
+                                              "\n                                                    "
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ])
+                                ])
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      )
                     ])
-                  })
-                ],
-                2
-              )
-            ])
-          ])
+                  ]
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.step === 2
+                ? [
+                    _c(
+                      "form",
+                      { attrs: { role: "form", "prevent-default": "" } },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _vm._m(3),
+                            _vm._v(" "),
+                            _c("textarea-autosize", {
+                              ref: "footerTextArea",
+                              staticClass: "form-control",
+                              attrs: { id: "header" },
+                              model: {
+                                value: _vm.bulletin.header,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.bulletin, "header", $$v)
+                                },
+                                expression: "bulletin.header"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _vm._m(4),
+                            _vm._v(" "),
+                            _c("textarea-autosize", {
+                              ref: "headerTextArea",
+                              staticClass: "form-control",
+                              attrs: { id: "footer", "min-height": 30 },
+                              model: {
+                                value: _vm.bulletin.footer,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.bulletin, "footer", $$v)
+                                },
+                                expression: "bulletin.footer"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ]
+                    )
+                  ]
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.step === 3
+                ? [
+                    _c("p", { staticClass: "keep-whitespace" }, [
+                      _vm._v(_vm._s(_vm.bulletin.header))
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.sortListingsPlaceWantFirst, function(listing) {
+                      return _c(
+                        "div",
+                        { key: listing.id },
+                        [
+                          listing.type === "Want"
+                            ? _c("p", [
+                                _vm._v(
+                                  "\n                                    =============================\n                                        Wanted\n                                    =============================\n                                    "
+                                )
+                              ])
+                            : listing.type === "Offer"
+                            ? _c("p", [
+                                _vm._v(
+                                  "\n                                    =============================\n                                        Offered\n                                    =============================\n                                    "
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          listing.type === "Want"
+                            ? [_vm._v("Wanted: " + _vm._s(listing.item))]
+                            : listing.type === "Offer"
+                            ? [_vm._v("Offered: " + _vm._s(listing.item))]
+                            : _vm._e(),
+                          _vm._v(
+                            "\n                                    Item: " +
+                              _vm._s(listing.item) +
+                              " "
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "\n                                    Info: " +
+                              _vm._s(listing.information) +
+                              " "
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "\n                                    Deal: " +
+                              _vm._s(listing.deal) +
+                              " "
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "\n                                    Contact: " +
+                              _vm._s(listing.contact_info) +
+                              " "
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "\n                                    Name: " +
+                              _vm._s(listing.user.name) +
+                              " "
+                          ),
+                          _c("br")
+                        ],
+                        2
+                      )
+                    })
+                  ]
+                : _vm._e()
+            ],
+            2
+          )
         ])
       ])
     ])
@@ -90613,29 +91321,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-9" }, [
-          _c("h5", { staticClass: "card-title pt-2" }, [
-            _vm._v("Bulletin for last 7 days")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-3" }, [
-          _c("div", { staticClass: "float-right" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: {
-                  "data-toggle": "modal",
-                  "data-target": "#registerUserModal"
-                }
-              },
-              [_vm._v("Register a user")]
-            )
-          ])
-        ])
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("p", { staticClass: "card-title pt-2" }, [
+        _vm._v("Data from last 7 days")
       ])
     ])
   },
@@ -90643,24 +91331,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-9" }, [
-          _c("h5", { staticClass: "card-title" }, [
-            _vm._v("Mark for exclusion")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-3" }, [
-          _c("div", { staticClass: "float-right" }, [
-            _c("div", { staticClass: "form-check" }, [
-              _c("input", {
-                staticClass: "form-check-input",
-                attrs: { type: "checkbox", id: "exampleCheck1" }
-              })
-            ])
-          ])
-        ])
+    return _c("div", { staticClass: "col-sm-9" }, [
+      _c("h5", { staticClass: "card-title" }, [
+        _vm._v("Mark event for exclusion")
       ])
     ])
   },
@@ -90668,24 +91341,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-9" }, [
-          _c("h5", { staticClass: "card-title" }, [
-            _vm._v("Mark for exclusion")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-3" }, [
-          _c("div", { staticClass: "float-right" }, [
-            _c("div", { staticClass: "form-check" }, [
-              _c("input", {
-                staticClass: "form-check-input",
-                attrs: { type: "checkbox", id: "exampleCheck1" }
-              })
-            ])
-          ])
-        ])
+    return _c("div", { staticClass: "col-sm-9" }, [
+      _c("h5", { staticClass: "card-title" }, [
+        _vm._v("Mark listing for exclusion")
       ])
     ])
   },
@@ -90693,21 +91351,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4" }, [_c("p", [_vm._v("Item:")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4" }, [
-      _c("p", [_vm._v("Information:")])
+    return _c("h5", [
+      _c("label", { attrs: { for: "header" } }, [
+        _vm._v("Include your header in Bulletin")
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4" }, [_c("p", [_vm._v("Deal:")])])
+    return _c("h5", [
+      _c("label", { attrs: { for: "footer" } }, [
+        _vm._v("Include your footer in Bulletin")
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -92340,6 +92998,277 @@ function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-textarea-autosize/dist/vue-textarea-autosize.esm.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/vue-textarea-autosize/dist/vue-textarea-autosize.esm.js ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/*!
+ * vue-textarea-autosize v1.1.1 
+ * (c) 2019 Saymon
+ * Released under the MIT License.
+ */
+//
+//
+//
+//
+//
+//
+//
+var script = {
+  name: 'TextareaAutosize',
+  props: {
+    value: {
+      type: [String, Number],
+      default: ''
+    },
+    autosize: {
+      type: Boolean,
+      default: true
+    },
+    minHeight: {
+      type: [Number],
+      'default': null
+    },
+    maxHeight: {
+      type: [Number],
+      'default': null
+    },
+
+    /*
+     * Force !important for style properties
+     */
+    important: {
+      type: [Boolean, Array],
+      default: false
+    }
+  },
+  data: function data() {
+    return {
+      // data property for v-model binding with real textarea tag
+      val: null,
+      // works when content height becomes more then value of the maxHeight property
+      maxHeightScroll: false,
+      height: 'auto'
+    };
+  },
+  computed: {
+    computedStyles: function computedStyles() {
+      if (!this.autosize) return {};
+      return {
+        resize: !this.isResizeImportant ? 'none' : 'none !important',
+        height: this.height,
+        overflow: this.maxHeightScroll ? 'auto' : !this.isOverflowImportant ? 'hidden' : 'hidden !important'
+      };
+    },
+    isResizeImportant: function isResizeImportant() {
+      var imp = this.important;
+      return imp === true || Array.isArray(imp) && imp.includes('resize');
+    },
+    isOverflowImportant: function isOverflowImportant() {
+      var imp = this.important;
+      return imp === true || Array.isArray(imp) && imp.includes('overflow');
+    },
+    isHeightImportant: function isHeightImportant() {
+      var imp = this.important;
+      return imp === true || Array.isArray(imp) && imp.includes('height');
+    }
+  },
+  watch: {
+    value: function value(val) {
+      this.val = val;
+    },
+    val: function val(_val) {
+      this.$nextTick(this.resize);
+      this.$emit('input', _val);
+    },
+    minHeight: function minHeight() {
+      this.$nextTick(this.resize);
+    },
+    maxHeight: function maxHeight() {
+      this.$nextTick(this.resize);
+    },
+    autosize: function autosize(val) {
+      if (val) this.resize();
+    }
+  },
+  methods: {
+    resize: function resize() {
+      var _this = this;
+
+      var important = this.isHeightImportant ? 'important' : '';
+      this.height = "auto".concat(important ? ' !important' : '');
+      this.$nextTick(function () {
+        var contentHeight = _this.$el.scrollHeight + 1;
+
+        if (_this.minHeight) {
+          contentHeight = contentHeight < _this.minHeight ? _this.minHeight : contentHeight;
+        }
+
+        if (_this.maxHeight) {
+          if (contentHeight > _this.maxHeight) {
+            contentHeight = _this.maxHeight;
+            _this.maxHeightScroll = true;
+          } else {
+            _this.maxHeightScroll = false;
+          }
+        }
+
+        var heightVal = contentHeight + 'px';
+        _this.height = "".concat(heightVal).concat(important ? ' !important' : '');
+      });
+      return this;
+    }
+  },
+  created: function created() {
+    this.val = this.value;
+  },
+  mounted: function mounted() {
+    this.resize();
+  }
+};
+
+function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
+/* server only */
+, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+  if (typeof shadowMode !== 'boolean') {
+    createInjectorSSR = createInjector;
+    createInjector = shadowMode;
+    shadowMode = false;
+  } // Vue.extend constructor export interop.
+
+
+  var options = typeof script === 'function' ? script.options : script; // render functions
+
+  if (template && template.render) {
+    options.render = template.render;
+    options.staticRenderFns = template.staticRenderFns;
+    options._compiled = true; // functional template
+
+    if (isFunctionalTemplate) {
+      options.functional = true;
+    }
+  } // scopedId
+
+
+  if (scopeId) {
+    options._scopeId = scopeId;
+  }
+
+  var hook;
+
+  if (moduleIdentifier) {
+    // server build
+    hook = function hook(context) {
+      // 2.3 injection
+      context = context || // cached call
+      this.$vnode && this.$vnode.ssrContext || // stateful
+      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
+      // 2.2 with runInNewContext: true
+
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__;
+      } // inject component styles
+
+
+      if (style) {
+        style.call(this, createInjectorSSR(context));
+      } // register component module identifier for async chunk inference
+
+
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier);
+      }
+    }; // used by ssr in case component is cached and beforeCreate
+    // never gets called
+
+
+    options._ssrRegister = hook;
+  } else if (style) {
+    hook = shadowMode ? function () {
+      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
+    } : function (context) {
+      style.call(this, createInjector(context));
+    };
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // register for functional component in vue file
+      var originalRender = options.render;
+
+      options.render = function renderWithStyleInjection(h, context) {
+        hook.call(context);
+        return originalRender(h, context);
+      };
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate;
+      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+    }
+  }
+
+  return script;
+}
+
+var normalizeComponent_1 = normalizeComponent;
+
+/* script */
+const __vue_script__ = script;
+
+/* template */
+var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('textarea',{directives:[{name:"model",rawName:"v-model",value:(_vm.val),expression:"val"}],style:(_vm.computedStyles),domProps:{"value":(_vm.val)},on:{"focus":_vm.resize,"input":function($event){if($event.target.composing){ return; }_vm.val=$event.target.value;}}})};
+var __vue_staticRenderFns__ = [];
+
+  /* style */
+  const __vue_inject_styles__ = undefined;
+  /* scoped */
+  const __vue_scope_id__ = undefined;
+  /* module identifier */
+  const __vue_module_identifier__ = undefined;
+  /* functional template */
+  const __vue_is_functional_template__ = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var TextareaAutosize = normalizeComponent_1(
+    { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    undefined,
+    undefined
+  );
+
+var version = '1.1.1';
+
+var install = function install(Vue) {
+  Vue.component('TextareaAutosize', TextareaAutosize);
+};
+
+var plugin = {
+  install: install,
+  version: version
+};
+
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(plugin);
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (plugin);
 
 
 /***/ }),
@@ -104410,6 +105339,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_ctk_date_time_picker__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_ctk_date_time_picker__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_ctk_date_time_picker_dist_vue_ctk_date_time_picker_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css */ "./node_modules/vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css");
 /* harmony import */ var vue_ctk_date_time_picker_dist_vue_ctk_date_time_picker_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_ctk_date_time_picker_dist_vue_ctk_date_time_picker_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue_textarea_autosize__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-textarea-autosize */ "./node_modules/vue-textarea-autosize/dist/vue-textarea-autosize.esm.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -104447,6 +105377,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('home-component', __webpack
 
 
 
+
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('DateTimePicker', vue_ctk_date_time_picker__WEBPACK_IMPORTED_MODULE_2___default.a);
 var plugin = {
   install: function install() {
@@ -104455,6 +105386,7 @@ var plugin = {
   }
 };
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(plugin);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_textarea_autosize__WEBPACK_IMPORTED_MODULE_4__["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

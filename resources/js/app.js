@@ -37,17 +37,19 @@ Vue.component('admin', require('./components/admin/Admin.vue').default);
 Vue.component('manageusers', require('./components/admin/ManageUsers.vue').default);
 Vue.component('bulletin', require('./components/admin/Bulletin.vue').default);
 
-
 //home
 Vue.component('home-component', require('./components/Home.vue').default);
+
+
 
 import Vue from 'vue'
 import helper from './helper';
 import DateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
+import TextareaAutosize from 'vue-textarea-autosize'
+
 
 Vue.component('DateTimePicker', DateTimePicker);
-
 
 const plugin = {
     install () {
@@ -57,6 +59,7 @@ const plugin = {
   }
 
   Vue.use(plugin);
+  Vue.use(TextareaAutosize);
 
 
 /**

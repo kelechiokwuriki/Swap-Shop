@@ -83,7 +83,7 @@
                 <div class="title m-b-md">
                     Swap Shop Platform
                 </div>
-                <h2>Welcome dear person</h2>
+                <h2>There's no such thing as rubbish, just stuff that hasn't found the right home...</h2>
                 <h3>Swap shop is a platform for members to exchange items. <br>It supports re-use, re-cycling and community neighbourliness</h3>
                 <div class="links">
                 </div>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIncludedForBulletinColumnToEventsTable extends Migration
+class AddExcludedFromBulletinToListingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddIncludedForBulletinColumnToEventsTable extends Migration
      */
     public function up()
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->boolean('included_for_bulletin')->default(1)->nullable();
-
+        Schema::table('listings', function (Blueprint $table) {
+            $table->boolean('excluded_from_bulletin')->default(0)->nullable();
         });
     }
 
@@ -26,8 +25,8 @@ class AddIncludedForBulletinColumnToEventsTable extends Migration
      */
     public function down()
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->dropColumn('included_for_bulletin');
+        Schema::table('listings', function (Blueprint $table) {
+            $table->dropColumn('excluded_from_bulletin');
         });
     }
 }
