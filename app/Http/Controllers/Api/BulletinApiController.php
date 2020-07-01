@@ -37,7 +37,6 @@ class BulletinApiController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -48,7 +47,7 @@ class BulletinApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->bulletinService->createAndSendBulletin($request->toArray());
     }
 
     /**

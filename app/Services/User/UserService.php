@@ -25,6 +25,11 @@ class UserService
         return $this->userRepository->all();
     }
 
+    public function getAllUsersEmailAddress()
+    {
+        return $this->userRepository->all()->pluck('email');
+    }
+
     public function registerUser(array $user)
     {
         $user['password'] = Hash::make(self::DEFAULT_PASS);

@@ -2399,10 +2399,8 @@ __webpack_require__.r(__webpack_exports__);
         number: null,
         header: '',
         swap_shop_info: '',
-        bulletinContent: {
-          listings: [],
-          events: []
-        }
+        listings: [],
+        events: []
       }
     };
   },
@@ -2416,10 +2414,10 @@ __webpack_require__.r(__webpack_exports__);
       if (this.step === this.totalSteps) {
         var listingResult = this.sortListingByWantFirst(this.bulletin.listings, 'type'); //return items included for bulletin
 
-        this.bulletinToSend.bulletinContent.listings = listingResult.filter(function (listing) {
+        this.bulletinToSend.listings = listingResult.filter(function (listing) {
           return listing.excluded_from_bulletin !== false;
         });
-        this.bulletinToSend.bulletinContent.events = this.bulletin.events.filter(function (event) {
+        this.bulletinToSend.events = this.bulletin.events.filter(function (event) {
           return event.excluded_from_bulletin !== false;
         });
       }
@@ -2451,10 +2449,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     sendBulletin: function sendBulletin() {
-      var dataToSend = FormData();
-      dataToSend.append('number', this.bulletinToSend.number);
-      dataToSend.append('header', this.bulletinToSend.number);
-      dataToSend.append('swap_shop_info', this.bulletinToSend.number); // dataToSend.append('content', this.bulletinToSend.number);
+      axios.post('/api/bulletin', this.bulletinToSend).then(function (response) {
+        console.log(response.data);
+      });
     },
     sortListingByWantFirst: function sortListingByWantFirst(array, key) {
       return array.sort(function (a, b) {
@@ -91277,71 +91274,66 @@ var render = function() {
                       _vm._v(_vm._s(_vm.bulletinToSend.header))
                     ]),
                     _vm._v(" "),
-                    _vm._l(
-                      _vm.bulletinToSend.bulletinContent.listings,
-                      function(listing) {
-                        return _c(
-                          "div",
-                          { key: "li" + listing.id },
-                          [
-                            listing.type === "Want"
-                              ? _c("p", [
-                                  _vm._v(
-                                    "\n                                    =============================\n                                        Wanted\n                                    =============================\n                                    "
-                                  )
-                                ])
-                              : listing.type === "Offer"
-                              ? _c("p", [
-                                  _vm._v(
-                                    "\n                                    =============================\n                                        Offered\n                                    =============================\n                                    "
-                                  )
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            listing.type === "Want"
-                              ? [_vm._v("Wanted: " + _vm._s(listing.item))]
-                              : listing.type === "Offer"
-                              ? [_vm._v("Offered: " + _vm._s(listing.item))]
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c("br"),
-                            _vm._v(
-                              "\n                                    Info: " +
-                                _vm._s(listing.information) +
-                                " "
-                            ),
-                            _c("br"),
-                            _vm._v(
-                              "\n                                    Deal: " +
-                                _vm._s(listing.deal) +
-                                " "
-                            ),
-                            _c("br"),
-                            _vm._v(
-                              "\n                                    Contact: " +
-                                _vm._s(listing.contact_info) +
-                                " "
-                            ),
-                            _c("br"),
-                            _vm._v(
-                              "\n                                    Name: " +
-                                _vm._s(listing.user.name) +
-                                " "
-                            ),
-                            _c("br")
-                          ],
-                          2
-                        )
-                      }
-                    ),
+                    _vm._l(_vm.bulletinToSend.listings, function(listing) {
+                      return _c(
+                        "div",
+                        { key: "li" + listing.id },
+                        [
+                          listing.type === "Want"
+                            ? _c("p", [
+                                _vm._v(
+                                  "\n                                    =============================\n                                        Wanted\n                                    =============================\n                                    "
+                                )
+                              ])
+                            : listing.type === "Offer"
+                            ? _c("p", [
+                                _vm._v(
+                                  "\n                                    =============================\n                                        Offered\n                                    =============================\n                                    "
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          listing.type === "Want"
+                            ? [_vm._v("Wanted: " + _vm._s(listing.item))]
+                            : listing.type === "Offer"
+                            ? [_vm._v("Offered: " + _vm._s(listing.item))]
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(
+                            "\n                                    Info: " +
+                              _vm._s(listing.information) +
+                              " "
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "\n                                    Deal: " +
+                              _vm._s(listing.deal) +
+                              " "
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "\n                                    Contact: " +
+                              _vm._s(listing.user.email) +
+                              " "
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "\n                                    Name: " +
+                              _vm._s(listing.user.name) +
+                              " "
+                          ),
+                          _c("br")
+                        ],
+                        2
+                      )
+                    }),
                     _vm._v(" "),
                     _c("br"),
                     _vm._v(" "),
                     _c("br"),
                     _vm._v(" "),
-                    _vm._l(_vm.bulletinToSend.bulletinContent.events, function(
-                      event
-                    ) {
+                    _vm._l(_vm.bulletinToSend.events, function(event) {
                       return _c("div", { key: "ev" + event.id }, [
                         _vm._v(
                           "\n\n                                    =============================\n                                    Events\n                                    =============================\n                                    "
@@ -91507,7 +91499,7 @@ var staticRenderFns = [
     return _c("h5", [
       _c("label", { staticClass: "mt-3", attrs: { for: "header" } }, [
         _vm._v(
-          "We retrieved the last bulletin header and updated the number. Update the information as you please"
+          "We retrieved the last bulletin header and updated the number. Update the header as you please"
         )
       ])
     ])

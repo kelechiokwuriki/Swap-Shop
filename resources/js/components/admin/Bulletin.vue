@@ -205,7 +205,7 @@
 
                                     <!--bulletin header-->
                                     <div class="form-group">
-                                        <h5><label for="header" class="mt-3">We retrieved the last bulletin header and updated the number. Update the information as you please</label></h5>
+                                        <h5><label for="header" class="mt-3">We retrieved the last bulletin header and updated the number. Update the header as you please</label></h5>
                                         <textarea-autosize
                                         id="header"
                                         class="form-control"
@@ -233,7 +233,7 @@
 
                                     <p class="keep-whitespace">{{ bulletinToSend.header }}</p>
 
-                                    <div v-for="listing in bulletinToSend.bulletinContent.listings" v-bind:key="'li'+listing.id">
+                                    <div v-for="listing in bulletinToSend.listings" v-bind:key="'li'+listing.id">
 
                                         <p v-if="listing.type === 'Want'">
                                         =============================
@@ -250,7 +250,7 @@
                                         <template v-else-if="listing.type === 'Offer'">Offered: {{listing.item}}</template> <br>
                                         Info: {{listing.information}} <br>
                                         Deal: {{listing.deal}} <br>
-                                        Contact: {{listing.contact_info}} <br>
+                                        Contact: {{listing.user.email}} <br>
                                         Name: {{listing.user.name}} <br>
                                     </div>
 
@@ -258,7 +258,7 @@
                                     <br>
 
 
-                                    <div v-for="event in bulletinToSend.bulletinContent.events" v-bind:key="'ev'+event.id">
+                                    <div v-for="event in bulletinToSend.events" v-bind:key="'ev'+event.id">
 
                                         =============================
                                         Events
@@ -297,10 +297,8 @@
                     number: null,
                     header: '',
                     swap_shop_info: '',
-                    bulletinContent: {
-                        listings: [],
-                        events: []
-                    }
+                    listings: [],
+                    events: []
                 }
             }
         },
@@ -315,11 +313,11 @@
                     let listingResult = this.sortListingByWantFirst(this.bulletin.listings, 'type');
 
                     //return items included for bulletin
-                    this.bulletinToSend.bulletinContent.listings = listingResult.filter(listing => {
+                    this.bulletinToSend.listings = listingResult.filter(listing => {
                         return listing.excluded_from_bulletin !== false;
                     })
 
-                    this.bulletinToSend.bulletinContent.events = this.bulletin.events.filter(event => {
+                    this.bulletinToSend.events = this.bulletin.events.filter(event => {
                         return event.excluded_from_bulletin !== false;
                     })
                 }
@@ -340,12 +338,10 @@
                 })
             },
             sendBulletin() {
-                let dataToSend = FormData();
-                dataToSend.append('number', this.bulletinToSend.number);
-                dataToSend.append('header', this.bulletinToSend.number);
-                dataToSend.append('swap_shop_info', this.bulletinToSend.number);
 
-                // dataToSend.append('content', this.bulletinToSend.number);
+                axios.post('/api/bulletin', this.bulletinToSend).then(response => {
+                    console.log(response.data);
+                })
 
 
             },
