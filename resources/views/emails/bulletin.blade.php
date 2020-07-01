@@ -25,6 +25,19 @@ Name: {{$listing['user']['name']}} <br>
 
 @endforeach
 
+@foreach($events as $event)
+
+@component('mail::panel')
+<h1>Event</h1>
+<br>
+Event: {{$event['name']}} <br>
+Info: {{$event['information']}} <br>
+When: {{$event['when']}} <br>
+Contact: {{$event['contact_info']}} <br>
+@endcomponent
+
+@endforeach
+
 
 @component('mail::button', ['url' => ''])
 Button Text

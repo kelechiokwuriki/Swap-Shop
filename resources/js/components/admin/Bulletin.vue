@@ -37,12 +37,12 @@
                                                 <div class="row">
                                                     <div class="col-sm-9">
                                                         <h5 class="card-title">
-                                                            <span v-if="event.excluded_from_bulletin">
+                                                            <span v-if="event.included_in_bulletin">
                                                                 Un-mark
                                                             </span>
                                                             <span v-else>Mark</span>
                                                             event for
-                                                            <span v-if="event.excluded_from_bulletin">
+                                                            <span v-if="event.included_in_bulletin">
                                                                 exclusion
                                                             </span>
                                                             <span v-else>inclusion</span>
@@ -51,7 +51,7 @@
                                                     <div class="col-sm-3">
                                                         <div class="float-right">
                                                             <div class="form-check">
-                                                                <input type="checkbox" v-model="event.excluded_from_bulletin" class="form-check-input" id="exampleCheck1">
+                                                                <input type="checkbox" v-model="event.included_in_bulletin" class="form-check-input" id="exampleCheck1">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -119,12 +119,12 @@
                                             <div class="card-header">
                                                 <div class="row">
                                                     <div class="col-sm-9">
-                                                        <h5 class="card-title"><span v-if="listing.excluded_from_bulletin">
+                                                        <h5 class="card-title"><span v-if="listing.included_in_bulletin">
                                                                 Un-mark
                                                             </span>
                                                             <span v-else>Mark</span>
                                                             listing for
-                                                            <span v-if="listing.excluded_from_bulletin">
+                                                            <span v-if="listing.included_in_bulletin">
                                                                 exclusion
                                                             </span>
                                                             <span v-else>inclusion</span>
@@ -133,7 +133,7 @@
                                                     <div class="col-sm-3">
                                                         <div class="float-right">
                                                             <div class="form-check">
-                                                                <input type="checkbox" v-model="listing.excluded_from_bulletin" class="form-check-input" id="exampleCheck1">
+                                                                <input type="checkbox" v-model="listing.included_in_bulletin" class="form-check-input" id="exampleCheck1">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -314,11 +314,11 @@
 
                     //return items included for bulletin
                     this.bulletinToSend.listings = listingResult.filter(listing => {
-                        return listing.excluded_from_bulletin !== false;
+                        return listing.included_in_bulletin !== false;
                     })
 
                     this.bulletinToSend.events = this.bulletin.events.filter(event => {
-                        return event.excluded_from_bulletin !== false;
+                        return event.included_in_bulletin !== false;
                     })
                 }
 
@@ -373,7 +373,7 @@
 
                 //return items included for bulletin
                 return listingResult.filter(listing => {
-                    return listing.excluded_from_bulletin !== 1;
+                    return listing.included_in_bulletin !== 1;
                 })
             },
             bulletinHeader() {

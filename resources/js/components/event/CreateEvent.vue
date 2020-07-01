@@ -24,7 +24,7 @@
                     </div>
                 </form>
                 <div class="text-center">
-                    <button type="button" class="btn btn-success btn-lg" @click="createEvent">Create Listing</button>
+                    <button type="button" class="btn btn-success btn-lg" @click="createEvent">Create Event</button>
                 </div>
             </div>
         </div>

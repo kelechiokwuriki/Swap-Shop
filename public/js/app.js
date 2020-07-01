@@ -2415,10 +2415,10 @@ __webpack_require__.r(__webpack_exports__);
         var listingResult = this.sortListingByWantFirst(this.bulletin.listings, 'type'); //return items included for bulletin
 
         this.bulletinToSend.listings = listingResult.filter(function (listing) {
-          return listing.excluded_from_bulletin !== false;
+          return listing.included_in_bulletin !== false;
         });
         this.bulletinToSend.events = this.bulletin.events.filter(function (event) {
-          return event.excluded_from_bulletin !== false;
+          return event.included_in_bulletin !== false;
         });
       }
     },
@@ -2480,7 +2480,7 @@ __webpack_require__.r(__webpack_exports__);
       var listingResult = this.sortListingByWantFirst(this.bulletin.listings, 'type'); //return items included for bulletin
 
       return listingResult.filter(function (listing) {
-        return listing.excluded_from_bulletin !== 1;
+        return listing.included_in_bulletin !== 1;
       });
     },
     bulletinHeader: function bulletinHeader() {}
@@ -90792,7 +90792,7 @@ var render = function() {
                                   _c("div", { staticClass: "row" }, [
                                     _c("div", { staticClass: "col-sm-9" }, [
                                       _c("h5", { staticClass: "card-title" }, [
-                                        event.excluded_from_bulletin
+                                        event.included_in_bulletin
                                           ? _c("span", [
                                               _vm._v(
                                                 "\n                                                            Un-mark\n                                                        "
@@ -90802,7 +90802,7 @@ var render = function() {
                                         _vm._v(
                                           "\n                                                        event for\n                                                        "
                                         ),
-                                        event.excluded_from_bulletin
+                                        event.included_in_bulletin
                                           ? _c("span", [
                                               _vm._v(
                                                 "\n                                                            exclusion\n                                                        "
@@ -90827,9 +90827,9 @@ var render = function() {
                                                     name: "model",
                                                     rawName: "v-model",
                                                     value:
-                                                      event.excluded_from_bulletin,
+                                                      event.included_in_bulletin,
                                                     expression:
-                                                      "event.excluded_from_bulletin"
+                                                      "event.included_in_bulletin"
                                                   }
                                                 ],
                                                 staticClass: "form-check-input",
@@ -90839,18 +90839,18 @@ var render = function() {
                                                 },
                                                 domProps: {
                                                   checked: Array.isArray(
-                                                    event.excluded_from_bulletin
+                                                    event.included_in_bulletin
                                                   )
                                                     ? _vm._i(
-                                                        event.excluded_from_bulletin,
+                                                        event.included_in_bulletin,
                                                         null
                                                       ) > -1
-                                                    : event.excluded_from_bulletin
+                                                    : event.included_in_bulletin
                                                 },
                                                 on: {
                                                   change: function($event) {
                                                     var $$a =
-                                                        event.excluded_from_bulletin,
+                                                        event.included_in_bulletin,
                                                       $$el = $event.target,
                                                       $$c = $$el.checked
                                                         ? true
@@ -90862,14 +90862,14 @@ var render = function() {
                                                         $$i < 0 &&
                                                           _vm.$set(
                                                             event,
-                                                            "excluded_from_bulletin",
+                                                            "included_in_bulletin",
                                                             $$a.concat([$$v])
                                                           )
                                                       } else {
                                                         $$i > -1 &&
                                                           _vm.$set(
                                                             event,
-                                                            "excluded_from_bulletin",
+                                                            "included_in_bulletin",
                                                             $$a
                                                               .slice(0, $$i)
                                                               .concat(
@@ -90882,7 +90882,7 @@ var render = function() {
                                                     } else {
                                                       _vm.$set(
                                                         event,
-                                                        "excluded_from_bulletin",
+                                                        "included_in_bulletin",
                                                         $$c
                                                       )
                                                     }
@@ -91000,7 +91000,7 @@ var render = function() {
                                   _c("div", { staticClass: "row" }, [
                                     _c("div", { staticClass: "col-sm-9" }, [
                                       _c("h5", { staticClass: "card-title" }, [
-                                        listing.excluded_from_bulletin
+                                        listing.included_in_bulletin
                                           ? _c("span", [
                                               _vm._v(
                                                 "\n                                                            Un-mark\n                                                        "
@@ -91010,7 +91010,7 @@ var render = function() {
                                         _vm._v(
                                           "\n                                                        listing for\n                                                        "
                                         ),
-                                        listing.excluded_from_bulletin
+                                        listing.included_in_bulletin
                                           ? _c("span", [
                                               _vm._v(
                                                 "\n                                                            exclusion\n                                                        "
@@ -91035,9 +91035,9 @@ var render = function() {
                                                     name: "model",
                                                     rawName: "v-model",
                                                     value:
-                                                      listing.excluded_from_bulletin,
+                                                      listing.included_in_bulletin,
                                                     expression:
-                                                      "listing.excluded_from_bulletin"
+                                                      "listing.included_in_bulletin"
                                                   }
                                                 ],
                                                 staticClass: "form-check-input",
@@ -91047,18 +91047,18 @@ var render = function() {
                                                 },
                                                 domProps: {
                                                   checked: Array.isArray(
-                                                    listing.excluded_from_bulletin
+                                                    listing.included_in_bulletin
                                                   )
                                                     ? _vm._i(
-                                                        listing.excluded_from_bulletin,
+                                                        listing.included_in_bulletin,
                                                         null
                                                       ) > -1
-                                                    : listing.excluded_from_bulletin
+                                                    : listing.included_in_bulletin
                                                 },
                                                 on: {
                                                   change: function($event) {
                                                     var $$a =
-                                                        listing.excluded_from_bulletin,
+                                                        listing.included_in_bulletin,
                                                       $$el = $event.target,
                                                       $$c = $$el.checked
                                                         ? true
@@ -91070,14 +91070,14 @@ var render = function() {
                                                         $$i < 0 &&
                                                           _vm.$set(
                                                             listing,
-                                                            "excluded_from_bulletin",
+                                                            "included_in_bulletin",
                                                             $$a.concat([$$v])
                                                           )
                                                       } else {
                                                         $$i > -1 &&
                                                           _vm.$set(
                                                             listing,
-                                                            "excluded_from_bulletin",
+                                                            "included_in_bulletin",
                                                             $$a
                                                               .slice(0, $$i)
                                                               .concat(
@@ -91090,7 +91090,7 @@ var render = function() {
                                                     } else {
                                                       _vm.$set(
                                                         listing,
-                                                        "excluded_from_bulletin",
+                                                        "included_in_bulletin",
                                                         $$c
                                                       )
                                                     }
@@ -91939,7 +91939,7 @@ var render = function() {
               attrs: { type: "button" },
               on: { click: _vm.createEvent }
             },
-            [_vm._v("Create Listing")]
+            [_vm._v("Create Event")]
           )
         ])
       ])
