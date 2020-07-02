@@ -24,7 +24,7 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::group(['middleware' => 'checkUserChangedPassword', 'auth'], function () {
+Route::group(['middleware' => 'redirectIfNotAuthenticated', 'checkUserChangedPassword', 'auth'], function () {
 
     // Route::group(['middleware' => ['checkUserChangedPassword']], function () {
 

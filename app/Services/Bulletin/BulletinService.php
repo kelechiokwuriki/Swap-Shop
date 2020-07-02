@@ -85,7 +85,7 @@ class BulletinService
                 $bulletin['listings'][$key]['user_id'],
                 $bulletin['listings'][$key]['created_at'],
                 $bulletin['listings'][$key]['updated_at'],
-                $bulletin['listings'][$key]['excluded_from_bulletin']
+                $bulletin['listings'][$key]['included_in_bulletin']
             );
         }
 
@@ -96,7 +96,7 @@ class BulletinService
                 $bulletin['events'][$key]['user_id'],
                 $bulletin['events'][$key]['created_at'],
                 $bulletin['events'][$key]['updated_at'],
-                $bulletin['events'][$key]['excluded_from_bulletin']
+                $bulletin['events'][$key]['included_in_bulletin']
             );
         }
 

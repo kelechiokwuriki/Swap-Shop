@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class Bulletin extends Mailable
 {
@@ -39,6 +40,8 @@ class Bulletin extends Mailable
      */
     public function build()
     {
+        Log::debug($this->swapShopInformation);
+
         return $this->markdown('emails.bulletin')->with([
             'bulletinNumber' => $this->bulletinNumber,
             'header' => $this->header,
