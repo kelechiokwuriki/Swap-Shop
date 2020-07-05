@@ -64,7 +64,7 @@ class BulletinService
 
         foreach($usersEmail as $userEmail) {
 
-            Mail::to($userEmail)->send(new Bulletin(
+            Mail::to($userEmail)->queue(new Bulletin(
                 $cleanedData['number'],
                 $cleanedData['header'],
                 $cleanedData['listings'],
