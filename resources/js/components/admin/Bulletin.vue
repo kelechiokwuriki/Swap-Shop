@@ -338,12 +338,18 @@
                 })
             },
             sendBulletin() {
-
                 axios.post('/api/bulletin', this.bulletinToSend).then(response => {
-                    console.log(response.data);
+                    if(response.data === 'Done') {
+                        this.feedBack('Bulletin number ' + this.bulletinToSend.number, 'Successfully sent your bulletin for the week!', 'success');
+                    }
                 })
-
-
+            },
+            feedBack(title, text, icon) {
+                return Swal.fire({
+                    title: title,
+                    text: text,
+                    icon: icon
+                });
             },
             sortListingByWantFirst(array, key) {
                 return array.sort(function(a, b) {

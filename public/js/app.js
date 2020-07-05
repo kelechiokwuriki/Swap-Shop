@@ -2510,8 +2510,19 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     sendBulletin: function sendBulletin() {
+      var _this2 = this;
+
       axios.post('/api/bulletin', this.bulletinToSend).then(function (response) {
-        console.log(response.data);
+        if (response.data === 'Done') {
+          _this2.feedBack('Bulletin number ' + _this2.bulletinToSend.number, 'Successfully sent your bulletin for the week!', 'success');
+        }
+      });
+    },
+    feedBack: function feedBack(title, text, icon) {
+      return Swal.fire({
+        title: title,
+        text: text,
+        icon: icon
       });
     },
     sortListingByWantFirst: function sortListingByWantFirst(array, key) {
@@ -2522,13 +2533,13 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getLatestBulletinData: function getLatestBulletinData() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('/api/latestBulletinData').then(function (response) {
-        _this2.bulletinToSend.number = response.data.number; // response.data.header.match(this.regexMatch);
+        _this3.bulletinToSend.number = response.data.number; // response.data.header.match(this.regexMatch);
 
-        _this2.bulletinToSend.header = response.data.header.replace(response.data.header.match(/\d+/), response.data.number);
-        _this2.bulletinToSend.swap_shop_info = response.data.swap_shop_info;
+        _this3.bulletinToSend.header = response.data.header.replace(response.data.header.match(/\d+/), response.data.number);
+        _this3.bulletinToSend.swap_shop_info = response.data.swap_shop_info;
       });
     }
   },

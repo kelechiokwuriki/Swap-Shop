@@ -73,7 +73,22 @@ class BulletinService
             ));
         }
 
+        $incrementedBulletinNumber = $cleanedData['number']++;
 
+        $this->createLocalBulletinData($incrementedBulletinNumber, $cleanedData['header'], $cleanedData['swap_shop_info']);
+
+
+        return 'Done';
+
+    }
+
+    private function createLocalBulletinData(int $number, string $header, string $swapShopInfo)
+    {
+        return $this->bulletinRepository->create([
+            'number' => $number,
+            'header' => $header,
+            'swap_shop_info' => $swapShopInfo
+        ]);
     }
 
     private function cleanData($bulletin)
