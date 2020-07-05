@@ -3,6 +3,8 @@
 namespace App\Services\User;
 
 use App\Repositories\User\UserRepository;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
@@ -38,5 +40,12 @@ class UserService
         $user = $this->userRepository->create($user);
 
         return $user;
+    }
+
+    public function userAcceptTermsOfService(User $user)
+    {
+        $user->accepted_terms_of_service = Carbon::now()->toDateTime();
+
+        return $user->save();
     }
 }

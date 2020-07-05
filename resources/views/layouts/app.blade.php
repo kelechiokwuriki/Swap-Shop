@@ -28,6 +28,8 @@
 </head>
 <body>
     <div id="app">
+
+
         <nav class="navbar sticky-top navbar-expand-md navbar-light bg-white shadow-sm">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
@@ -40,23 +42,30 @@
                 <!-- Left Side Of Navbar -->
                 @if(Auth::check())
 
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a href="/home" class="nav-link"><i class="fas fa-home pr-1"></i>Home</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a href="/listings" class="nav-link"><i class="far fa-list-alt pr-1"></i>Listings</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a href="/events" class="nav-link"><i class="far fa-calendar-alt pr-1"></i>Events</a>
-                        </li>
-                        @if(Auth::user()->hasRole('admin'))
-                            <li class="nav-item active">
-                                <a href="{{ route('admin.index') }}" class="nav-link"><i class="fas fa-tachometer-alt pr-1"></i>Admin Dashboard</a>
-                            </li>
-                        @endif
 
-                    </ul>
+                    <!--only show navigation if user has accepted terms of service-->
+                    @if(Auth::user()->accepted_terms_of_service !== null)
+
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a href="/home" class="nav-link"><i class="fas fa-home pr-1"></i>Home</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a href="/listings" class="nav-link"><i class="far fa-list-alt pr-1"></i>Listings</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a href="/events" class="nav-link"><i class="far fa-calendar-alt pr-1"></i>Events</a>
+                            </li>
+                            @if(Auth::user()->hasRole('admin'))
+                                <li class="nav-item active">
+                                    <a href="{{ route('admin.index') }}" class="nav-link"><i class="fas fa-tachometer-alt pr-1"></i>Admin Dashboard</a>
+                                </li>
+                            @endif
+
+                        </ul>
+
+                    @endif
+                    <!--end terms of service checker-->
 
                 @endif
 
@@ -85,13 +94,23 @@
                                     {{ __('Logout') }}
                                 </a>
 
-                                <a class="dropdown-item" href="{{ route('logout') }}">
-                                    Profile
-                                </a>
+                                <!--only show navigation if user has accepted terms of service-->
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
+                                @if(Auth::user()->accepted_terms_of_service !== null)
+
+
+                                    <a class="dropdown-item" href="{{ route('logout') }}">
+                                        Profile
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+
+                                @endif
+
+                                <!--end terms of service checker-->
+
                             </div>
                         </li>
                     @endguest
@@ -99,7 +118,10 @@
             </div>
         </nav>
 
+
+
         <main id="main" class="py-4">
+
             @yield('content')
         </main>
     </div>

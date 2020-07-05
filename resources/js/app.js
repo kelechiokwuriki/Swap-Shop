@@ -32,6 +32,9 @@ Vue.component('createevent-component', require('./components/event/CreateEvent.v
 //searchbar
 Vue.component('searchbar', require('./components/UIhelpers/SearchBar.vue').default);
 
+//terms of service modal
+Vue.component('terms-of-service', require('./components/UIhelpers/TermsOfServiceModal.vue').default);
+
 //admin
 Vue.component('admin', require('./components/admin/Admin.vue').default);
 Vue.component('manageusers', require('./components/admin/ManageUsers.vue').default);

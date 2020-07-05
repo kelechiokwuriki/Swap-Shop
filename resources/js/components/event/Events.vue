@@ -1,7 +1,6 @@
 <template>
     <div class="container">
         <searchbar v-on:search="setSearchText" :searchPlaceHolder="searchPlaceHolder" v-show="events.length !== 0"></searchbar>
-
         <div class="row justify-content-center content-container">
             <div class="col-md-8">
                 <div class="card mb-4" v-for="event in eventsToShow" v-bind:key="event.id">

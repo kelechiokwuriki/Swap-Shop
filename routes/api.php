@@ -23,6 +23,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('listings', 'Api\ListingApiController');
     Route::resource('events', 'Api\EventApiController');
 
+    Route::post('/accept-terms-of-service', 'Api\TermsOfServiceApiController@userAcceptTermsOfService');
+
     //todo middleware for only admin
     Route::middleware('checkRole')->group(function () {
         Route::resource('users', 'Api\UserApiController');
