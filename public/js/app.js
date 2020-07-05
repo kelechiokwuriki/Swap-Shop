@@ -2085,8 +2085,10 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/accept-terms-of-service').then(function (response) {
         if (response.data === 1) {
           if (_this.path !== '') {
-            window.location.href = '/' + _this.path;
+            return window.location.href = '/' + _this.path;
           }
+
+          return window.location.href = '/home';
         }
       });
     },

@@ -29,8 +29,10 @@
                 axios.post('/api/accept-terms-of-service').then(response => {
                     if(response.data === 1) {
                         if(this.path !== '') {
-                            window.location.href = '/' + this.path;
+                            return window.location.href = '/' + this.path;
                         }
+
+                        return window.location.href = '/home';
                     }
                 })
             },

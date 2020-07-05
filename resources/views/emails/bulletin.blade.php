@@ -38,10 +38,8 @@ Contact: {{$event['contact_info']}} <br>
 
 @endforeach
 
-{{-- @component('mail::panel') --}}
 <h1>Swap Shop Information</h1>
-{{$swapShopInformation}}
-{{-- @endcomponent --}}
+<pre>{{$swapShopInformation}}</pre>
 
 
 @component('mail::button', ['url' => ''])
@@ -51,3 +49,5 @@ Button Text
 Thanks,<br>
 {{ config('app.name') }}
 @endcomponent
+
+

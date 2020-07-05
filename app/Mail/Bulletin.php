@@ -40,7 +40,12 @@ class Bulletin extends Mailable
      */
     public function build()
     {
-        Log::debug($this->swapShopInformation);
+
+        // $result = str_replace('\n', '<br/>', $this->swapShopInformation);
+        // $result = nl2br($this->swapShopInformation);
+
+        // Log::debug($result);
+
 
         return $this->markdown('emails.bulletin')->with([
             'bulletinNumber' => $this->bulletinNumber,
