@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth', 'redirectIfNotAuthenticated', 'checkTerms
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('/listings', 'ListingController');
     Route::resource('/events', 'EventController');
-
+    Route::resource('/profile', 'ProfileController');
 });
 
 

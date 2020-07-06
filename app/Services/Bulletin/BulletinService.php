@@ -61,9 +61,7 @@ class BulletinService
 
         $cleanedData = $this->cleanData($bulletin);
 
-
         foreach($usersEmail as $userEmail) {
-
             Mail::to($userEmail)->queue(new Bulletin(
                 $cleanedData['number'],
                 $cleanedData['header'],
@@ -73,13 +71,12 @@ class BulletinService
             ));
         }
 
+        //increment the bulletin number before saving in database
         $incrementedBulletinNumber = $cleanedData['number']++;
 
         $this->createLocalBulletinData($incrementedBulletinNumber, $cleanedData['header'], $cleanedData['swap_shop_info']);
 
-
         return 'Done';
-
     }
 
     private function createLocalBulletinData(int $number, string $header, string $swapShopInfo)
@@ -141,6 +138,8 @@ class BulletinService
     {
         $bulletin = $this->bulletinRepository->latest()->first();
 
+        //increment the bulletin number to be shown in front-end
+        //as the 'current' bulletin number
         $bulletin->number++;
 
         return $bulletin;

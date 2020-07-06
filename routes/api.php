@@ -22,6 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('listings', 'Api\ListingApiController');
     Route::resource('events', 'Api\EventApiController');
+    Route::resource('profiles', 'Api\ProfileApiController');
 
     Route::post('/accept-terms-of-service', 'Api\TermsOfServiceApiController@userAcceptTermsOfService');
 

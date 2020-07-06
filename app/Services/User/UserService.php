@@ -32,6 +32,20 @@ class UserService
         return $this->userRepository->all()->pluck('email');
     }
 
+    public function updateUserProfileDetails(int $id, array $details)
+    {
+        $extractedUserData = $this->extractUserDataFromProfile($details);
+
+        $extractedUserData['password'] = Hash::make($details['password']);
+
+        return $this->userRepository->update($details['id'], $extractedUserData);
+    }
+
+    public function retrieveUserProfile($id)
+    {
+        return $this->userRepository->find($id)->loadCount(['events', 'listings']);
+    }
+
     public function registerUser(array $user)
     {
         $user['password'] = Hash::make(self::DEFAULT_PASS);
@@ -47,5 +61,13 @@ class UserService
         $user->accepted_terms_of_service = Carbon::now()->toDateTime();
 
         return $user->save();
+    }
+
+    private function extractUserDataFromProfile(array $profile)
+    {
+        return [
+            'name' => $profile['name'],
+            'email' => $profile['email'],
+        ];
     }
 }

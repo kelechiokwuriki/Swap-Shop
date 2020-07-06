@@ -43,6 +43,9 @@ Vue.component('bulletin', require('./components/admin/Bulletin.vue').default);
 //home
 Vue.component('home-component', require('./components/Home.vue').default);
 
+//profile
+Vue.component('profile-component', require('./components/profile/Profile.vue').default);
+
 
 
 import Vue from 'vue'
