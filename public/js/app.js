@@ -3401,10 +3401,23 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    feedBack: function feedBack(title, text, icon) {
+      return Swal.fire({
+        title: title,
+        text: text,
+        icon: icon
+      });
+    },
     updateProfile: function updateProfile() {
+      var _this = this;
+
       this.profile.password = this.password;
       axios.put('/api/profiles/' + this.user_id, this.profile).then(function (response) {
-        console.log(response.data);
+        if (response.data === 1) {
+          return _this.feedBack('Success', 'Your profile has been updated', 'success');
+        }
+
+        return _this.feedBack('Error', 'An error occured, please try again', 'error');
       });
     }
   },
@@ -3414,10 +3427,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     axios.get('/api/profiles/' + this.user_id).then(function (response) {
-      _this.profile = response.data;
+      _this2.profile = response.data;
     });
   }
 });
@@ -93327,7 +93340,37 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
-              _vm._m(1),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "profile-password" } }, [
+                  _vm._v("Password")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.password,
+                      expression: "password"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "profile-password",
+                    placeholder: ""
+                  },
+                  domProps: { value: _vm.password },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.password = $event.target.value
+                    }
+                  }
+                })
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group row mt-4 mb-4" }, [
                 _c("div", { staticClass: "col" }, [
@@ -93378,19 +93421,6 @@ var staticRenderFns = [
       _c("h4", { staticClass: "card-title header-text-color" }, [
         _vm._v("Your Profile")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "profile-password" } }, [_vm._v("Password")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", id: "profile-password", placeholder: "" }
-      })
     ])
   }
 ]

@@ -94,9 +94,14 @@
                                     {{ __('Logout') }}
                                 </a>
 
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+
                                 <!--only show navigation if user has accepted terms of service-->
 
                                 @if(Auth::user()->accepted_terms_of_service !== null)
+
 
                                     <a class="dropdown-item" href="/profile">
                                         Profile
