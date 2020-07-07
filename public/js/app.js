@@ -2651,6 +2651,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2659,10 +2696,41 @@ __webpack_require__.r(__webpack_exports__);
       user: {
         name: null,
         email: null
+      },
+      editUserModalData: {
+        id: null,
+        name: null,
+        email: null
       }
     };
   },
   methods: {
+    updateUserDetails: function updateUserDetails() {
+      var _this = this;
+
+      axios.put(this.usersApi + this.editUserModalData.id, this.editUserModalData).then(function (response) {
+        if (response.data === 1) {
+          var index = _this.getUserIndexFromUsersArray();
+
+          _this.users[index].name = _this.editUserModalData.name;
+          _this.users[index].email = _this.editUserModalData.email;
+          _this.users[index].updated_at = moment().toDate();
+        }
+      });
+    },
+    getUserIndexFromUsersArray: function getUserIndexFromUsersArray() {
+      var _this2 = this;
+
+      return this.users.findIndex(function (user) {
+        return user.id === _this2.editUserModalData.id;
+      });
+    },
+    showEditUserModal: function showEditUserModal(user) {
+      this.editUserModalData.id = user.id;
+      this.editUserModalData.name = user.name;
+      this.editUserModalData.email = user.email;
+      $("#editUserModal").modal('show');
+    },
     feedBack: function feedBack(title, text, icon) {
       return Swal.fire({
         title: title,
@@ -2671,15 +2739,15 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     registerUser: function registerUser() {
-      var _this = this;
+      var _this3 = this;
 
       axios.post(this.usersApi, this.user).then(function (response) {
         if (response.status === 201) {
-          _this.users.push(response.data);
+          _this3.users.push(response.data);
 
-          _this.feedBack('Success', 'Successfully registered ' + _this.user.name, 'success');
+          _this3.feedBack('Success', 'Successfully registered ' + _this3.user.name, 'success');
         } else {
-          _this.feedBack('Oops...', 'Something went wrong please try again!', 'error');
+          _this3.feedBack('Oops...', 'Something went wrong please try again!', 'error');
         }
       });
     },
@@ -2697,10 +2765,10 @@ __webpack_require__.r(__webpack_exports__);
       return moment(date);
     }),
     getUsers: function getUsers() {
-      var _this2 = this;
+      var _this4 = this;
 
       axios.get(this.usersApi).then(function (response) {
-        _this2.users = response.data;
+        _this4.users = response.data;
       });
     }
   },
@@ -3263,7 +3331,7 @@ __webpack_require__.r(__webpack_exports__);
     setSearchText: function setSearchText(value) {
       this.searchListingText = value;
     },
-    saveListing: function saveListing() {
+    updateListing: function updateListing() {
       var _this = this;
 
       axios.put(this.listingsApi + this.editListingModalData.id, this.editListingModalData).then(function (response) {
@@ -91774,51 +91842,204 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-sm-9" }, [
-                _c("h5", { staticClass: "card-title pt-2" }, [
-                  _vm._v(_vm._s(_vm.users.length) + " Users")
-                ])
-              ]),
-              _vm._v(" "),
-              _vm._m(0)
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body text-center" }, [
-            _c("table", { staticClass: "table table-hover" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.users, function(user) {
-                  return _c("tr", { key: user.id }, [
-                    _c("td", [_vm._v(_vm._s(user.name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.email))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        _vm._s(
-                          _vm
-                            .moment(user.created_at)
-                            .format("MMMM Do YYYY, h:mm:ss a")
-                        )
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-sm-9" }, [
+              _c("h5", { staticClass: "card-title pt-2" }, [
+                _vm._v(_vm._s(_vm.users.length) + " Users")
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body text-center" }, [
+          _c("table", { staticClass: "table table-hover" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.users, function(user) {
+                return _c("tr", { key: user.id }, [
+                  _c("td", [_vm._v(_vm._s(user.name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(user.email))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(user.events_count))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(user.listings_count))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(
+                        _vm
+                          .moment(user.created_at)
+                          .format("MMMM Do YYYY, h:mm:ss a")
                       )
-                    ]),
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(
+                        _vm
+                          .moment(user.updated_at)
+                          .format("MMMM Do YYYY, h:mm:ss a")
+                      )
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary btn-sm",
+                        attrs: { "data-toggle": "modal" },
+                        on: {
+                          click: function($event) {
+                            return _vm.showEditUserModal(user)
+                          }
+                        }
+                      },
+                      [_vm._v("Edit User")]
+                    ),
                     _vm._v(" "),
-                    _vm._m(2, true)
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger btn-sm",
+                        attrs: { "data-toggle": "modal" }
+                      },
+                      [_vm._v("Deactivate User")]
+                    )
                   ])
-                }),
-                0
-              )
-            ])
+                ])
+              }),
+              0
+            )
           ])
         ])
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "editUserModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "editUserModal",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(2),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("form", [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "listing-deal" } }, [
+                        _vm._v("New Name")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.editUserModalData.name,
+                            expression: "editUserModalData.name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", id: "listing-deal" },
+                        domProps: { value: _vm.editUserModalData.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.editUserModalData,
+                              "name",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "listing-deal" } }, [
+                        _vm._v("New Email Address")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.editUserModalData.email,
+                            expression: "editUserModalData.email"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", id: "listing-deal" },
+                        domProps: { value: _vm.editUserModalData.email },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.editUserModalData,
+                              "email",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.updateUserDetails()
+                        }
+                      }
+                    },
+                    [_vm._v("Save changes")]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -91967,7 +92188,13 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Email")]),
         _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Total Events")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Total Listings")]),
+        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Date Registered")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Details Updated")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Actions")])
       ])
@@ -91977,23 +92204,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
+    return _c("div", { staticClass: "modal-header" }, [
       _c(
-        "button",
-        {
-          staticClass: "btn btn-primary btn-sm",
-          attrs: { "data-toggle": "modal" }
-        },
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "editListingModal" } },
         [_vm._v("Edit User")]
       ),
       _vm._v(" "),
       _c(
         "button",
         {
-          staticClass: "btn btn-danger btn-sm",
-          attrs: { "data-toggle": "modal" }
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
         },
-        [_vm._v("Deactivate User")]
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
     ])
   },
@@ -93190,7 +93418,7 @@ var render = function() {
                           attrs: { type: "button" },
                           on: {
                             click: function($event) {
-                              return _vm.saveListing()
+                              return _vm.updateListing()
                             }
                           }
                         },
@@ -93356,7 +93584,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   attrs: {
-                    type: "text",
+                    type: "password",
                     id: "profile-password",
                     placeholder: ""
                   },
@@ -106893,7 +107121,7 @@ __webpack_require__.r(__webpack_exports__);
     return '/api/events/';
   },
   getUsersApi: function getUsersApi() {
-    return '/api/users';
+    return '/api/users/';
   }
 });
 

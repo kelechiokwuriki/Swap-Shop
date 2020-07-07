@@ -105,7 +105,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="saveListing()">Save changes</button>
+                        <button type="button" class="btn btn-primary" @click="updateListing()">Save changes</button>
                     </div>
                     </div>
                 </div>
@@ -137,7 +137,7 @@
             setSearchText(value) {
                 this.searchListingText = value;
             },
-            saveListing() {
+            updateListing() {
                 axios.put(this.listingsApi + this.editListingModalData.id, this.editListingModalData).then(response => {
                     if(response.data === 1) {
                         let localListingIndex = this.getListingIndexFromArray();

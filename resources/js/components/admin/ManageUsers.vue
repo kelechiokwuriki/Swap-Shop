@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <!-- <div class="col-md-8"> -->
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
@@ -22,7 +22,10 @@
                                 <tr>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
+                                <th scope="col">Total Events</th>
+                                <th scope="col">Total Listings</th>
                                 <th scope="col">Date Registered</th>
+                                <th scope="col">Details Updated</th>
                                 <th scope="col">Actions</th>
 
                                 </tr>
@@ -31,9 +34,12 @@
                                 <tr v-for="user in users" v-bind:key="user.id">
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.email }}</td>
+                                <td>{{ user.events_count }}</td>
+                                <td>{{ user.listings_count }}</td>
                                 <td>{{ moment(user.created_at).format('MMMM Do YYYY, h:mm:ss a') }}</td>
+                                <td>{{ moment(user.updated_at).format('MMMM Do YYYY, h:mm:ss a') }}</td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal">Edit User</button>
+                                    <button class="btn btn-primary btn-sm" data-toggle="modal" @click="showEditUserModal(user)">Edit User</button>
                                     <button class="btn btn-danger btn-sm" data-toggle="modal">Deactivate User</button>
                                 </td>
                                 </tr>
@@ -41,9 +47,40 @@
                         </table>
                     </div>
                 </div>
-            </div>
+            <!-- </div> -->
 
-            <!-- Modal -->
+             <!--Edit user Modal -->
+            <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editListingModal">Edit User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="listing-deal">New Name</label>
+                                <input type="text" v-model="editUserModalData.name" class="form-control" id="listing-deal">
+                            </div>
+                            <div class="form-group">
+                                <label for="listing-deal">New Email Address</label>
+                                <input type="text" v-model="editUserModalData.email" class="form-control" id="listing-deal">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="updateUserDetails()">Save changes</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <!--end edit user modal-->
+
+            <!-- Register User Modal -->
             <div class="modal fade" id="registerUserModal" tabindex="-1" role="dialog" aria-labelledby="registerUserModal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -73,7 +110,7 @@
                     </div>
                 </div>
             </div>
-            <!--end modal-->
+            <!--end register user modal-->
 
         </div>
     </div>
@@ -88,10 +125,36 @@
                 user: {
                     name: null,
                     email: null
+                },
+                editUserModalData: {
+                    id: null,
+                    name: null,
+                    email: null
                 }
             }
         },
         methods: {
+            updateUserDetails() {
+                axios.put(this.usersApi + this.editUserModalData.id, this.editUserModalData).then(response => {
+                    if(response.data === 1) {
+                        let index = this.getUserIndexFromUsersArray();
+
+                        this.users[index].name = this.editUserModalData.name;
+                        this.users[index].email = this.editUserModalData.email;
+                        this.users[index].updated_at = moment().toDate();
+                    }
+                })
+            },
+            getUserIndexFromUsersArray() {
+                return this.users.findIndex(user => user.id === this.editUserModalData.id);
+            },
+            showEditUserModal(user) {
+                this.editUserModalData.id = user.id;
+                this.editUserModalData.name = user.name;
+                this.editUserModalData.email = user.email;
+
+                $("#editUserModal").modal('show');
+            },
             feedBack(title, text, icon) {
                 return Swal.fire({
                     title: title,

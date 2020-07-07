@@ -24,7 +24,7 @@ class UserService
 
     public function getAllUsers()
     {
-        return $this->userRepository->all();
+        return $this->userRepository->all()->loadCount(['events', 'listings']);
     }
 
     public function getAllUsersEmailAddress()
@@ -39,6 +39,11 @@ class UserService
         $extractedUserData['password'] = Hash::make($details['password']);
 
         return $this->userRepository->update($details['id'], $extractedUserData);
+    }
+
+    public function updateUserDetailsFromAdmin(int $id, array $details)
+    {
+        return $this->userRepository->update($id, $details);
     }
 
     public function retrieveUserProfile($id)

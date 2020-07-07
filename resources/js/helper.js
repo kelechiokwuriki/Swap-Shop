@@ -6,6 +6,6 @@ export default {
         return '/api/events/';
     },
     getUsersApi() {
-        return '/api/users';
+        return '/api/users/';
     }
 }

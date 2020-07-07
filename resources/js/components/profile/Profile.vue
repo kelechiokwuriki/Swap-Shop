@@ -18,7 +18,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="profile-password">Password</label>
-                                <input type="text" v-model="password"  class="form-control" id="profile-password" placeholder="">
+                                <input type="password" v-model="password"  class="form-control" id="profile-password" placeholder="">
                             </div>
                             <div class="form-group row mt-4 mb-4">
                                 <div class="col">
@@ -65,7 +65,6 @@
                     }
 
                     return this.feedBack('Error', 'An error occured, please try again', 'error');
-
                 })
             }
         },
