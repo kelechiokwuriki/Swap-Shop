@@ -58,6 +58,9 @@ class UserService
 
         $user = $this->userRepository->create($user);
 
+        event(new Registered($user));
+
+
         return $user;
     }
 
