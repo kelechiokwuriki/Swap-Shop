@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/terms-of-service', 'TermsOfServiceController@index');
 

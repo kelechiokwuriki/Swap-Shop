@@ -106144,7 +106144,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('bulletin', __webpack_requi
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('home-component', __webpack_require__(/*! ./components/Home.vue */ "./resources/js/components/Home.vue")["default"]); //profile
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('profile-component', __webpack_require__(/*! ./components/profile/Profile.vue */ "./resources/js/components/profile/Profile.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('profile-component', __webpack_require__(/*! ./components/profile/Profile.vue */ "./resources/js/components/profile/Profile.vue")["default"]); //ckeditor
+
 
 
 
