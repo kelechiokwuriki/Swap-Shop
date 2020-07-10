@@ -6,20 +6,26 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-3">
-                                <p class="card-title pt-2">Data from last 7 days</p>
+                                <p class="card-title pt-2" v-if="bulletin.events.length !== 0 || bulletin.listings.length !== 0">Data from last 7 days</p>
                             </div>
                             <div class="col-sm-6 text-center">
-                                <h4 class="card-title pt-2" v-show="step === 1">Filter items to be included in Bulletin</h4>
-                                <h4 class="card-title pt-2" v-show="step === 2">Include Bulletin header and footer</h4>
-                                <h4 class="card-title pt-2" v-show="step === totalSteps">Preview and send Bulletin</h4>
+                                <template v-if="bulletin.events.length !== 0 || bulletin.listings.length !== 0">
+                                    <h4 class="card-title pt-2" v-show="step === 1">Filter items to be included in Bulletin</h4>
+                                    <h4 class="card-title pt-2" v-show="step === 2">Include Bulletin header and footer</h4>
+                                    <h4 class="card-title pt-2" v-show="step === totalSteps">Preview and send Bulletin</h4>
+                                </template>
+                                <template v-else>
+                                    <h4 class="card-title pt-2">No bulletin from the last 7 days</h4>
+                                </template>
 
                             </div>
                             <div class="col-sm-3">
                                 <div class="float-right">
-                                    <button class="btn btn-secondary" @click="previousStep" v-show="step !== 1">Go Back</button>
-                                    <button class="btn btn-primary ml-1" @click="nextStep" v-show="step !== totalSteps">Next Step</button>
-                                    <button class="btn btn-primary ml-1" @click="sendBulletin" v-show="step === totalSteps">Send Bulletin</button>
-
+                                    <template v-if="bulletin.events.length !== 0 || bulletin.listings.length !== 0">
+                                        <button class="btn btn-secondary" @click="previousStep" v-show="step !== 1">Go Back</button>
+                                        <button class="btn btn-primary ml-1" @click="nextStep" v-show="step !== totalSteps">Next Step</button>
+                                        <button class="btn btn-primary ml-1" @click="sendBulletin" v-show="step === totalSteps">Send Bulletin</button>
+                                    </template>
                                 </div>
                             </div>
                         </div>

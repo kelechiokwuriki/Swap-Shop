@@ -2449,6 +2449,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2714,6 +2720,8 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.users[index].name = _this.editUserModalData.name;
           _this.users[index].email = _this.editUserModalData.email;
+          _this.users[index].events_count = 0;
+          _this.users[index].listings_count = 0;
           _this.users[index].updated_at = moment().toDate();
         }
       });
@@ -90961,111 +90969,142 @@ var render = function() {
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
             _c("div", { staticClass: "row" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-6 text-center" }, [
-                _c(
-                  "h4",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.step === 1,
-                        expression: "step === 1"
-                      }
-                    ],
-                    staticClass: "card-title pt-2"
-                  },
-                  [_vm._v("Filter items to be included in Bulletin")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "h4",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.step === 2,
-                        expression: "step === 2"
-                      }
-                    ],
-                    staticClass: "card-title pt-2"
-                  },
-                  [_vm._v("Include Bulletin header and footer")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "h4",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.step === _vm.totalSteps,
-                        expression: "step === totalSteps"
-                      }
-                    ],
-                    staticClass: "card-title pt-2"
-                  },
-                  [_vm._v("Preview and send Bulletin")]
-                )
+              _c("div", { staticClass: "col-sm-3" }, [
+                _vm.bulletin.events.length !== 0 ||
+                _vm.bulletin.listings.length !== 0
+                  ? _c("p", { staticClass: "card-title pt-2" }, [
+                      _vm._v("Data from last 7 days")
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-sm-6 text-center" },
+                [
+                  _vm.bulletin.events.length !== 0 ||
+                  _vm.bulletin.listings.length !== 0
+                    ? [
+                        _c(
+                          "h4",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.step === 1,
+                                expression: "step === 1"
+                              }
+                            ],
+                            staticClass: "card-title pt-2"
+                          },
+                          [_vm._v("Filter items to be included in Bulletin")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "h4",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.step === 2,
+                                expression: "step === 2"
+                              }
+                            ],
+                            staticClass: "card-title pt-2"
+                          },
+                          [_vm._v("Include Bulletin header and footer")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "h4",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.step === _vm.totalSteps,
+                                expression: "step === totalSteps"
+                              }
+                            ],
+                            staticClass: "card-title pt-2"
+                          },
+                          [_vm._v("Preview and send Bulletin")]
+                        )
+                      ]
+                    : [
+                        _c("h4", { staticClass: "card-title pt-2" }, [
+                          _vm._v("No bulletin from the last 7 days")
+                        ])
+                      ]
+                ],
+                2
+              ),
+              _vm._v(" "),
               _c("div", { staticClass: "col-sm-3" }, [
-                _c("div", { staticClass: "float-right" }, [
-                  _c(
-                    "button",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.step !== 1,
-                          expression: "step !== 1"
-                        }
-                      ],
-                      staticClass: "btn btn-secondary",
-                      on: { click: _vm.previousStep }
-                    },
-                    [_vm._v("Go Back")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.step !== _vm.totalSteps,
-                          expression: "step !== totalSteps"
-                        }
-                      ],
-                      staticClass: "btn btn-primary ml-1",
-                      on: { click: _vm.nextStep }
-                    },
-                    [_vm._v("Next Step")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.step === _vm.totalSteps,
-                          expression: "step === totalSteps"
-                        }
-                      ],
-                      staticClass: "btn btn-primary ml-1",
-                      on: { click: _vm.sendBulletin }
-                    },
-                    [_vm._v("Send Bulletin")]
-                  )
-                ])
+                _c(
+                  "div",
+                  { staticClass: "float-right" },
+                  [
+                    _vm.bulletin.events.length !== 0 ||
+                    _vm.bulletin.listings.length !== 0
+                      ? [
+                          _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.step !== 1,
+                                  expression: "step !== 1"
+                                }
+                              ],
+                              staticClass: "btn btn-secondary",
+                              on: { click: _vm.previousStep }
+                            },
+                            [_vm._v("Go Back")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.step !== _vm.totalSteps,
+                                  expression: "step !== totalSteps"
+                                }
+                              ],
+                              staticClass: "btn btn-primary ml-1",
+                              on: { click: _vm.nextStep }
+                            },
+                            [_vm._v("Next Step")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.step === _vm.totalSteps,
+                                  expression: "step === totalSteps"
+                                }
+                              ],
+                              staticClass: "btn btn-primary ml-1",
+                              on: { click: _vm.sendBulletin }
+                            },
+                            [_vm._v("Send Bulletin")]
+                          )
+                        ]
+                      : _vm._e()
+                  ],
+                  2
+                )
               ])
             ])
           ]),
@@ -91201,13 +91240,13 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("div", { staticClass: "card-body" }, [
                                   _c("div", { staticClass: "form-group row" }, [
-                                    _vm._m(1, true),
+                                    _vm._m(0, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [_vm._v(_vm._s(event.name))])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(2, true),
+                                    _vm._m(1, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
@@ -91225,7 +91264,7 @@ var render = function() {
                                       ])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(3, true),
+                                    _vm._m(2, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
@@ -91233,7 +91272,7 @@ var render = function() {
                                       ])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(4, true),
+                                    _vm._m(3, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
@@ -91241,7 +91280,7 @@ var render = function() {
                                       ])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(5, true),
+                                    _vm._m(4, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
@@ -91259,7 +91298,7 @@ var render = function() {
                                       ])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(6, true),
+                                    _vm._m(5, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
@@ -91409,19 +91448,19 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("div", { staticClass: "card-body" }, [
                                   _c("div", { staticClass: "form-group row" }, [
-                                    _vm._m(7, true),
+                                    _vm._m(6, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [_vm._v(_vm._s(listing.type))])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(8, true),
+                                    _vm._m(7, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [_vm._v(_vm._s(listing.item))])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(9, true),
+                                    _vm._m(8, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
@@ -91429,13 +91468,13 @@ var render = function() {
                                       ])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(10, true),
+                                    _vm._m(9, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [_vm._v(_vm._s(listing.deal))])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(11, true),
+                                    _vm._m(10, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
@@ -91453,7 +91492,7 @@ var render = function() {
                                       ])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(12, true),
+                                    _vm._m(11, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
@@ -91489,7 +91528,7 @@ var render = function() {
                       { attrs: { role: "form", "prevent-default": "" } },
                       [
                         _c("div", { staticClass: "form-group" }, [
-                          _vm._m(13),
+                          _vm._m(12),
                           _vm._v(" "),
                           _c("input", {
                             directives: [
@@ -91522,7 +91561,7 @@ var render = function() {
                           "div",
                           { staticClass: "form-group" },
                           [
-                            _vm._m(14),
+                            _vm._m(13),
                             _vm._v(" "),
                             _c("textarea-autosize", {
                               ref: "footerTextArea",
@@ -91544,7 +91583,7 @@ var render = function() {
                           "div",
                           { staticClass: "form-group" },
                           [
-                            _vm._m(15),
+                            _vm._m(14),
                             _vm._v(" "),
                             _c("textarea-autosize", {
                               ref: "headerTextArea",
@@ -91688,16 +91727,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-3" }, [
-      _c("p", { staticClass: "card-title pt-2" }, [
-        _vm._v("Data from last 7 days")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

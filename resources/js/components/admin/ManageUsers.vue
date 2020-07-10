@@ -141,6 +141,8 @@
 
                         this.users[index].name = this.editUserModalData.name;
                         this.users[index].email = this.editUserModalData.email;
+                        this.users[index].events_count = 0;
+                        this.users[index].listings_count = 0;
                         this.users[index].updated_at = moment().toDate();
                     }
                 })

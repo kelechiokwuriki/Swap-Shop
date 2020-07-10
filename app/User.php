@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
 use App\Listing;
 use App\Event;
 use App\Role;
-use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
