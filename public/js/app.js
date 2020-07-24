@@ -2921,17 +2921,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       event: {
         name: null,
         when: null,
+        repeat_until: null,
         information: null,
         contact_info: null
       },
       eventsApi: this.$helper.getEventsApi()
     };
+  },
+  computed: {
+    todayDate: function todayDate() {
+      return moment().format("YYYY-MM-DD hh:mm a");
+      ;
+    }
   },
   methods: {
     feedBack: function feedBack(title, text, icon) {
@@ -111774,22 +111785,54 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "event-when" } }, [
+              _vm._v("When is the event?")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.event.when,
+                  expression: "event.when"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "event-when" },
+              domProps: { value: _vm.event.when },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.event, "when", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
           _c(
             "div",
             { staticClass: "form-group" },
             [
               _c("label", { attrs: { for: "event-when" } }, [
-                _vm._v("When is the event?")
+                _vm._v("Repeat in bulletin till when?")
               ]),
               _vm._v(" "),
               _c("DateTimePicker", {
-                attrs: { id: "event-when", format: "YYYY-MM-DD HH:mm" },
+                attrs: {
+                  id: "event-when",
+                  format: "YYYY-MM-DD HH:mm",
+                  "min-date": _vm.todayDate
+                },
                 model: {
-                  value: _vm.event.when,
+                  value: _vm.event.repeat_until,
                   callback: function($$v) {
-                    _vm.$set(_vm.event, "when", $$v)
+                    _vm.$set(_vm.event, "repeat_until", $$v)
                   },
-                  expression: "event.when"
+                  expression: "event.repeat_until"
                 }
               })
             ],
@@ -111990,15 +112033,7 @@ var render = function() {
                     _vm._m(1, true),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-8" }, [
-                      _c("p", [
-                        _vm._v(
-                          _vm._s(
-                            _vm
-                              .moment(event.when)
-                              .format("MMMM Do YYYY, h:mm:ss a")
-                          )
-                        )
-                      ])
+                      _c("p", [_vm._v(_vm._s(event.when))])
                     ]),
                     _vm._v(" "),
                     _vm._m(2, true),

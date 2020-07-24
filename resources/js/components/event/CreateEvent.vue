@@ -12,7 +12,11 @@
                     </div>
                     <div class="form-group">
                         <label for="event-when">When is the event?</label>
-                        <DateTimePicker id="event-when" v-model="event.when" format="YYYY-MM-DD HH:mm"/>
+                        <input type="text" class="form-control" id="event-when" v-model="event.when">
+                    </div>
+                     <div class="form-group">
+                        <label for="event-when">Repeat in bulletin till when?</label>
+                        <DateTimePicker id="event-when" v-model="event.repeat_until" format="YYYY-MM-DD HH:mm" :min-date="todayDate"/>
                     </div>
                     <div class="form-group">
                         <label for="event-information">Give some information about the event</label>
@@ -38,10 +42,16 @@
                 event: {
                     name: null,
                     when: null,
+                    repeat_until: null,
                     information: null,
                     contact_info: null
                 },
                 eventsApi: this.$helper.getEventsApi()
+            }
+        },
+        computed: {
+            todayDate() {
+                return moment().format("YYYY-MM-DD hh:mm a");;
             }
         },
         methods: {

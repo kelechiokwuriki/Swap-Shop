@@ -31,7 +31,7 @@
                                 <p>When:</p>
                             </div>
                             <div class="col-8">
-                                <p>{{ moment(event.when).format('MMMM Do YYYY, h:mm:ss a') }}</p>
+                                <p>{{ event.when }}</p>
                             </div>
 
                             <div class="col-4">
