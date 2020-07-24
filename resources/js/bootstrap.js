@@ -28,6 +28,10 @@ window.moment = require('moment');
 require('jquery');
 window.Swal = require('sweetalert2')
 
+require( 'datatables.net-bs4' );
+require( 'datatables.net-buttons-bs4' );
+require( 'datatables.net-responsive-bs4' );
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
