@@ -46,6 +46,11 @@ class UserService
         return $this->userRepository->update($id, $details);
     }
 
+    public function deleteUser(int $id)
+    {
+        return $this->userRepository->delete($id);
+    }
+
     public function retrieveUserProfile($id)
     {
         return $this->userRepository->find($id)->loadCount(['events', 'listings']);

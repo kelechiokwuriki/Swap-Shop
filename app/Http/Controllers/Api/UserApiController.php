@@ -97,6 +97,6 @@ class UserApiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->userService->deleteUser($id);
     }
 }

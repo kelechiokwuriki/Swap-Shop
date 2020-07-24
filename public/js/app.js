@@ -2724,6 +2724,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2737,6 +2764,10 @@ __webpack_require__.r(__webpack_exports__);
         id: null,
         name: null,
         email: null
+      },
+      deleteUserModalData: {
+        id: null,
+        name: null
       }
     };
   },
@@ -2756,11 +2787,26 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    getUserIndexFromUsersArray: function getUserIndexFromUsersArray() {
+    deleteUser: function deleteUser() {
       var _this2 = this;
 
+      axios["delete"](this.usersApi + this.deleteUserModalData.id).then(function (response) {
+        if (response.data === 1) {
+          var index = _this2.getUserIndexFromUsersArray();
+
+          _this2.users.splice(index, 1);
+
+          return _this2.feedBack('Success', 'Successfully deleted ' + _this2.deleteUserModalData.name, 'success');
+        }
+
+        return _this2.feedBack('Oops...', 'Something went wrong please try again!', 'error');
+      });
+    },
+    getUserIndexFromUsersArray: function getUserIndexFromUsersArray() {
+      var _this3 = this;
+
       return this.users.findIndex(function (user) {
-        return user.id === _this2.editUserModalData.id;
+        return user.id === _this3.editUserModalData.id;
       });
     },
     showEditUserModal: function showEditUserModal(user) {
@@ -2768,6 +2814,11 @@ __webpack_require__.r(__webpack_exports__);
       this.editUserModalData.name = user.name;
       this.editUserModalData.email = user.email;
       $("#editUserModal").modal('show');
+    },
+    showDeleteUserModal: function showDeleteUserModal(user) {
+      this.deleteUserModalData.id = user.id;
+      this.deleteUserModalData.name = user.name;
+      $("#deleteUserModal").modal('show');
     },
     feedBack: function feedBack(title, text, icon) {
       return Swal.fire({
@@ -2777,15 +2828,17 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     registerUser: function registerUser() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.post(this.usersApi, this.user).then(function (response) {
         if (response.status === 201) {
-          _this3.users.push(response.data);
+          response.data.email_verified_at = null;
 
-          _this3.feedBack('Success', 'Successfully registered ' + _this3.user.name, 'success');
+          _this4.users.push(response.data);
+
+          _this4.feedBack('Success', 'Successfully registered ' + _this4.user.name, 'success');
         } else {
-          _this3.feedBack('Oops...', 'Something went wrong please try again!', 'error');
+          _this4.feedBack('Oops...', 'Something went wrong please try again!', 'error');
         }
       });
     },
@@ -2803,15 +2856,15 @@ __webpack_require__.r(__webpack_exports__);
       return moment(date);
     }),
     getUsers: function getUsers() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get(this.usersApi).then(function (response) {
-        _this4.users = response.data;
+        _this5.users = response.data;
       })["catch"](function (error) {})["finally"](function () {
         $('#usersTable').DataTable({
           // "ordering": [[2, "desc"]],
           // stateSave: true,
-          "aaSorting": [[1, "desc"]],
+          "aaSorting": [[4, "asc"]],
           pageLength: 10,
           lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Everything']]
         });
@@ -111179,9 +111232,23 @@ var render = function() {
                             _vm._s(
                               _vm
                                 .moment(user.created_at)
-                                .format("MMMM Do YYYY, h:mm:ss a")
+                                .format("MMMM Do YYYY, h:mm a")
                             )
                           )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          user.email_verified_at !== null
+                            ? _c("span", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm
+                                      .moment(user.email_verified_at)
+                                      .format("MMMM Do YYYY, h:mm a")
+                                  )
+                                )
+                              ])
+                            : _c("span", [_vm._v("Not Verified")])
                         ]),
                         _vm._v(" "),
                         _c("td", [
@@ -111189,7 +111256,7 @@ var render = function() {
                             _vm._s(
                               _vm
                                 .moment(user.updated_at)
-                                .format("MMMM Do YYYY, h:mm:ss a")
+                                .format("MMMM Do YYYY, h:mm a")
                             )
                           )
                         ]),
@@ -111209,14 +111276,20 @@ var render = function() {
                             [_vm._v("Edit User")]
                           ),
                           _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger btn-sm",
-                              attrs: { "data-toggle": "modal" }
-                            },
-                            [_vm._v("Deactivate User")]
-                          )
+                          user.email_verified_at === null
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-danger btn-sm",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.showDeleteUserModal(user)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Delete Unverified User")]
+                              )
+                            : _vm._e()
                         ])
                       ])
                     }),
@@ -111352,6 +111425,64 @@ var render = function() {
         {
           staticClass: "modal fade",
           attrs: {
+            id: "deleteUserModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "editUserModal",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(3),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("p", [
+                    _vm._v("Delete user "),
+                    _c(
+                      "span",
+                      { staticClass: "font-weight-bold text-uppercase" },
+                      [_vm._v(_vm._s(_vm.deleteUserModalData.name))]
+                    ),
+                    _vm._v(" from the platform?")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: { click: _vm.deleteUser }
+                    },
+                    [_vm._v("Delete User")]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
             id: "registerUserModal",
             tabindex: "-1",
             role: "dialog",
@@ -111365,7 +111496,7 @@ var render = function() {
             { staticClass: "modal-dialog", attrs: { role: "document" } },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(3),
+                _vm._m(4),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _c("form", { attrs: { role: "form" } }, [
@@ -111479,7 +111610,7 @@ var staticRenderFns = [
               "data-target": "#registerUserModal"
             }
           },
-          [_vm._v("Register a user")]
+          [_vm._v("Register a new user")]
         )
       ])
     ])
@@ -111498,9 +111629,11 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Total Listings")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Date Registered")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Registered")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Details Updated")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Verified")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Updated On")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Actions")])
       ])
@@ -111515,6 +111648,31 @@ var staticRenderFns = [
         "h5",
         { staticClass: "modal-title", attrs: { id: "editListingModal" } },
         [_vm._v("Edit User")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "editListingModal" } },
+        [_vm._v("Delete Unverified User")]
       ),
       _vm._v(" "),
       _c(

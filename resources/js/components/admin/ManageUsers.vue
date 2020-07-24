@@ -10,7 +10,7 @@
                             </div>
                             <div class="col-sm-3">
                                 <div class="float-right">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#registerUserModal">Register a user</button>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#registerUserModal">Register a new user</button>
                                 </div>
                             </div>
                         </div>
@@ -25,8 +25,9 @@
                                             <th scope="col">Email</th>
                                             <th scope="col">Total Events</th>
                                             <th scope="col">Total Listings</th>
-                                            <th scope="col">Date Registered</th>
-                                            <th scope="col">Details Updated</th>
+                                            <th scope="col">Registered</th>
+                                            <th scope="col">Verified</th>
+                                            <th scope="col">Updated On</th>
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
@@ -36,11 +37,15 @@
                                             <td>{{ user.email }}</td>
                                             <td>{{ user.events_count }}</td>
                                             <td>{{ user.listings_count }}</td>
-                                            <td>{{ moment(user.created_at).format('MMMM Do YYYY, h:mm:ss a') }}</td>
-                                            <td>{{ moment(user.updated_at).format('MMMM Do YYYY, h:mm:ss a') }}</td>
+                                            <td>{{ moment(user.created_at).format('MMMM Do YYYY, h:mm a') }}</td>
+                                            <td>
+                                                <span v-if="user.email_verified_at !== null">{{ moment(user.email_verified_at).format('MMMM Do YYYY, h:mm a') }}</span>
+                                                <span v-else>Not Verified</span>
+                                            </td>
+                                            <td>{{ moment(user.updated_at).format('MMMM Do YYYY, h:mm a') }}</td>
                                             <td>
                                                 <button class="btn btn-primary btn-sm" data-toggle="modal" @click="showEditUserModal(user)">Edit User</button>
-                                                <button class="btn btn-danger btn-sm" data-toggle="modal">Deactivate User</button>
+                                                <button class="btn btn-danger btn-sm" v-if="user.email_verified_at === null" @click="showDeleteUserModal(user)">Delete Unverified User</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -79,7 +84,7 @@
                 </div>
             <!-- </div> -->
 
-             <!--Edit user Modal -->
+            <!--Edit user Modal -->
             <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -109,6 +114,28 @@
                 </div>
             </div>
             <!--end edit user modal-->
+
+             <!--Delete user Modal -->
+            <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editListingModal">Delete Unverified User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Delete user <span class="font-weight-bold text-uppercase">{{ deleteUserModalData.name }}</span> from the platform?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" @click="deleteUser">Delete User</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <!--end delete user modal-->
 
             <!-- Register User Modal -->
             <div class="modal fade" id="registerUserModal" tabindex="-1" role="dialog" aria-labelledby="registerUserModal" aria-hidden="true">
@@ -160,6 +187,10 @@
                     id: null,
                     name: null,
                     email: null
+                },
+                deleteUserModalData: {
+                    id: null,
+                    name: null
                 }
             }
         },
@@ -177,6 +208,19 @@
                     }
                 })
             },
+            deleteUser() {
+                axios.delete(this.usersApi + this.deleteUserModalData.id).then(response => {
+                    if(response.data === 1) {
+                        let index = this.getUserIndexFromUsersArray();
+
+                        this.users.splice(index, 1);
+
+                        return this.feedBack('Success', 'Successfully deleted ' + this.deleteUserModalData.name, 'success');
+                    }
+
+                    return this.feedBack('Oops...', 'Something went wrong please try again!', 'error')
+                });
+            },
             getUserIndexFromUsersArray() {
                 return this.users.findIndex(user => user.id === this.editUserModalData.id);
             },
@@ -186,6 +230,12 @@
                 this.editUserModalData.email = user.email;
 
                 $("#editUserModal").modal('show');
+            },
+            showDeleteUserModal(user) {
+                this.deleteUserModalData.id = user.id;
+                this.deleteUserModalData.name = user.name;
+
+                $("#deleteUserModal").modal('show');
             },
             feedBack(title, text, icon) {
                 return Swal.fire({
@@ -197,6 +247,8 @@
             registerUser() {
                 axios.post(this.usersApi, this.user).then(response => {
                     if(response.status === 201) {
+                        response.data.email_verified_at = null;
+
                         this.users.push(response.data);
 
                         this.feedBack('Success', 'Successfully registered ' + this.user.name, 'success');
@@ -217,7 +269,7 @@
                     $('#usersTable').DataTable({
                         // "ordering": [[2, "desc"]],
                         // stateSave: true,
-                        "aaSorting": [[1, "desc"]],
+                        "aaSorting": [[4, "asc"]],
                         pageLength: 10,
                         lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Everything']]
                     });
