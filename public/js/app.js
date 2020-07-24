@@ -110576,13 +110576,7 @@ var render = function() {
                                       _c("p", [
                                         _vm._v(
                                           "\n                                                        " +
-                                            _vm._s(
-                                              _vm
-                                                .moment(event.when)
-                                                .format(
-                                                  "MMMM Do YYYY, h:mm:ss a"
-                                                )
-                                            ) +
+                                            _vm._s(event.when) +
                                             "\n                                                    "
                                         )
                                       ])

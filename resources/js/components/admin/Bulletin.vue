@@ -77,7 +77,7 @@
                                                     </div>
                                                     <div class="col-8">
                                                         <p>
-                                                            {{ moment(event.when).format('MMMM Do YYYY, h:mm:ss a') }}
+                                                            {{ event.when }}
                                                         </p>
                                                     </div>
 

@@ -35,7 +35,7 @@ class BulletinService
         $convertBooleanListingColumns = [];
         $convertBooleanEventColumns = [];
 
-        $events = $this->eventRepository->getDataCreatedSevenDaysAgo()->with('user')->get()->toArray();
+        $events = $this->eventRepository->getDataCreatedSevenDaysAgo()->where('repeat_until', '>=', Carbon::today())->with('user')->get()->toArray();
 
         foreach($events as $event) {
             $convertBooleanEventColumns[] = $this->convertBooleanColumns($event);
