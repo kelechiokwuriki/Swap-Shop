@@ -27,20 +27,28 @@ class UserService
         return $this->userRepository->all()->loadCount(['events', 'listings']);
     }
 
+    public function getAllUsersExceptLoggedInUser()
+    {
+        return $this->userRepository->whereCompare('id', '!=', auth()->id())->withCount(['events', 'listings'])->get();
+    }
+
     public function getAllUsersEmailAddress()
     {
         return $this->userRepository->all()->pluck('email');
     }
 
+
+    //Update user profile details from profile page
     public function updateUserProfileDetails(int $id, array $details)
     {
-        $extractedUserData = $this->extractUserDataFromProfile($details);
+        $extractedUserData = $this->extractNameAndEmail($details);
 
         $extractedUserData['password'] = Hash::make($details['password']);
 
         return $this->userRepository->update($details['id'], $extractedUserData);
     }
 
+    //the admin uses this method to update user details
     public function updateUserDetailsFromAdmin(int $id, array $details)
     {
         return $this->userRepository->update($id, $details);
@@ -76,7 +84,7 @@ class UserService
         return $user->save();
     }
 
-    private function extractUserDataFromProfile(array $profile)
+    private function extractNameAndEmail(array $profile)
     {
         return [
             'name' => $profile['name'],

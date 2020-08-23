@@ -31,6 +31,12 @@ abstract class BaseRepository
         return $this->model->findOrFail($id);
     }
 
+
+    public function whereCompare(string $column, string $comparison, $value)
+    {
+        return $this->model->where($column, $comparison, $value);
+    }
+
     public function where(string $column, $value)
     {
         return $this->model->where($column, $value);

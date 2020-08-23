@@ -222,6 +222,16 @@
 
                         this.users.push(response.data);
 
+                        setTimeout(function() {
+                            $('#usersTable').DataTable({
+                                // "ordering": [[2, "desc"]],
+                                // stateSave: true,
+                                "aaSorting": [[4, "asc"]],
+                                pageLength: 10,
+                                lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Everything']]
+                            });
+                        }, );
+
                         this.feedBack('Success', 'Successfully registered ' + this.user.name, 'success');
                     } else {
                         this.feedBack('Oops...', 'Something went wrong please try again!', 'error')

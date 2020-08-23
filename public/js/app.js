@@ -2716,35 +2716,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2829,6 +2800,16 @@ __webpack_require__.r(__webpack_exports__);
           response.data.email_verified_at = null;
 
           _this4.users.push(response.data);
+
+          setTimeout(function () {
+            $('#usersTable').DataTable({
+              // "ordering": [[2, "desc"]],
+              // stateSave: true,
+              "aaSorting": [[4, "asc"]],
+              pageLength: 10,
+              lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Everything']]
+            });
+          });
 
           _this4.feedBack('Success', 'Successfully registered ' + _this4.user.name, 'success');
         } else {
