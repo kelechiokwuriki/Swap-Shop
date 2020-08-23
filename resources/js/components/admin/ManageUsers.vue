@@ -6,7 +6,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-9">
-                                <h5 class="card-title pt-2">{{ users.length }} Users</h5>
+                                <h5 class="card-title pt-2">{{ users.length }} User<span v-if="users.length > 1">s</span></h5>
                             </div>
                             <div class="col-sm-3">
                                 <div class="float-right">
@@ -217,6 +217,7 @@
             },
             registerUser() {
                 axios.post(this.usersApi, this.user).then(response => {
+                    console.log(response);
                     if(response.status === 201) {
                         response.data.email_verified_at = null;
 
@@ -235,6 +236,20 @@
                         this.feedBack('Success', 'Successfully registered ' + this.user.name, 'success');
                     } else {
                         this.feedBack('Oops...', 'Something went wrong please try again!', 'error')
+                    }
+                }).catch(error => {
+
+                    switch(error.response.status) {
+                        case 422:
+                            this.feedBack('Oops...', 'User already exists!', 'error');
+                            break;
+
+                        case 500:
+                            this.feedBack('Oops...', 'Something went wrong please try again!', 'error');
+                            break;
+
+                        default:
+                            this.feedBack('Oops...', 'Something went wrong please try again!', 'error');
                     }
                 })
             },

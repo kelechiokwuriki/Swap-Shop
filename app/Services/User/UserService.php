@@ -73,8 +73,18 @@ class UserService
 
         event(new Registered($user));
 
-
         return $user;
+    }
+
+    private function userExists(string $userEmail)
+    {
+        $res = $this->userRepository->where('email', $userEmail);
+
+        Log::debug('here');
+
+        Log::debug($res);
+
+        dd();
     }
 
     public function userAcceptTermsOfService(User $user)

@@ -2796,6 +2796,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       axios.post(this.usersApi, this.user).then(function (response) {
+        console.log(response);
+
         if (response.status === 201) {
           response.data.email_verified_at = null;
 
@@ -2814,6 +2816,22 @@ __webpack_require__.r(__webpack_exports__);
           _this4.feedBack('Success', 'Successfully registered ' + _this4.user.name, 'success');
         } else {
           _this4.feedBack('Oops...', 'Something went wrong please try again!', 'error');
+        }
+      })["catch"](function (error) {
+        switch (error.response.status) {
+          case 422:
+            _this4.feedBack('Oops...', 'User already exists!', 'error');
+
+            break;
+
+          case 500:
+            _this4.feedBack('Oops...', 'Something went wrong please try again!', 'error');
+
+            break;
+
+          default:
+            _this4.feedBack('Oops...', 'Something went wrong please try again!', 'error');
+
         }
       });
     },
@@ -111169,7 +111187,8 @@ var render = function() {
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-sm-9" }, [
               _c("h5", { staticClass: "card-title pt-2" }, [
-                _vm._v(_vm._s(_vm.users.length) + " Users")
+                _vm._v(_vm._s(_vm.users.length) + " User"),
+                _vm.users.length > 1 ? _c("span", [_vm._v("s")]) : _vm._e()
               ])
             ]),
             _vm._v(" "),
