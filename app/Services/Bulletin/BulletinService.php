@@ -88,6 +88,7 @@ class BulletinService
         ]);
     }
 
+
     private function cleanData($bulletin)
     {
         foreach($bulletin['listings'] as $key => $value)
