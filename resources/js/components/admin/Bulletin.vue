@@ -327,16 +327,9 @@
                         return event.included_in_bulletin !== false;
                     })
                 }
-
             },
             moment(date) {
                 return moment(date);
-            },
-            linkToEventCreation() {
-                window.location = '/events/create';
-            },
-            linkToListingCreation() {
-                window.location = '/listings/create';
             },
             getBulletin() {
                 axios.get('/api/bulletindata').then(response => {
@@ -363,13 +356,12 @@
                     return ((x < y) ? 1 : ((x > y) ? -1 : 0));
                 });
             },
-            getLatestBulletinData() {
+            getBulletinForLastSevenDays() {
                 axios.get('/api/latestBulletinData').then(response => {
                     this.bulletinToSend.number = response.data.number;
 
-                    // response.data.header.match(this.regexMatch);
+                    //replace the number on header with the number from database
                     this.bulletinToSend.header = response.data.header.replace(response.data.header.match(/\d+/), response.data.number);
-
 
                     this.bulletinToSend.swap_shop_info = response.data.swap_shop_info;
                 })
@@ -377,7 +369,7 @@
         },
         mounted() {
             this.getBulletin();
-            this.getLatestBulletinData();
+            this.getBulletinForLastSevenDays();
         },
         computed: {
             sortListingsPlaceWantFirst() {

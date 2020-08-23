@@ -51,35 +51,6 @@
                                     </tbody>
                                 </table>
                             </div>
-
-                        <!-- <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Total Events</th>
-                                <th scope="col">Total Listings</th>
-                                <th scope="col">Date Registered</th>
-                                <th scope="col">Details Updated</th>
-                                <th scope="col">Actions</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="user in users" v-bind:key="user.id">
-                                <td>{{ user.name }}</td>
-                                <td>{{ user.email }}</td>
-                                <td>{{ user.events_count }}</td>
-                                <td>{{ user.listings_count }}</td>
-                                <td>{{ moment(user.created_at).format('MMMM Do YYYY, h:mm:ss a') }}</td>
-                                <td>{{ moment(user.updated_at).format('MMMM Do YYYY, h:mm:ss a') }}</td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal" @click="showEditUserModal(user)">Edit User</button>
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal">Deactivate User</button>
-                                </td>
-                                </tr>
-                            </tbody>
-                        </table> -->
                     </div>
                 </div>
             <!-- </div> -->

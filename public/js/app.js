@@ -2502,12 +2502,6 @@ __webpack_require__.r(__webpack_exports__);
     }(function (date) {
       return moment(date);
     }),
-    linkToEventCreation: function linkToEventCreation() {
-      window.location = '/events/create';
-    },
-    linkToListingCreation: function linkToListingCreation() {
-      window.location = '/listings/create';
-    },
     getBulletin: function getBulletin() {
       var _this = this;
 
@@ -2538,11 +2532,11 @@ __webpack_require__.r(__webpack_exports__);
         return x < y ? 1 : x > y ? -1 : 0;
       });
     },
-    getLatestBulletinData: function getLatestBulletinData() {
+    getBulletinForLastSevenDays: function getBulletinForLastSevenDays() {
       var _this3 = this;
 
       axios.get('/api/latestBulletinData').then(function (response) {
-        _this3.bulletinToSend.number = response.data.number; // response.data.header.match(this.regexMatch);
+        _this3.bulletinToSend.number = response.data.number; //replace the number on header with the number from database
 
         _this3.bulletinToSend.header = response.data.header.replace(response.data.header.match(/\d+/), response.data.number);
         _this3.bulletinToSend.swap_shop_info = response.data.swap_shop_info;
@@ -2551,7 +2545,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getBulletin();
-    this.getLatestBulletinData();
+    this.getBulletinForLastSevenDays();
   },
   computed: {
     sortListingsPlaceWantFirst: function sortListingsPlaceWantFirst() {
