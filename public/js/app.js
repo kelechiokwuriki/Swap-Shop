@@ -2948,7 +2948,7 @@ __webpack_require__.r(__webpack_exports__);
     createEvent: function createEvent() {
       var _this = this;
 
-      axios.post(this.eventsApi, this.event).then(function (response) {
+      axios.post('/api/events', this.event).then(function (response) {
         console.log(response);
 
         if (response.status === 201) {

@@ -63,7 +63,7 @@
                  })
              },
             createEvent() {
-                axios.post(this.eventsApi, this.event).then(response => {
+                axios.post('/api/events', this.event).then(response => {
                     console.log(response);
                     if(response.status === 201) {
                         this.feedBack('Success', 'Your event has been created', 'success');
