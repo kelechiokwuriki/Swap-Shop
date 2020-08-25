@@ -26,10 +26,14 @@
                         <label for="contact-information">Contact information</label>
                         <input type="text" v-model="event.contact_info" class="form-control" id="contact-information" placeholder="">
                     </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success btn-lg" @click="createEvent">Create Event</button>
+                    </div>
+
+                    <p>{{responseFromServer}}</p>
                 </form>
-                <div class="text-center">
-                    <button type="button" class="btn btn-success btn-lg" @click="createEvent">Create Event</button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -44,7 +48,8 @@
                     when: null,
                     repeat_until: null,
                     information: null,
-                    contact_info: null
+                    contact_info: null,
+                    responseFromServer: ''
                 },
                 eventsApi: this.$helper.getEventsApi()
             }
@@ -66,7 +71,8 @@
                 e.preventDefault();
 
                 axios.post('/api/events/', this.event).then(response => {
-                    alert(response);
+                    this.responseFromServer = response;
+                    alert(response.status);
                     console.log(response);
                     if(response.status === 201) {
                         this.feedBack('Success', 'Your event has been created', 'success');

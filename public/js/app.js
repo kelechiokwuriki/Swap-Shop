@@ -2918,6 +2918,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2926,7 +2930,8 @@ __webpack_require__.r(__webpack_exports__);
         when: null,
         repeat_until: null,
         information: null,
-        contact_info: null
+        contact_info: null,
+        responseFromServer: ''
       },
       eventsApi: this.$helper.getEventsApi()
     };
@@ -2950,7 +2955,8 @@ __webpack_require__.r(__webpack_exports__);
 
       e.preventDefault();
       axios.post('/api/events/', this.event).then(function (response) {
-        alert(response);
+        _this.responseFromServer = response;
+        alert(response.status);
         console.log(response);
 
         if (response.status === 201) {
@@ -111860,19 +111866,21 @@ var render = function() {
                 }
               }
             })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "text-center" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-success btn-lg",
-              attrs: { type: "button" },
-              on: { click: _vm.createEvent }
-            },
-            [_vm._v("Create Event")]
-          )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "text-center" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success btn-lg",
+                attrs: { type: "submit" },
+                on: { click: _vm.createEvent }
+              },
+              [_vm._v("Create Event")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(_vm.responseFromServer))])
         ])
       ])
     ])
