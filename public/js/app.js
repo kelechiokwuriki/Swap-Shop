@@ -2950,6 +2950,7 @@ __webpack_require__.r(__webpack_exports__);
 
       e.preventDefault();
       axios.post('/api/events/', this.event).then(function (response) {
+        alert(response);
         console.log(response);
 
         if (response.status === 201) {
