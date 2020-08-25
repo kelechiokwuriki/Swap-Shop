@@ -29,7 +29,7 @@ class UserService
 
     public function getAllUsersExceptLoggedInUser()
     {
-        return $this->userRepository->whereCompare('id', '!=', auth()->id())->withCount(['events', 'listings'])->get();
+        return $this->userRepository->whereCompare('id', '!=', auth()->id())->withCount(['events', 'listings'])->with('roles')->get();
     }
 
     public function getAllUsersEmailAddress()

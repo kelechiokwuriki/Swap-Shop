@@ -2949,6 +2949,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post(this.eventsApi, this.event).then(function (response) {
+        console.log(response);
+
         if (response.status === 201) {
           _this.feedBack('Success', 'Your event has been created', 'success');
         } else {
@@ -110213,7 +110215,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "col-sm-6" }, [
         _c(
           "a",
           {
@@ -110224,7 +110226,7 @@ var staticRenderFns = [
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-sm-3" }, [
+      _c("div", { staticClass: "col-sm-6" }, [
         _c(
           "a",
           {
@@ -110232,28 +110234,6 @@ var staticRenderFns = [
             attrs: { href: "/admin/bulletin", role: "button" }
           },
           [_vm._v("Manage Bulletins")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-3" }, [
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-primary btn-lg",
-            attrs: { href: "/admin/listings", role: "button" }
-          },
-          [_vm._v("Manage listings")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-3" }, [
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-primary btn-lg",
-            attrs: { href: "/admin/events", role: "button" }
-          },
-          [_vm._v("Manage events")]
         )
       ])
     ])
