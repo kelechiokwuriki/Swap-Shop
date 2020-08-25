@@ -2945,10 +2945,11 @@ __webpack_require__.r(__webpack_exports__);
         icon: icon
       });
     },
-    createEvent: function createEvent() {
+    createEvent: function createEvent(e) {
       var _this = this;
 
-      axios.post('/api/events', this.event).then(function (response) {
+      e.preventDefault();
+      axios.post('/api/events/', this.event).then(function (response) {
         console.log(response);
 
         if (response.status === 201) {
