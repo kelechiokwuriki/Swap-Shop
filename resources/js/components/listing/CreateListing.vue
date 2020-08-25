@@ -74,10 +74,6 @@
                 })
             }
         },
-        mounted() {
-            axios.get('/api/listings').then(response => {
-                this.listings = response.data;
-            })
-        }
+
     }
 </script>

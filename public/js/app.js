@@ -3277,13 +3277,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     }
-  },
-  mounted: function mounted() {
-    var _this2 = this;
-
-    axios.get('/api/listings').then(function (response) {
-      _this2.listings = response.data;
-    });
   }
 });
 
