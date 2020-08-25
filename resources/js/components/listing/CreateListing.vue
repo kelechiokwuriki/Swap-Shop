@@ -71,6 +71,8 @@
                     } else {
                         this.feedBack('Oops...', 'Something went wrong please try again!', 'error')
                     }
+                }).catch(error => {
+                    console.log(error);
                 })
             }
         },

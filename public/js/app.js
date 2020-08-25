@@ -3276,6 +3276,8 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           _this.feedBack('Oops...', 'Something went wrong please try again!', 'error');
         }
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   }
