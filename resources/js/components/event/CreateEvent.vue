@@ -30,8 +30,6 @@
                     <div class="text-center">
                         <button type="submit" class="btn btn-success btn-lg" @click="createEvent">Create Event</button>
                     </div>
-
-                    <p>{{responseFromServer}}</p>
                 </form>
 
             </div>
@@ -49,7 +47,6 @@
                     repeat_until: null,
                     information: null,
                     contact_info: null,
-                    responseFromServer: ''
                 },
                 eventsApi: this.$helper.getEventsApi()
             }
@@ -70,10 +67,7 @@
             createEvent(e) {
                 e.preventDefault();
 
-                axios.post('/api/events/', this.event).then(response => {
-                    this.responseFromServer = response;
-                    alert(response.status);
-                    console.log(response);
+                axios.post('/api/events', this.event).then(response => {
                     if(response.status === 201) {
                         this.feedBack('Success', 'Your event has been created', 'success');
                     } else {

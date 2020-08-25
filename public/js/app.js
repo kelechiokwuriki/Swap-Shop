@@ -2920,8 +2920,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2930,8 +2928,7 @@ __webpack_require__.r(__webpack_exports__);
         when: null,
         repeat_until: null,
         information: null,
-        contact_info: null,
-        responseFromServer: ''
+        contact_info: null
       },
       eventsApi: this.$helper.getEventsApi()
     };
@@ -2954,11 +2951,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       e.preventDefault();
-      axios.post('/api/events/', this.event).then(function (response) {
-        _this.responseFromServer = response;
-        alert(response.status);
-        console.log(response);
-
+      axios.post('/api/events', this.event).then(function (response) {
         if (response.status === 201) {
           _this.feedBack('Success', 'Your event has been created', 'success');
         } else {
@@ -111878,9 +111871,7 @@ var render = function() {
               },
               [_vm._v("Create Event")]
             )
-          ]),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm.responseFromServer))])
+          ])
         ])
       ])
     ])
