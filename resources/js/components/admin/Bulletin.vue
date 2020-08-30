@@ -205,13 +205,20 @@
                                     <!--bulletin number-->
                                     <div class="form-group">
                                         <h5><label for="number">Current Bulletin Number</label></h5>
-                                        <input type="number" v-model="bulletinToSend.number" class="form-control">
+                                        <input type="number" v-model="bulletinToSend.number" min="1" class="form-control">
                                     </div>
                                     <!--end bulletin number-->
 
                                     <!--bulletin header-->
                                     <div class="form-group">
-                                        <h5><label for="header" class="mt-3">We retrieved the last bulletin header and updated the number. Update the header as you please</label></h5>
+                                        <h5>
+                                            <label for="header" class="mt-3">
+                                                <template v-if="bulletinToSend.header !== ''">
+                                                We retrieved the last bulletin header and updated the number. Update the header as you please
+                                                </template>
+                                                <template v-else>Bulletin Header</template>
+                                            </label>
+                                        </h5>
                                         <textarea-autosize
                                         id="header"
                                         class="form-control"
@@ -223,7 +230,14 @@
 
                                     <!--bulletin footer-->
                                     <div class="form-group">
-                                        <h5><label for="footer" class="mt-3">We retrieved the last Swap Shop information. Update the information as you please</label></h5>
+                                        <h5>
+                                            <label for="footer" class="mt-3">
+                                                <template v-if="bulletinToSend.swap_shop_info !== ''">
+                                                    We retrieved the last Swap Shop information. Update the information as you please
+                                                </template>
+                                                <template v-else>Bulletin Header</template>
+                                            </label>
+                                        </h5>
                                         <textarea-autosize
                                         id="footer"
                                         class="form-control"

@@ -45,7 +45,9 @@
                                             <td>{{ moment(user.updated_at).format('MMMM Do YYYY, h:mm a') }}</td>
                                             <td>
                                                 <button class="btn btn-primary btn-sm" data-toggle="modal" @click="showEditUserModal(user)">Edit User</button>
-                                                <button class="btn btn-danger btn-sm" v-if="user.email_verified_at === null" @click="showDeleteUserModal(user)">Delete Unverified User</button>
+                                                <template v-if="user.name !== loggedinuser">
+                                                    <button class="btn btn-danger btn-sm" v-if="user.email_verified_at === null" @click="showDeleteUserModal(user)">Delete Unverified User</button>
+                                                </template>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -272,8 +274,10 @@
                 })
             }
         },
-        computed: {
-
+        props: {
+            loggedinuser: {
+                type: String
+            }
         },
         mounted() {
             this.getUsers();

@@ -26,7 +26,7 @@ class UserApiController extends Controller
      */
     public function index()
     {
-        return $this->userService->getAllUsersExceptLoggedInUser();
+        return $this->userService->getAllUsers();
     }
 
     /**

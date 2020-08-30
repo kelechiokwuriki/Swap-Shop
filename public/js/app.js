@@ -2455,6 +2455,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2570,6 +2584,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -2864,7 +2880,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  computed: {},
+  props: {
+    loggedinuser: {
+      type: String
+    }
+  },
   mounted: function mounted() {
     this.getUsers();
   }
@@ -110827,7 +110847,7 @@ var render = function() {
                               }
                             ],
                             staticClass: "form-control",
-                            attrs: { type: "number" },
+                            attrs: { type: "number", min: "1" },
                             domProps: { value: _vm.bulletinToSend.number },
                             on: {
                               input: function($event) {
@@ -110848,7 +110868,25 @@ var render = function() {
                           "div",
                           { staticClass: "form-group" },
                           [
-                            _vm._m(13),
+                            _c("h5", [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "mt-3",
+                                  attrs: { for: "header" }
+                                },
+                                [
+                                  _vm.bulletinToSend.header !== ""
+                                    ? [
+                                        _vm._v(
+                                          "\n                                            We retrieved the last bulletin header and updated the number. Update the header as you please\n                                            "
+                                        )
+                                      ]
+                                    : [_vm._v("Bulletin Header")]
+                                ],
+                                2
+                              )
+                            ]),
                             _vm._v(" "),
                             _c("textarea-autosize", {
                               ref: "footerTextArea",
@@ -110870,7 +110908,25 @@ var render = function() {
                           "div",
                           { staticClass: "form-group" },
                           [
-                            _vm._m(14),
+                            _c("h5", [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "mt-3",
+                                  attrs: { for: "footer" }
+                                },
+                                [
+                                  _vm.bulletinToSend.swap_shop_info !== ""
+                                    ? [
+                                        _vm._v(
+                                          "\n                                                We retrieved the last Swap Shop information. Update the information as you please\n                                            "
+                                        )
+                                      ]
+                                    : [_vm._v("Bulletin Header")]
+                                ],
+                                2
+                              )
+                            ]),
                             _vm._v(" "),
                             _c("textarea-autosize", {
                               ref: "headerTextArea",
@@ -111109,30 +111165,6 @@ var staticRenderFns = [
         _vm._v("Current Bulletin Number")
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h5", [
-      _c("label", { staticClass: "mt-3", attrs: { for: "header" } }, [
-        _vm._v(
-          "We retrieved the last bulletin header and updated the number. Update the header as you please"
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h5", [
-      _c("label", { staticClass: "mt-3", attrs: { for: "footer" } }, [
-        _vm._v(
-          "We retrieved the last Swap Shop information. Update the information as you please"
-        )
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -111236,36 +111268,46 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary btn-sm",
-                              attrs: { "data-toggle": "modal" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.showEditUserModal(user)
-                                }
-                              }
-                            },
-                            [_vm._v("Edit User")]
-                          ),
-                          _vm._v(" "),
-                          user.email_verified_at === null
-                            ? _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-danger btn-sm",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.showDeleteUserModal(user)
-                                    }
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary btn-sm",
+                                attrs: { "data-toggle": "modal" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.showEditUserModal(user)
                                   }
-                                },
-                                [_vm._v("Delete Unverified User")]
-                              )
-                            : _vm._e()
-                        ])
+                                }
+                              },
+                              [_vm._v("Edit User")]
+                            ),
+                            _vm._v(" "),
+                            user.name !== _vm.loggedinuser
+                              ? [
+                                  user.email_verified_at === null
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-danger btn-sm",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.showDeleteUserModal(
+                                                user
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Delete Unverified User")]
+                                      )
+                                    : _vm._e()
+                                ]
+                              : _vm._e()
+                          ],
+                          2
+                        )
                       ])
                     }),
                     0

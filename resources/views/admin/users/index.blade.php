@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <manageusers></manageusers>
+    <manageusers :loggedinuser="{{ $loggedInUser }}"></manageusers>
 @endsection

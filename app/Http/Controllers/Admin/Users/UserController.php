@@ -16,7 +16,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.users.index');
+        $loggedInUser = auth()->user()->name;
+
+        return view('admin.users.index')->with([
+            'loggedInUser' => json_encode($loggedInUser)
+        ]);
     }
 
     /**
