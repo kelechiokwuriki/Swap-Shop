@@ -24,7 +24,16 @@
                                     <template v-if="bulletin.events.length !== 0 || bulletin.listings.length !== 0">
                                         <button class="btn btn-secondary" @click="previousStep" v-show="step !== 1">Go Back</button>
                                         <button class="btn btn-primary ml-1" @click="nextStep" v-show="step !== totalSteps">Next Step</button>
-                                        <button class="btn btn-primary ml-1" @click="sendBulletin" v-show="step === totalSteps">Send Bulletin</button>
+                                        <button class="btn btn-primary ml-1" @click="sendBulletin" v-show="step === totalSteps"
+                                        :disabled="sendingBulletin">
+                                            <template v-if="sendingBulletin">
+                                                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                    Sending...
+                                            </template>
+                                            <template v-else>
+                                                Send Bulletin
+                                            </template>
+                                        </button>
                                     </template>
                                 </div>
                             </div>
@@ -309,6 +318,7 @@
     export default {
         data() {
             return {
+                sendingBulletin: false,
                 bulletin: [],
                 step: 1,
                 totalSteps: 3,
@@ -351,18 +361,23 @@
                 })
             },
             sendBulletin() {
+                this.sendingBulletin = true;
+
                 axios.post('/api/bulletin', this.bulletinToSend).then(response => {
                     if(response.data === 'Done') {
+                        this.sendingBulletin = false;
                         this.feedBack('Bulletin number ' + this.bulletinToSend.number, 'Successfully sent your bulletin for the week!', 'success');
                     }
                 })
             },
             feedBack(title, text, icon) {
-                return Swal.fire({
+                Swal.fire({
                     title: title,
                     text: text,
                     icon: icon
-                });
+                }).then(function() {
+                    window.location.href = '/admin';
+                })
             },
             sortListingByWantFirst(array, key) {
                 return array.sort(function(a, b) {

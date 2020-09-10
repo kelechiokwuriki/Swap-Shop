@@ -2469,9 +2469,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      sendingBulletin: false,
       bulletin: [],
       step: 1,
       totalSteps: 3,
@@ -2526,17 +2536,22 @@ __webpack_require__.r(__webpack_exports__);
     sendBulletin: function sendBulletin() {
       var _this2 = this;
 
+      this.sendingBulletin = true;
       axios.post('/api/bulletin', this.bulletinToSend).then(function (response) {
         if (response.data === 'Done') {
+          _this2.sendingBulletin = false;
+
           _this2.feedBack('Bulletin number ' + _this2.bulletinToSend.number, 'Successfully sent your bulletin for the week!', 'success');
         }
       });
     },
     feedBack: function feedBack(title, text, icon) {
-      return Swal.fire({
+      Swal.fire({
         title: title,
         text: text,
         icon: icon
+      }).then(function () {
+        window.location.href = '/admin';
       });
     },
     sortListingByWantFirst: function sortListingByWantFirst(array, key) {
@@ -110409,9 +110424,31 @@ var render = function() {
                                 }
                               ],
                               staticClass: "btn btn-primary ml-1",
+                              attrs: { disabled: _vm.sendingBulletin },
                               on: { click: _vm.sendBulletin }
                             },
-                            [_vm._v("Send Bulletin")]
+                            [
+                              _vm.sendingBulletin
+                                ? [
+                                    _c("span", {
+                                      staticClass:
+                                        "spinner-border spinner-border-sm",
+                                      attrs: {
+                                        role: "status",
+                                        "aria-hidden": "true"
+                                      }
+                                    }),
+                                    _vm._v(
+                                      "\n                                                Sending...\n                                        "
+                                    )
+                                  ]
+                                : [
+                                    _vm._v(
+                                      "\n                                            Send Bulletin\n                                        "
+                                    )
+                                  ]
+                            ],
+                            2
                           )
                         ]
                       : _vm._e()
@@ -110922,7 +110959,7 @@ var render = function() {
                                           "\n                                                We retrieved the last Swap Shop information. Update the information as you please\n                                            "
                                         )
                                       ]
-                                    : [_vm._v("Bulletin Header")]
+                                    : [_vm._v("Bulletin Information/Footer")]
                                 ],
                                 2
                               )

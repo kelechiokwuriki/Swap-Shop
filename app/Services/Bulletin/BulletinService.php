@@ -71,12 +71,37 @@ class BulletinService
             ));
         }
 
+
+         // check for failures
+        if (count(Mail::failures()) > 0) {
+            return 'failed';
+        }
+
+
         //increment the bulletin number before saving in database
         $incrementedBulletinNumber = $cleanedData['number']++;
 
-        $this->createLocalBulletinData($incrementedBulletinNumber, $cleanedData['header'], $cleanedData['swap_shop_info']);
+        $bulletin = $this->createLocalBulletinData($incrementedBulletinNumber, $cleanedData['header'], $cleanedData['swap_shop_info']);
+
+        if($bulletin) {
+            $this->deletelistingsAfterEmailSent($cleanedData['listings']);
+            $this->deleteEventsAfterEmailSent($cleanedData['events']);
+        }
 
         return 'Done';
+    }
+
+    private function deletelistingsAfterEmailSent($listings)
+    {
+        foreach($listings as $listing) {
+            $this->listingRepository->delete($listing['id']);
+        }
+    }
+
+    private function deleteEventsAfterEmailSent($events) {
+        foreach($events as $event) {
+            $this->eventRepository->delete($event['id']);
+        }
     }
 
     private function createLocalBulletinData(int $number, string $header, string $swapShopInfo)
@@ -94,7 +119,7 @@ class BulletinService
         foreach($bulletin['listings'] as $key => $value)
         {
             unset(
-                $bulletin['listings'][$key]['id'],
+                // $bulletin['listings'][$key]['id'],
                 $bulletin['listings'][$key]['user_id'],
                 $bulletin['listings'][$key]['created_at'],
                 $bulletin['listings'][$key]['updated_at'],
@@ -105,7 +130,7 @@ class BulletinService
         foreach($bulletin['events'] as $key => $value)
         {
             unset(
-                $bulletin['events'][$key]['id'],
+                // $bulletin['events'][$key]['id'],
                 $bulletin['events'][$key]['user_id'],
                 $bulletin['events'][$key]['created_at'],
                 $bulletin['events'][$key]['updated_at'],
