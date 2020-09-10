@@ -43,9 +43,36 @@ class Bulletin extends Mailable
         return $this->markdown('emails.bulletin')->with([
             'bulletinNumber' => $this->bulletinNumber,
             'header' => $this->header,
-            'listings' => $this->listings,
+            'wantedListings' => $this->getWantedListings(),
+            'offeredListings' => $this->getOfferedListings(),
             'events' => $this->events,
             'swapShopInformation' => $this->swapShopInformation
         ]);
+    }
+
+    private function getWantedListings()
+    {
+        $wantedListings = [];
+
+        foreach($this->listings as $listing) {
+            if($listing['type'] === 'Want') {
+                $wantedListings[] = $listing;
+            }
+        }
+
+        return $wantedListings;
+    }
+
+    private function getOfferedListings()
+    {
+        $offeredListings = [];
+
+        foreach($this->listings as $listing) {
+            if($listing['type'] === 'Offer') {
+                $offeredListings[] = $listing;
+            }
+        }
+
+        return $offeredListings;
     }
 }

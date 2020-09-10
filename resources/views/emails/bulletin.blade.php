@@ -5,18 +5,11 @@ use Carbon\Carbon;
 @component('mail::message')
 # {{$header}}
 
-
-@foreach($listings as $listing)
+<h1>Wanted</h1>
+@foreach ($wantedListings as $listing)
 
 @component('mail::panel')
-
-@if ($listing['type'] === 'Want')
-<h1>Wanted</h1>
-@elseif ($listing['type'] === 'Offer')
-<h1>Offer</h1>
-@endif
-<br>
-Wanted: {{$listing['type']}} <br>
+Wanted: {{$listing['item']}} <br>
 Info: {{$listing['information']}} <br>
 The Deal: {{$listing['deal']}} <br>
 Email: {{$listing['user']['email']}} <br>
@@ -25,10 +18,25 @@ Name: {{$listing['user']['name']}} <br>
 
 @endforeach
 
+
+<h1>Offered</h1>
+@foreach ($offeredListings as $listing)
+
+@component('mail::panel')
+Offered: {{$listing['item']}} <br>
+Info: {{$listing['information']}} <br>
+The Deal: {{$listing['deal']}} <br>
+Email: {{$listing['user']['email']}} <br>
+Name: {{$listing['user']['name']}} <br>
+@endcomponent
+
+@endforeach
+
+
+<h1>Events</h1>
 @foreach($events as $event)
 
 @component('mail::panel')
-<h1>Event</h1>
 <br>
 Event: {{$event['name']}} <br>
 Info: {{$event['information']}} <br>

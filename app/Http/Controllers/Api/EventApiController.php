@@ -48,10 +48,8 @@ class EventApiController extends Controller
     public function store(Request $request)
     {
         $request->request->set('user_id', auth()->id());
-        Log::debug($request->all());
 
         return $this->eventService->createEvent($request->all());
-
     }
 
     /**

@@ -235,7 +235,7 @@
                                                 <template v-if="bulletinToSend.swap_shop_info !== ''">
                                                     We retrieved the last Swap Shop information. Update the information as you please
                                                 </template>
-                                                <template v-else>Bulletin Header</template>
+                                                <template v-else>Bulletin Information/Footer</template>
                                             </label>
                                         </h5>
                                         <textarea-autosize
