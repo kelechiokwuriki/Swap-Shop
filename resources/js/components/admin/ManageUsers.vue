@@ -218,7 +218,7 @@
                 });
             },
             registerUser() {
-                axios.post(this.usersApi, this.user).then(response => {
+                    axios.post('/api/users', this.user).then(response => {
                     console.log(response);
                     if(response.status === 201) {
                         response.data.email_verified_at = null;

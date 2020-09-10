@@ -293,11 +293,15 @@
                                     <br>
                                     <br>
 
-                                    <div v-for="event in bulletinToSend.events" v-bind:key="'ev'+event.id">
 
+                                    <p>
                                         =============================
                                         Events
                                         =============================
+                                    </p>
+
+
+                                    <div v-for="event in bulletinToSend.events" v-bind:key="'ev'+event.id">
                                         <br>
                                         Event: {{event.name}} <br>
                                         Info: {{event.information}} <br>
