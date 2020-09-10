@@ -290,29 +290,6 @@
                                         Name: {{listing.user.name}} <br><br><br>
                                     </div>
 
-
-
-                                    <!-- <div v-for="listing in bulletinToSend.listings" v-bind:key="'li'+listing.id">
-
-                                        <p v-if="listing.type === 'Want'">
-                                        =============================
-                                            Wanted
-                                        =============================
-                                        </p>
-                                        <p v-else-if="listing.type === 'Offer'">
-                                        =============================
-                                            Offered
-                                        =============================
-                                        </p>
-
-                                        <template v-if="listing.type === 'Want'">Wanted: {{listing.item}}</template>
-                                        <template v-else-if="listing.type === 'Offer'">Offered: {{listing.item}}</template> <br>
-                                        Info: {{listing.information}} <br>
-                                        Deal: {{listing.deal}} <br>
-                                        Contact: {{listing.user.email}} <br>
-                                        Name: {{listing.user.name}} <br>
-                                    </div> -->
-
                                     <br>
                                     <br>
 
