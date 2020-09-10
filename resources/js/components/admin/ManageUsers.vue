@@ -188,6 +188,20 @@
 
                         this.users.splice(index, 1);
 
+                        $('#usersTable').DataTable().destroy();
+
+
+
+                        setTimeout(function() {
+                            $('#usersTable').DataTable({
+                                // "ordering": [[2, "desc"]],
+                                // stateSave: true,
+                                "aaSorting": [[4, "asc"]],
+                                pageLength: 10,
+                                lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Everything']]
+                            });
+                        }, );
+
                         return this.feedBack('Success', 'Successfully deleted ' + this.deleteUserModalData.name, 'success');
                     }
 
@@ -224,6 +238,10 @@
                         response.data.email_verified_at = null;
 
                         this.users.push(response.data);
+
+                        $('#usersTable').DataTable().destroy();
+
+
 
                         setTimeout(function() {
                             $('#usersTable').DataTable({

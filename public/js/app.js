@@ -2811,6 +2811,16 @@ __webpack_require__.r(__webpack_exports__);
 
           _this2.users.splice(index, 1);
 
+          $('#usersTable').DataTable().destroy();
+          setTimeout(function () {
+            $('#usersTable').DataTable({
+              // "ordering": [[2, "desc"]],
+              // stateSave: true,
+              "aaSorting": [[4, "asc"]],
+              pageLength: 10,
+              lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Everything']]
+            });
+          });
           return _this2.feedBack('Success', 'Successfully deleted ' + _this2.deleteUserModalData.name, 'success');
         }
 
@@ -2853,6 +2863,7 @@ __webpack_require__.r(__webpack_exports__);
 
           _this4.users.push(response.data);
 
+          $('#usersTable').DataTable().destroy();
           setTimeout(function () {
             $('#usersTable').DataTable({
               // "ordering": [[2, "desc"]],
