@@ -2478,6 +2478,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2584,7 +2614,16 @@ __webpack_require__.r(__webpack_exports__);
         return listing.included_in_bulletin !== 1;
       });
     },
-    bulletinHeader: function bulletinHeader() {}
+    wantedListings: function wantedListings() {
+      return this.bulletinToSend.listings.filter(function (listing) {
+        return listing.type === 'Want';
+      });
+    },
+    offeredListings: function offeredListings() {
+      return this.bulletinToSend.listings.filter(function (listing) {
+        return listing.type === 'Offer';
+      });
+    }
   }
 });
 
@@ -110995,59 +111034,90 @@ var render = function() {
                       _vm._v(_vm._s(_vm.bulletinToSend.header))
                     ]),
                     _vm._v(" "),
-                    _vm._l(_vm.bulletinToSend.listings, function(listing) {
-                      return _c(
-                        "div",
-                        { key: "li" + listing.id },
-                        [
-                          listing.type === "Want"
-                            ? _c("p", [
-                                _vm._v(
-                                  "\n                                    =============================\n                                        Wanted\n                                    =============================\n                                    "
-                                )
-                              ])
-                            : listing.type === "Offer"
-                            ? _c("p", [
-                                _vm._v(
-                                  "\n                                    =============================\n                                        Offered\n                                    =============================\n                                    "
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          listing.type === "Want"
-                            ? [_vm._v("Wanted: " + _vm._s(listing.item))]
-                            : listing.type === "Offer"
-                            ? [_vm._v("Offered: " + _vm._s(listing.item))]
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(
-                            "\n                                    Info: " +
-                              _vm._s(listing.information) +
-                              " "
-                          ),
-                          _c("br"),
-                          _vm._v(
-                            "\n                                    Deal: " +
-                              _vm._s(listing.deal) +
-                              " "
-                          ),
-                          _c("br"),
-                          _vm._v(
-                            "\n                                    Contact: " +
-                              _vm._s(listing.user.email) +
-                              " "
-                          ),
-                          _c("br"),
-                          _vm._v(
-                            "\n                                    Name: " +
-                              _vm._s(listing.user.name) +
-                              " "
-                          ),
-                          _c("br")
-                        ],
-                        2
+                    _c("p", [
+                      _vm._v(
+                        "\n                                =============================\n                                    Wanted\n                                =============================\n                                "
                       )
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.wantedListings, function(listing) {
+                      return _c("div", { key: "li" + listing.id }, [
+                        _vm._v(
+                          "\n                                    Wanted: " +
+                            _vm._s(listing.item) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                    Info: " +
+                            _vm._s(listing.information) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                    Deal: " +
+                            _vm._s(listing.deal) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                    Contact: " +
+                            _vm._s(listing.user.email) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                    Name: " +
+                            _vm._s(listing.user.name) +
+                            " "
+                        ),
+                        _c("br"),
+                        _c("br"),
+                        _c("br")
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "\n                                =============================\n                                    Offered\n                                =============================\n                                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.offeredListings, function(listing) {
+                      return _c("div", { key: "li" + listing.id }, [
+                        _vm._v(
+                          "\n                                    Offered: " +
+                            _vm._s(listing.item) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                    Info: " +
+                            _vm._s(listing.information) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                    Deal: " +
+                            _vm._s(listing.deal) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                    Contact: " +
+                            _vm._s(listing.user.email) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                    Name: " +
+                            _vm._s(listing.user.name) +
+                            " "
+                        ),
+                        _c("br"),
+                        _c("br"),
+                        _c("br")
+                      ])
                     }),
                     _vm._v(" "),
                     _c("br"),

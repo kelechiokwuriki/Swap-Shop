@@ -262,7 +262,37 @@
 
                                     <p class="keep-whitespace">{{ bulletinToSend.header }}</p>
 
-                                    <div v-for="listing in bulletinToSend.listings" v-bind:key="'li'+listing.id">
+                                    <p>
+                                    =============================
+                                        Wanted
+                                    =============================
+                                    </p>
+
+                                    <div v-for="listing in wantedListings" v-bind:key="'li'+listing.id">
+                                        Wanted: {{listing.item}} <br>
+                                        Info: {{listing.information}} <br>
+                                        Deal: {{listing.deal}} <br>
+                                        Contact: {{listing.user.email}} <br>
+                                        Name: {{listing.user.name}} <br><br><br>
+                                    </div>
+
+                                    <p>
+                                    =============================
+                                        Offered
+                                    =============================
+                                    </p>
+
+                                    <div v-for="listing in offeredListings" v-bind:key="'li'+listing.id">
+                                        Offered: {{listing.item}} <br>
+                                        Info: {{listing.information}} <br>
+                                        Deal: {{listing.deal}} <br>
+                                        Contact: {{listing.user.email}} <br>
+                                        Name: {{listing.user.name}} <br><br><br>
+                                    </div>
+
+
+
+                                    <!-- <div v-for="listing in bulletinToSend.listings" v-bind:key="'li'+listing.id">
 
                                         <p v-if="listing.type === 'Want'">
                                         =============================
@@ -281,7 +311,7 @@
                                         Deal: {{listing.deal}} <br>
                                         Contact: {{listing.user.email}} <br>
                                         Name: {{listing.user.name}} <br>
-                                    </div>
+                                    </div> -->
 
                                     <br>
                                     <br>
@@ -409,8 +439,11 @@
                     return listing.included_in_bulletin !== 1;
                 })
             },
-            bulletinHeader() {
-
+            wantedListings() {
+                return this.bulletinToSend.listings.filter(listing => listing.type === 'Want');
+            },
+            offeredListings() {
+                return this.bulletinToSend.listings.filter(listing => listing.type === 'Offer');
             }
         }
     }
