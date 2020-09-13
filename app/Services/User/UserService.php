@@ -76,17 +76,6 @@ class UserService
         return $user;
     }
 
-    private function userExists(string $userEmail)
-    {
-        $res = $this->userRepository->where('email', $userEmail);
-
-        Log::debug('here');
-
-        Log::debug($res);
-
-        dd();
-    }
-
     public function userAcceptTermsOfService(User $user)
     {
         $user->accepted_terms_of_service = Carbon::now()->toDateTime();

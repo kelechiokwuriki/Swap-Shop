@@ -300,7 +300,6 @@
                                         =============================
                                     </p>
 
-
                                     <div v-for="event in bulletinToSend.events" v-bind:key="'ev'+event.id">
                                         <br>
                                         Event: {{event.name}} <br>

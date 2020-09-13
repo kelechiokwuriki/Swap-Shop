@@ -83,4 +83,40 @@ class RegisterUserTest extends TestCase
 
         $this->assertEquals($user['email'], $foundUser->email);
     }
+
+    public function testDeleteUser()
+    {
+        $user = [
+            'name' => 'test name',
+            'email' => 'fakeemail@fake.com',
+            'password' => Hash::make('testpassword')
+        ];
+
+        $userRegistered = $this->userService->registerUser($user);
+
+        $result = $this->userService->deleteUser($userRegistered->id);
+
+        $this->assertDatabaseMissing('users', $user);
+    }
+
+    public function testUpdateUser()
+    {
+        $user = [
+            'name' => 'test name',
+            'email' => 'fakeemail@fake.com',
+            'password' => Hash::make('testpassword')
+        ];
+
+        $userRegistered = $this->userService->registerUser($user);
+
+        $user['name'] = 'new name';
+
+        $updatedUser = $this->userService->updateUserDetailsFromAdmin($userRegistered->id, $user);
+
+        $userToCheck = User::find($userRegistered->id);
+
+        $this->assertEquals($userToCheck->name, $user['name']);
+        $this->assertTrue($updatedUser);
+
+    }
 }
