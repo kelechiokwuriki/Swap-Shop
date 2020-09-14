@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
-class RegisterUserTest extends TestCase
+class UsersTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -54,6 +54,7 @@ class RegisterUserTest extends TestCase
             'email' => $this->userRequest->email,
         ];
     }
+
     public function testPostUser()
     {
         $response = $this->json(
