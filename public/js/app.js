@@ -2487,9 +2487,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      selectAllListings: false,
+      selectAllEvents: false,
       sendingBulletin: false,
       bulletin: [],
       step: 1,
@@ -2584,6 +2598,18 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.getBulletin();
     this.getBulletinForLastSevenDays();
+  },
+  watch: {
+    selectAllEvents: function selectAllEvents(value) {
+      this.bulletin.events.forEach(function (event) {
+        event.included_in_bulletin = !event.included_in_bulletin;
+      });
+    },
+    selectAllListings: function selectAllListings(value) {
+      this.bulletin.listings.forEach(function (listing) {
+        listing.included_in_bulletin = !listing.included_in_bulletin;
+      });
+    }
   },
   computed: {
     sortListingsPlaceWantFirst: function sortListingsPlaceWantFirst() {
@@ -110497,10 +110523,76 @@ var render = function() {
                     _c("div", { staticClass: "row" }, [
                       _c(
                         "div",
-                        { staticClass: "col" },
+                        { staticClass: "col-sm-6" },
                         [
-                          _c("h4", { staticClass: "card-title text-center" }, [
-                            _vm._v("Events")
+                          _c("div", { staticClass: "row" }, [
+                            _vm._m(0),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-sm-6" }, [
+                              _c("div", { staticClass: "form-check" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.selectAllEvents,
+                                      expression: "selectAllEvents"
+                                    }
+                                  ],
+                                  staticClass: "form-check-input",
+                                  attrs: {
+                                    type: "checkbox",
+                                    id: "defaultCheck2"
+                                  },
+                                  domProps: {
+                                    checked: Array.isArray(_vm.selectAllEvents)
+                                      ? _vm._i(_vm.selectAllEvents, null) > -1
+                                      : _vm.selectAllEvents
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      var $$a = _vm.selectAllEvents,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = null,
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.selectAllEvents = $$a.concat([
+                                              $$v
+                                            ]))
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.selectAllEvents = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)))
+                                        }
+                                      } else {
+                                        _vm.selectAllEvents = $$c
+                                      }
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "h5 form-check-label",
+                                    attrs: { for: "defaultCheck2" }
+                                  },
+                                  [
+                                    _vm.selectAllEvents
+                                      ? _c("span", [
+                                          _vm._v("Un-select all Events")
+                                        ])
+                                      : _c("span", [
+                                          _vm._v("Select all Events")
+                                        ])
+                                  ]
+                                )
+                              ])
+                            ])
                           ]),
                           _vm._v(" "),
                           _vm._l(_vm.bulletin.events, function(event) {
@@ -110509,9 +110601,75 @@ var render = function() {
                               { key: event.id, staticClass: "card mb-4" },
                               [
                                 _c("div", { staticClass: "card-header" }, [
-                                  _c("div", { staticClass: "row" }, [
-                                    _c("div", { staticClass: "col-sm-9" }, [
-                                      _c("h5", { staticClass: "card-title" }, [
+                                  _c("div", { staticClass: "form-check" }, [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: event.included_in_bulletin,
+                                          expression:
+                                            "event.included_in_bulletin"
+                                        }
+                                      ],
+                                      staticClass: "form-check-input",
+                                      attrs: {
+                                        type: "checkbox",
+                                        id: "defaultCheck2"
+                                      },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          event.included_in_bulletin
+                                        )
+                                          ? _vm._i(
+                                              event.included_in_bulletin,
+                                              null
+                                            ) > -1
+                                          : event.included_in_bulletin
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = event.included_in_bulletin,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  event,
+                                                  "included_in_bulletin",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  event,
+                                                  "included_in_bulletin",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              event,
+                                              "included_in_bulletin",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "h5 form-check-label",
+                                        attrs: { for: "defaultCheck2" }
+                                      },
+                                      [
                                         event.included_in_bulletin
                                           ? _c("span", [
                                               _vm._v(
@@ -110529,119 +110687,28 @@ var render = function() {
                                               )
                                             ])
                                           : _c("span", [_vm._v("inclusion")])
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "col-sm-3" }, [
-                                      _c(
-                                        "div",
-                                        { staticClass: "float-right" },
-                                        [
-                                          _c(
-                                            "div",
-                                            { staticClass: "form-check" },
-                                            [
-                                              _c("input", {
-                                                directives: [
-                                                  {
-                                                    name: "model",
-                                                    rawName: "v-model",
-                                                    value:
-                                                      event.included_in_bulletin,
-                                                    expression:
-                                                      "event.included_in_bulletin"
-                                                  }
-                                                ],
-                                                staticClass: "form-check-input",
-                                                attrs: {
-                                                  type: "checkbox",
-                                                  id: "exampleCheck1"
-                                                },
-                                                domProps: {
-                                                  checked: Array.isArray(
-                                                    event.included_in_bulletin
-                                                  )
-                                                    ? _vm._i(
-                                                        event.included_in_bulletin,
-                                                        null
-                                                      ) > -1
-                                                    : event.included_in_bulletin
-                                                },
-                                                on: {
-                                                  change: function($event) {
-                                                    var $$a =
-                                                        event.included_in_bulletin,
-                                                      $$el = $event.target,
-                                                      $$c = $$el.checked
-                                                        ? true
-                                                        : false
-                                                    if (Array.isArray($$a)) {
-                                                      var $$v = null,
-                                                        $$i = _vm._i($$a, $$v)
-                                                      if ($$el.checked) {
-                                                        $$i < 0 &&
-                                                          _vm.$set(
-                                                            event,
-                                                            "included_in_bulletin",
-                                                            $$a.concat([$$v])
-                                                          )
-                                                      } else {
-                                                        $$i > -1 &&
-                                                          _vm.$set(
-                                                            event,
-                                                            "included_in_bulletin",
-                                                            $$a
-                                                              .slice(0, $$i)
-                                                              .concat(
-                                                                $$a.slice(
-                                                                  $$i + 1
-                                                                )
-                                                              )
-                                                          )
-                                                      }
-                                                    } else {
-                                                      _vm.$set(
-                                                        event,
-                                                        "included_in_bulletin",
-                                                        $$c
-                                                      )
-                                                    }
-                                                  }
-                                                }
-                                              })
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ])
+                                      ]
+                                    )
                                   ])
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "card-body" }, [
                                   _c("div", { staticClass: "form-group row" }, [
-                                    _vm._m(0, true),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "col-8" }, [
-                                      _c("p", [_vm._v(_vm._s(event.name))])
-                                    ]),
-                                    _vm._v(" "),
                                     _vm._m(1, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
-                                      _c("p", [
-                                        _vm._v(
-                                          "\n                                                        " +
-                                            _vm._s(event.when) +
-                                            "\n                                                    "
-                                        )
-                                      ])
+                                      _c("p", [_vm._v(_vm._s(event.name))])
                                     ]),
                                     _vm._v(" "),
                                     _vm._m(2, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
-                                        _vm._v(_vm._s(event.information))
+                                        _vm._v(
+                                          "\n                                                            " +
+                                            _vm._s(event.when) +
+                                            "\n                                                        "
+                                        )
                                       ])
                                     ]),
                                     _vm._v(" "),
@@ -110649,7 +110716,7 @@ var render = function() {
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
-                                        _vm._v(_vm._s(event.contact_info))
+                                        _vm._v(_vm._s(event.information))
                                       ])
                                     ]),
                                     _vm._v(" "),
@@ -110657,17 +110724,7 @@ var render = function() {
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
-                                        _vm._v(
-                                          "\n                                                        " +
-                                            _vm._s(
-                                              _vm
-                                                .moment(event.created_at)
-                                                .format(
-                                                  "MMMM Do YYYY, h:mm:ss a"
-                                                )
-                                            ) +
-                                            "\n                                                    "
-                                        )
+                                        _vm._v(_vm._s(event.contact_info))
                                       ])
                                     ]),
                                     _vm._v(" "),
@@ -110676,7 +110733,25 @@ var render = function() {
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
                                         _vm._v(
-                                          "\n                                                        " +
+                                          "\n                                                            " +
+                                            _vm._s(
+                                              _vm
+                                                .moment(event.created_at)
+                                                .format(
+                                                  "MMMM Do YYYY, h:mm:ss a"
+                                                )
+                                            ) +
+                                            "\n                                                        "
+                                        )
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._m(6, true),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-8" }, [
+                                      _c("p", [
+                                        _vm._v(
+                                          "\n                                                            " +
                                             _vm._s(
                                               _vm
                                                 .moment(event.updated_at)
@@ -110684,7 +110759,7 @@ var render = function() {
                                                   "MMMM Do YYYY, h:mm:ss a"
                                                 )
                                             ) +
-                                            "\n                                                    "
+                                            "\n                                                        "
                                         )
                                       ])
                                     ])
@@ -110699,10 +110774,78 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
-                        { staticClass: "col" },
+                        { staticClass: "col-sm-6" },
                         [
-                          _c("h4", { staticClass: "card-title text-center" }, [
-                            _vm._v("Listings")
+                          _c("div", { staticClass: "row" }, [
+                            _vm._m(7),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-sm-6" }, [
+                              _c("div", { staticClass: "form-check" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.selectAllListings,
+                                      expression: "selectAllListings"
+                                    }
+                                  ],
+                                  staticClass: "form-check-input",
+                                  attrs: {
+                                    type: "checkbox",
+                                    id: "defaultCheck3"
+                                  },
+                                  domProps: {
+                                    checked: Array.isArray(
+                                      _vm.selectAllListings
+                                    )
+                                      ? _vm._i(_vm.selectAllListings, null) > -1
+                                      : _vm.selectAllListings
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      var $$a = _vm.selectAllListings,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = null,
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.selectAllListings = $$a.concat(
+                                              [$$v]
+                                            ))
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.selectAllListings = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)))
+                                        }
+                                      } else {
+                                        _vm.selectAllListings = $$c
+                                      }
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "h5 form-check-label",
+                                    attrs: { for: "defaultCheck3" }
+                                  },
+                                  [
+                                    _vm.selectAllListings
+                                      ? _c("span", [
+                                          _vm._v("Un-select all Listings")
+                                        ])
+                                      : _c("span", [
+                                          _vm._v("Select all Listings")
+                                        ])
+                                  ]
+                                )
+                              ])
+                            ])
                           ]),
                           _vm._v(" "),
                           _vm._l(_vm.bulletin.listings, function(listing) {
@@ -110711,129 +110854,113 @@ var render = function() {
                               { key: listing.id, staticClass: "card mb-4" },
                               [
                                 _c("div", { staticClass: "card-header" }, [
-                                  _c("div", { staticClass: "row" }, [
-                                    _c("div", { staticClass: "col-sm-9" }, [
-                                      _c("h5", { staticClass: "card-title" }, [
+                                  _c("div", { staticClass: "form-check" }, [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: listing.included_in_bulletin,
+                                          expression:
+                                            "listing.included_in_bulletin"
+                                        }
+                                      ],
+                                      staticClass: "form-check-input",
+                                      attrs: {
+                                        type: "checkbox",
+                                        id: "defaultCheck1"
+                                      },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          listing.included_in_bulletin
+                                        )
+                                          ? _vm._i(
+                                              listing.included_in_bulletin,
+                                              null
+                                            ) > -1
+                                          : listing.included_in_bulletin
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a =
+                                              listing.included_in_bulletin,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  listing,
+                                                  "included_in_bulletin",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  listing,
+                                                  "included_in_bulletin",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              listing,
+                                              "included_in_bulletin",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "h5 form-check-label",
+                                        attrs: { for: "defaultCheck1" }
+                                      },
+                                      [
                                         listing.included_in_bulletin
                                           ? _c("span", [
                                               _vm._v(
-                                                "\n                                                            Un-mark\n                                                        "
+                                                "\n                                                                Un-mark\n                                                            "
                                               )
                                             ])
                                           : _c("span", [_vm._v("Mark")]),
                                         _vm._v(
-                                          "\n                                                        listing for\n                                                        "
+                                          "\n                                                            listing for\n                                                            "
                                         ),
                                         listing.included_in_bulletin
                                           ? _c("span", [
                                               _vm._v(
-                                                "\n                                                            exclusion\n                                                        "
+                                                "\n                                                                exclusion\n                                                            "
                                               )
                                             ])
                                           : _c("span", [_vm._v("inclusion")])
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "col-sm-3" }, [
-                                      _c(
-                                        "div",
-                                        { staticClass: "float-right" },
-                                        [
-                                          _c(
-                                            "div",
-                                            { staticClass: "form-check" },
-                                            [
-                                              _c("input", {
-                                                directives: [
-                                                  {
-                                                    name: "model",
-                                                    rawName: "v-model",
-                                                    value:
-                                                      listing.included_in_bulletin,
-                                                    expression:
-                                                      "listing.included_in_bulletin"
-                                                  }
-                                                ],
-                                                staticClass: "form-check-input",
-                                                attrs: {
-                                                  type: "checkbox",
-                                                  id: "exampleCheck1"
-                                                },
-                                                domProps: {
-                                                  checked: Array.isArray(
-                                                    listing.included_in_bulletin
-                                                  )
-                                                    ? _vm._i(
-                                                        listing.included_in_bulletin,
-                                                        null
-                                                      ) > -1
-                                                    : listing.included_in_bulletin
-                                                },
-                                                on: {
-                                                  change: function($event) {
-                                                    var $$a =
-                                                        listing.included_in_bulletin,
-                                                      $$el = $event.target,
-                                                      $$c = $$el.checked
-                                                        ? true
-                                                        : false
-                                                    if (Array.isArray($$a)) {
-                                                      var $$v = null,
-                                                        $$i = _vm._i($$a, $$v)
-                                                      if ($$el.checked) {
-                                                        $$i < 0 &&
-                                                          _vm.$set(
-                                                            listing,
-                                                            "included_in_bulletin",
-                                                            $$a.concat([$$v])
-                                                          )
-                                                      } else {
-                                                        $$i > -1 &&
-                                                          _vm.$set(
-                                                            listing,
-                                                            "included_in_bulletin",
-                                                            $$a
-                                                              .slice(0, $$i)
-                                                              .concat(
-                                                                $$a.slice(
-                                                                  $$i + 1
-                                                                )
-                                                              )
-                                                          )
-                                                      }
-                                                    } else {
-                                                      _vm.$set(
-                                                        listing,
-                                                        "included_in_bulletin",
-                                                        $$c
-                                                      )
-                                                    }
-                                                  }
-                                                }
-                                              })
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ])
+                                      ]
+                                    )
                                   ])
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "card-body" }, [
                                   _c("div", { staticClass: "form-group row" }, [
-                                    _vm._m(6, true),
+                                    _vm._m(8, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [_vm._v(_vm._s(listing.type))])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(7, true),
+                                    _vm._m(9, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [_vm._v(_vm._s(listing.item))])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(8, true),
+                                    _vm._m(10, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
@@ -110841,13 +110968,13 @@ var render = function() {
                                       ])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(9, true),
+                                    _vm._m(11, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [_vm._v(_vm._s(listing.deal))])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(10, true),
+                                    _vm._m(12, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
@@ -110865,7 +110992,7 @@ var render = function() {
                                       ])
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(11, true),
+                                    _vm._m(13, true),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-8" }, [
                                       _c("p", [
@@ -110901,7 +111028,7 @@ var render = function() {
                       { attrs: { role: "form", "prevent-default": "" } },
                       [
                         _c("div", { staticClass: "form-group" }, [
-                          _vm._m(12),
+                          _vm._m(14),
                           _vm._v(" "),
                           _c("input", {
                             directives: [
@@ -111174,6 +111301,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-6" }, [
+      _c("h4", { staticClass: "card-title text-center" }, [_vm._v("Events")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-4" }, [_c("p", [_vm._v("Name:")])])
   },
   function() {
@@ -111212,6 +111347,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-4" }, [
       _c("p", [_vm._v("Date updated:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-6" }, [
+      _c("h4", { staticClass: "card-title text-center" }, [_vm._v("Listings")])
     ])
   },
   function() {

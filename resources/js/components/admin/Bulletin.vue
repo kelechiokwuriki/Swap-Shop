@@ -45,13 +45,26 @@
                             <template v-if="step === 1">
                                 <div class="row">
                                     <!--events bulletin-->
-                                    <div class="col">
-                                        <h4 class="card-title text-center">Events</h4>
-                                        <div class="card mb-4" v-for="event in bulletin.events" v-bind:key="event.id">
-                                            <div class="card-header">
-                                                <div class="row">
-                                                    <div class="col-sm-9">
-                                                        <h5 class="card-title">
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <h4 class="card-title text-center">Events</h4>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                 <div class="form-check">
+                                                    <input type="checkbox" v-model="selectAllEvents" class="form-check-input" id="defaultCheck2">
+                                                    <label class="h5 form-check-label" for="defaultCheck2">
+                                                        <span v-if="selectAllEvents">Un-select all Events</span>
+                                                        <span v-else>Select all Events</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            <div class="card mb-4" v-for="event in bulletin.events" v-bind:key="event.id">
+                                                <div class="card-header">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" v-model="event.included_in_bulletin" class="form-check-input" id="defaultCheck2">
+                                                        <label class="h5 form-check-label" for="defaultCheck2">
                                                             <span v-if="event.included_in_bulletin">
                                                                 Un-mark
                                                             </span>
@@ -61,98 +74,97 @@
                                                                 exclusion
                                                             </span>
                                                             <span v-else>inclusion</span>
-                                                        </h5>
+                                                        </label>
                                                     </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="float-right">
-                                                            <div class="form-check">
-                                                                <input type="checkbox" v-model="event.included_in_bulletin" class="form-check-input" id="exampleCheck1">
-                                                            </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="form-group row">
+                                                        <div class="col-4">
+                                                            <p>Name:</p>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <p>{{event.name}}</p>
+                                                        </div>
+
+                                                        <div class="col-4">
+                                                            <p>When:</p>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <p>
+                                                                {{ event.when }}
+                                                            </p>
+                                                        </div>
+
+                                                        <div class="col-4">
+                                                            <p>Information:</p>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <p>{{event.information}}</p>
+                                                        </div>
+
+                                                        <div class="col-4">
+                                                            <p>Contact info:</p>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <p>{{event.contact_info}}</p>
+                                                        </div>
+
+                                                        <div class="col-4">
+                                                            <p>Date created:</p>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <p>
+                                                                {{ moment(event.created_at).format('MMMM Do YYYY, h:mm:ss a') }}
+                                                            </p>
+                                                        </div>
+
+                                                        <div class="col-4">
+                                                            <p>Date updated:</p>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <p>
+                                                                {{ moment(event.updated_at).format('MMMM Do YYYY, h:mm:ss a') }}
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-body">
-                                                <div class="form-group row">
-                                                    <div class="col-4">
-                                                        <p>Name:</p>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <p>{{event.name}}</p>
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                        <p>When:</p>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <p>
-                                                            {{ event.when }}
-                                                        </p>
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                        <p>Information:</p>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <p>{{event.information}}</p>
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                        <p>Contact info:</p>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <p>{{event.contact_info}}</p>
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                        <p>Date created:</p>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <p>
-                                                            {{ moment(event.created_at).format('MMMM Do YYYY, h:mm:ss a') }}
-                                                        </p>
-                                                    </div>
-
-                                                    <div class="col-4">
-                                                        <p>Date updated:</p>
-                                                    </div>
-                                                    <div class="col-8">
-                                                        <p>
-                                                            {{ moment(event.updated_at).format('MMMM Do YYYY, h:mm:ss a') }}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                     <!--end events bulletin-->
 
                                     <!--listings bulletin-->
-                                    <div class="col">
-                                        <h4 class="card-title text-center">Listings</h4>
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <h4 class="card-title text-center">Listings</h4>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                 <div class="form-check">
+                                                    <input type="checkbox" v-model="selectAllListings" class="form-check-input" id="defaultCheck3">
+                                                    <label class="h5 form-check-label" for="defaultCheck3">
+                                                        <span v-if="selectAllListings">Un-select all Listings</span>
+                                                        <span v-else>Select all Listings</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="card mb-4" v-for="listing in bulletin.listings" v-bind:key="listing.id">
                                             <div class="card-header">
-                                                <div class="row">
-                                                    <div class="col-sm-9">
-                                                        <h5 class="card-title"><span v-if="listing.included_in_bulletin">
-                                                                Un-mark
-                                                            </span>
-                                                            <span v-else>Mark</span>
-                                                            listing for
+                                                    <div class="form-check">
+                                                        <input type="checkbox" v-model="listing.included_in_bulletin" class="form-check-input" id="defaultCheck1">
+                                                        <label class="h5 form-check-label" for="defaultCheck1">
                                                             <span v-if="listing.included_in_bulletin">
-                                                                exclusion
-                                                            </span>
-                                                            <span v-else>inclusion</span>
-                                                        </h5>
+                                                                    Un-mark
+                                                                </span>
+                                                                <span v-else>Mark</span>
+                                                                listing for
+                                                                <span v-if="listing.included_in_bulletin">
+                                                                    exclusion
+                                                                </span>
+                                                                <span v-else>inclusion</span>
+                                                        </label>
                                                     </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="float-right">
-                                                            <div class="form-check">
-                                                                <input type="checkbox" v-model="listing.included_in_bulletin" class="form-check-input" id="exampleCheck1">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+
                                             </div>
                                             <div class="card-body">
                                                 <div class="form-group row">
@@ -327,6 +339,8 @@
     export default {
         data() {
             return {
+                selectAllListings: false,
+                selectAllEvents: false,
                 sendingBulletin: false,
                 bulletin: [],
                 step: 1,
@@ -390,7 +404,8 @@
             },
             sortListingByWantFirst(array, key) {
                 return array.sort(function(a, b) {
-                    var x = a[key]; var y = b[key];
+                    var x = a[key];
+                    var y = b[key];
                     return ((x < y) ? 1 : ((x > y) ? -1 : 0));
                 });
             },
@@ -408,6 +423,18 @@
         mounted() {
             this.getBulletin();
             this.getBulletinForLastSevenDays();
+        },
+        watch: {
+            selectAllEvents (value) {
+                    this.bulletin.events.forEach(event => {
+                        event.included_in_bulletin = !event.included_in_bulletin;
+                    })
+            },
+            selectAllListings (value) {
+                this.bulletin.listings.forEach(listing => {
+                    listing.included_in_bulletin = !listing.included_in_bulletin;
+                })
+            }
         },
         computed: {
             sortListingsPlaceWantFirst() {
