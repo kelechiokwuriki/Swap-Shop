@@ -22,12 +22,17 @@ class BulletinApiController extends Controller
      */
     public function index()
     {
-        //
+        return $this->bulletinService->retrieveAllBulletins();
     }
 
     public function latestBulletinData()
     {
         return $this->bulletinService->getLatestBulletinData();
+    }
+
+    public function getBulletinForSevenDays()
+    {
+        return $this->bulletinService->getBulletinForLastSevenDays();
     }
 
     /**

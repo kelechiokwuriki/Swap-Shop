@@ -55,6 +55,11 @@ class BulletinService
         ];
     }
 
+    public function retrieveAllBulletins()
+    {
+        return $this->bulletinRepository->all();
+    }
+
     public function createAndSendBulletin($bulletin)
     {
         $usersEmail = $this->userService->getAllUsersEmailAddress();

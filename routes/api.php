@@ -30,9 +30,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::middleware('checkRole')->group(function () {
         Route::resource('users', 'Api\UserApiController');
 
-        Route::get('bulletindata', 'Api\BulletinDataApiController@getBulletinForSevenDays');
-
         Route::resource('bulletin', 'Api\BulletinApiController');
+
         Route::get('/latestBulletinData', 'Api\BulletinApiController@latestBulletinData');
+        Route::get('/bulletindata', 'Api\BulletinApiController@getBulletinForSevenDays');
     });
 });

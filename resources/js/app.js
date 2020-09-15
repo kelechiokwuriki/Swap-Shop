@@ -39,6 +39,7 @@ Vue.component('terms-of-service', require('./components/UIhelpers/TermsOfService
 Vue.component('admin', require('./components/admin/Admin.vue').default);
 Vue.component('manageusers', require('./components/admin/ManageUsers.vue').default);
 Vue.component('bulletin', require('./components/admin/Bulletin.vue').default);
+Vue.component('archived-bulletin', require('./components/admin/ArchivedBulletin.vue').default);
 
 //home
 Vue.component('home-component', require('./components/Home.vue').default);

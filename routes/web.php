@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth', 'redirectIfNotAuthenticated', 'checkTerms
 
             Route::resource('/admin/users', 'Users\UserController');
             Route::resource('/admin/bulletin', 'Bulletin\BulletinController');
+            Route::get('/admin/archivedbulletin', 'Bulletin\BulletinController@archivedBulletin');
         });
     });
 

@@ -17,6 +17,11 @@ class BulletinController extends Controller
         return view('admin.bulletin.index');
     }
 
+    public function archivedBulletin()
+    {
+        return view('admin.bulletin.archivedbulletin');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
