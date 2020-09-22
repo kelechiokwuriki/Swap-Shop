@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\User;
+use App\Role;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +14,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
+        $firstUser = User::first();
+
+        $adminRole = Role::create([
+            'name' => 'admin'
+        ]);
+
+        $firstUser->roles()->sync($adminRole->id);
     }
 }
