@@ -12,6 +12,7 @@ Download or clone the repository.
 You will need Composer. Installing this globally is recommended.
 * Run "composer install" to fetch and install dependencies
 * Copy the .env.example file to .env . You can customise settings however you wish, but you must specify your database information. You can use whichever database driver that your PHP installation can support - the default is MySQL.
+* Update the mail details in the env with your created outgoing email server
 * If you wish to run the program in development mode, change the APP_ENV value to local.
 * Run php artisan key:generate to populate your .env file with a new key.
 * Run php artisan config:cache to optionally cache your configuration. This is for performance.
