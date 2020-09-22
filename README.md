@@ -17,6 +17,13 @@ You will need Composer. Installing this globally is recommended.
 * Run php artisan config:cache to optionally cache your configuration. This is for performance.
 * Run php artisan migrate (or php artisan migrate:fresh if you've run it previously) to provide a fresh database structure to your specified database.
 * Run this to create a user with admin capabilities
+* Run "npm run dev" to compile the front end assets.
+
+
+## Automated Install
+An automated installer is available for Linux and macOS. Simply run bash install.sh after downloading or cloning the repository. It is currently untested with Windows Subsystem for Linux or other Bash
+implementations under Windows, so proceed with caution. For help setting up your .env file, please see the below section.
+
 
 
 

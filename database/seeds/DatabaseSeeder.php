@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
             'password_needs_reset' => 0
         ]);
 
-
         $adminRole = Role::create([
             'name' => 'admin'
         ]);
