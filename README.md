@@ -16,6 +16,7 @@ You will need Composer. Installing this globally is recommended.
 * Run php artisan key:generate to populate your .env file with a new key.
 * Run php artisan config:cache to optionally cache your configuration. This is for performance.
 * Run php artisan migrate (or php artisan migrate:fresh if you've run it previously) to provide a fresh database structure to your specified database.
+* Run this to create a user with admin capabilities
 
 
 
