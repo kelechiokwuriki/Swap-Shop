@@ -14,11 +14,15 @@ You will need Composer. Installing this globally is recommended.
 * Copy the .env.example file to .env . You can customise settings however you wish, but you must specify your database information. You can use whichever database driver that your PHP installation can support - the default is MySQL.
 * Update the mail details in the env with your created outgoing email server
 * If you wish to run the program in development mode, change the APP_ENV value to local.
-* Run php artisan key:generate to populate your .env file with a new key.
-* Run php artisan config:cache to optionally cache your configuration. This is for performance.
-* Run php artisan migrate (or php artisan migrate:fresh if you've run it previously) to provide a fresh database structure to your specified database.
+* Run "php artisan key:generate" to populate your .env file with a new key.
+* Run "php artisan config:cache" to optionally cache your configuration. This is for performance.
+* Run "php artisan migrate" (or php artisan migrate:fresh if you've run it previously) to provide a fresh database structure to your specified database.
 * Run this to create a user with admin capabilities
+* Update the mail details in the env with your created outgoing email server
 * Run "npm run dev" to compile the front end assets.
+* Run "php artisan serve" to kick up the server
+
+
 
 
 ## Automated Install
